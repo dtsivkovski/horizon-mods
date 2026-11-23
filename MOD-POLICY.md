@@ -65,18 +65,31 @@ remove any project, at any time, without having to give a reason.
 
 ## Cheats
 
-A mod may have features that give its players an edge on servers (kill aura, reach, fly, auto-clickers and the like)
-when both of these are true:
+The registry splits multiplayer-affecting features into three tiers:
 
-1. It is not presented as a cheat or a hack: not in its name, its page, or its files.
-2. A server can opt into those features: they stay off on any server that has not allowed them.
+1. **Always refused (no opt-in or opt-out).** Mods presented as cheats, hacks or hacked clients (in their name,
+   page or files), and anything built to get past a server's anticheat or to hide a mod or its features from the
+   server (for example a "GrimAC mode" preset, spoofing mod lists or blocking server opt-out).
+2. **Server opt-in required.** Hard multiplayer cheats must stay off on any server that has not allowed them (or
+   stay singleplayer-only):
+   - X-ray or ESP overlays (seeing ores, caves, chests or entities through opaque blocks);
+   - aimbot or aim assist;
+   - survival movement or reach cheats (granting flight, speed, blink, no-fall, step, or reach/hitbox expansion;
+     adjusting flight speed while the player is already allowed to fly, such as in creative or spectator mode, is
+     not survival flight);
+   - combat automation (kill aura, triggerbot, crystal aura, auto-totem, or PvP-targeting auto-clickers);
+   - item duplication or protocol exploits.
+3. **Utilities and technical tweaks (off by default, with a multiplayer warning).** General building, technical and
+   quality-of-life utilities that some servers may disallow — such as hold/fast click or placement helpers (not
+   targeting players for PvP), block-break cooldown toggles, creative fly-speed presets, gamma/fullbright, freecam,
+   HUDs, minimaps, seed crackers and pathfinding bots — are allowed when:
+   - any tweak that alters gameplay or input is off by default;
+   - the mod's page includes a clear multiplayer warning that some features may be disallowed or trigger anticheats
+     and players should check server rules first;
+   - the mod does not block or hide from a server's opt-out.
 
-Horizon has no standard way yet for a mod to ask a server for that opt-in. Until it has one, reviewers don't hold a
-mod over how its opt-in is built.
-
-The registry still refuses mods presented as cheats, and anything built to get past a server's anticheat or to hide
-a mod or its features from the server (for example a "GrimAC mode" preset). A server can't opt into those.
-Client-side utilities that give no edge on servers, such as HUDs, seed crackers or pathfinding bots, stay welcome.
+Horizon has no standard way yet for a mod to ask a server for opt-in or receive a server opt-out. Until it has one,
+reviewers don't hold a mod over how its opt-in or opt-out is built.
 
 ## Licences
 

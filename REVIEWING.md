@@ -30,9 +30,13 @@ This list is complete. Anything not on it does not block.
 2. Hidden network or data access.
 3. Missing copyright or licence attribution, or a licence the policy doesn't accept.
 4. Mojang data.
-5. A break of the cheat rule: the mod is presented as a cheat or hack, its edge-giving features stay on where a
-   server has not allowed them, or it is built to get past an anticheat or hide from the server. How a mod asks a
-   server for the opt-in is not standardised yet, so don't block over how the opt-in is built.
+5. A break of the cheat rule ([MOD-POLICY.md](MOD-POLICY.md#cheats)):
+   - the mod is presented as a cheat or hack, or is built to get past an anticheat or hide/block server opt-out;
+   - a server-opt-in feature (X-ray/ESP, aimbot/aim assist, survival movement or reach cheats, combat automation,
+     or item duplication/protocol exploits) stays on where a server has not allowed it;
+   - a general utility/technical tweak leaves gameplay- or input-altering tweaks on by default or omits a clear
+     multiplayer warning on its page.
+   How a mod handles server opt-in or opt-out is not standardised yet, so don't block over how it is built.
 6. Hashes that don't match the files, or files that aren't staged (and that you can't stage yourself, step 2).
 7. Broken packaging, or a native mod without its build proof.
 8. Failing automatic checks (that a small fix from step 2 doesn't cure).
