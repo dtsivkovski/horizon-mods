@@ -24,6 +24,76 @@ categories = ["game-mechanics", "utility"]
 tags = ["world-edit", "block-selection", "fill", "copy", "paste", "undo"]
 
 [[versions]]
+version = "1.0.0"
+published = "2026-11-23"
+game = "26.3"
+file = "finteredit-1.0.0.hmod"
+sha256 = "9c5e83ac4c5c5da06be913a4c17ffe026578fc5e8247023853b6b52595606f7b"
+changelog = """
+finteredit — Changelog v1.0.0
+==============================
+
+General
+-------
+- Bumped version from 0.1.8 to 1.0.0 in Cargo.toml and horizon-mod.toml.
+- First stable release of the finteredit mod for Horizon (Minecraft: Java Edition 26.3).
+
+Bug fixes
+---------
+- Fixed the //set command not working.
+  Previously the mod only registered the /set variant and the run_mod_command
+  handler only matched the literal "/set". Because Horizon strips only one of
+  the two leading slashes when a player types //set in chat, the incoming
+  literals.first() is "/set", which was not handled, so //set did nothing.
+- Registered both command signatures so players can use either prefix:
+    * Command::op("set <n:text>", 2)
+    * Command::op("/set <n:text>", 2)
+  The run_mod_command match arm now accepts Some("set") | Some("/set"),
+  so both //set <block> and /set <block> work correctly.
+- Tab completion for block names still works with both prefixes via
+  commands::suggest::blocks, which trims the leading slash and matches
+  commands starting with "set ".
+
+Features
+--------
+- Minimal WorldEdit-style editing for Horizon:
+    * /wand (or //wand) gives a wooden axe and resets the current selection.
+    * Left-click with the axe sets the first selection point.
+    * Right-click with the axe sets the second selection point.
+    * //set <block> (or /set <block>) fills the selected cuboid with a block.
+    * //copy copies the selection to a clipboard.
+    * //paste [ -o ] pastes the clipboard at the player position or at the
+      original copied coordinates.
+    * //undo (or /undo) reverts the last edit.
+- Selections are stored per player UUID and bound to the dimension they were
+  made in; cross-dimension edits are rejected.
+- Undo history keeps up to 8 entries per player and is cleared on logout.
+- Accepts both numeric legacy block IDs (Minecraft 1.12 style, e.g. 7, 5:4)
+  and direct block names (e.g. minecraft:air, stone) for //set.
+
+Localization
+------------
+- User-facing messages are localized in English (en_us.json) and Russian
+  (ru_ru.json) under assets/finteredit/lang/.
+- The client language is picked automatically; plural forms for block counts
+  are handled correctly in Russian.
+
+Requirements and limits
+-----------------------
+- //set, //copy, //paste, //undo, and /undo require operator level 2.
+- Maximum selection volume is 128,000 blocks.
+- Undo stores up to 8 last actions per player.
+- Only blocks are restored on undo; block entity contents (chests, etc.) are
+  not restored.
+
+Build
+-----
+- Requires Rust, cargo-horizon-mod, and the Horizon SDK (pulled automatically).
+- Build with: cargo horizon-mod build --wasm
+- Output: target/horizon-mod/finteredit.hmod
+- Verified with cargo check for v1.0.0."""
+
+[[versions]]
 version = "0.1.8"
 published = "2026-11-23"
 game = "26.3"
