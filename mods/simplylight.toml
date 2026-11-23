@@ -30,3 +30,11 @@ game = "26.3"
 file = "simplylight.hmod"
 sha256 = "433705de1d8467c0ab076ae02a0b7ed447e65b068032414db694dc46992c5c50"
 changelog = "Content-only package for mod API 0.2: assets/ and data/ with a content manifest, no native half. The 160 blocks, 2048 states, light levels, drops, recipes, tags and creative tab are unchanged."
+
+[[versions]]
+version = "0.2.1"
+published = "2026-11-21"
+game = "26.3"
+file = "simplylight.hmod"
+sha256 = "7bbf9c31943b0641ff313178d0ce479426339879b528bdb47c959ef65b99118b"
+changelog = """Slice 2, carried-data parity and the waterlogging gap. Every one of the 234 carried recipes is now crafted in a real table and every one of the 160 loot tables is broken and checked: all 234 craft their declared id and count with the grid emptied and the result in the inventory, all 160 blocks drop exactly themselves, and an unknown table is refused. The ten `any_*` tags and the `c:` tags resolve through those recipes. The fluid gap is closed too: 8 of 8 waterloggable families bind `waterlogged=true` from a real placement into water, and 4 of 4 stay false in air, with the stateless illuminant block carrying no such property. No carried-data defect was found and none was invented — the first red run was the harness's own expectation, which counted a dye recipe's result as an ingredient it consumes, and the corrected assertion still catches an unconsumed grid."""

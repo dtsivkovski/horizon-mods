@@ -19,7 +19,7 @@ A port of [EvilCraft](https://github.com/CyclopsMC/EvilCraft) for Horizon.
 - **The BER chest model is not carried.** `RenderBlockEntityBloodChest` draws a chest model with `textures/model/blood_chest.png`; a content model cannot do a block-entity renderer, so the chest is a static block model.
 - The rest of the mod's blocks and items, the Blood Infuser, the Spirit Furnace, the broom and the werewolf/vampire systems are later slices.
 
-MIT: the original copyright and licence travel inside the bundle, not only in the source repository. Pinned to Horizon 1d63e0a and horizon-mixins 5a64af93.
+EvilCraft for Horizon is listed under CC BY 4.0. The package includes the upstream attribution and MIT notice. Version 0.2.10 is pinned to Horizon 0a875da and horizon-mixins e59da90.
 """
 authors = ["rubensworks (aka kroeser)", "AdLf0208"]
 owners = ["AdLf0208"]
@@ -31,9 +31,25 @@ categories = ["utility"]
 tags = ["port", "horizon"]
 
 [[versions]]
+version = "0.2.10"
+published = "2026-11-23"
+game = "26.3"
+file = "evilcraft.hmod"
+sha256 = "dbbdf5d865689c45d98ab4151fefe00fad04f29f64ac7f669922a9c5364013ef"
+changelog = """This version answers a review with two data-loss bugs and an attribution correction. The chest's anvil repair used to replace a whole stack with one repaired anvil, taking every other item with it; it now repairs the stack item by item, charges for each, keeps the components, and leaves the stack untouched when the tank cannot pay for all of it, in both machines that share that code. The blood extractor used to be stackable, so a drain debited the stain once and wrote one amount onto the whole stack; it is now a single item, and a stack saved before this version resolves deterministically — the first extractor keeps the stored amount, the others come back empty, and the total is unchanged, which the leg proves by creating that stack with the previous version and reading it back. The packaged notice now credits all ten carried infusion recipes, each compared byte for byte against the jar. Both fixes are proved in game on their own legs and inverted by their own selftests."""
+
+[[versions]]
+version = "0.2.4"
+published = "2026-11-21"
+game = "26.3"
+file = "evilcraft.hmod"
+sha256 = "a6632c3c555a9c9de1c7337ad4ce3b9bd0f08f5cf38470445d675c41f52790b8"
+changelog = """Slice 4, projectile kills: an arrow kill now fills the blood extractor the player carries, which the melee-only hook never could. The credit rule is one listener on the death itself, so a melee kill cannot be filled twice and the existing melee phase remains the regression guard. Proven with three counterfactuals in one run: a twenty-health zombie killed with thirty-two arrows leaves the extractor at five hundred and forty-one of five thousand, the previous package's bytes at the same kill leave it at zero, and a zombie killed by a skeleton's arrow, whose owner was read back as that skeleton, leaves it at zero as well. The hook named in our brief did not work for this and the reason is measured rather than guessed: the death-loot hook does name the player for a bow kill, but a write to the player's inventory made there is discarded, so the fill moved to the death hook where the write lands. A second engine fact came with it: a player switched from survival to creative stops keeping a death hook's inventory write, so the kill phases run in survival and the numbers say why, two hundred and sixty-six in creative from launch, five hundred and ninety-eight in survival, and zero after the switch."""
+
+[[versions]]
 version = "0.2.1"
 published = "2026-11-10"
 game = "26.3"
 file = "evilcraft.hmod"
 sha256 = "dc620c8b8de282fd8ee2edca590774059a5ffa53866477942035469ffd1cfb0c"
-changelog = "First release"
+changelog = """First release"""

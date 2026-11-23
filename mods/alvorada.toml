@@ -1,0 +1,27 @@
+id = "alvorada"
+kind = "shader"
+name = "Alvorada"
+summary = "Shardpack for minecraft Horizon"
+description = "Crisp, colorful shader pack: sharp shadows, warm sun against blue shade, textured blocks, living water, a painted End sky and reworked portals."
+authors = ["Fooyer"]
+owners = ["Fooyer"]
+owner_ids = [95866940]
+license = "MIT"
+source = "https://github.com/Fooyer/alvorada"
+icon = "icons/alvorada.png"
+categories = ["vanilla-like", "shadows", "high"]
+tags = ["shader"]
+key = "RWR9INqf+nJYTvHSpb6KDMKuZnJwSuwkHUe6oaWisCX8AOss2rBnJG9F"
+
+[[versions]]
+version = "1.6.3"
+published = "2026-11-23"
+game = "26.3"
+file = "alvorada-1.6.3.hshader"
+sha256 = "3e578f5b16437479b17f162497e48ee04b92b956e0b06f75e5dbe7a1b4c63bbf"
+signature = """
+untrusted comment: signature from minisign secret key\r
+RUR9INqf+nJYTlKEzasQ9T6lgI5fRMY+2EZnXldqh60yHj6e1jxXjrocAKPHQu39DRcU2mh8+8RTUYWaA/DSSpdeegpsuAQ50As=\r
+trusted comment: timestamp:1795395810\tfile:alvorada-1.6.3.hshader\thashed\r
+2QZ0WFi6PA0vT42YDqFOqpfPz72ID/CMTutBQahiZE/1AWWXcjo2R3DTx5jBGWDZENrQzt96mvyYsv3SUiukBg=="""
+changelog = "Shardpack for minecraft Horizon."

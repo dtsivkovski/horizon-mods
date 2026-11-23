@@ -40,9 +40,62 @@ categories = ["technology", "game-mechanics"]
 tags = ["port", "machines", "energy", "ore-processing"]
 
 [[versions]]
+version = "0.2.8"
+published = "2026-11-23"
+game = "26.3"
+file = "actuallyadditions.hmod"
+sha256 = "5440228fe6a14f9fa35fedd6efe924c1c099a1d5832f466fb6d2438daf123097"
+changelog = """This version adds pulse mode, so the reconstructor can fire once on each rising edge of a redstone signal instead of freezing while it is powered, and the toggle is a click with the reference's configurator item rather than a new item of its own. Two of the brief's premises did not survive the artefact: the mod has no wrench, and the item that toggles is a config value defaulting to a redstone torch, so nothing was carried and no extra item part was added — the branch sits where the reference puts it. The saved flag rides the existing state allowlist rather than an item component, because a component route exists here but would give one flag two homes. Proven in game on the edges themselves: with the torch the machine reads pulse on and the toggle item is still in hand; with no signal across a hundred and forty ticks the cycle does not move; the first rising edge spends exactly one thousand and forty and makes one crystal, the falling edge does nothing, and the second rising edge makes another. The same rig without the toggle runs its cycle through the same window, which is the differential. It also answers the review on conversion order for both halves: the source is removed and checked before the result appears, the price is charged only after success, and the item half restores the whole stack if the spawn is refused."""
+
+[[versions]]
+version = "0.2.7"
+published = "2026-11-23"
+game = "26.3"
+file = "actuallyadditions.hmod"
+sha256 = "7d35fc805d9e49c05d2cc4e30a1a5f1cc261da0a6d0bf6d3b18b8a5d909bc5e4"
+changelog = """This version gives the beam its other half: dropped items in the beam's path convert too, not only blocks. The reference's shape is subtle and it is followed exactly — the block pass runs first, then the item pass, once per beam step with a box that grows as the beam walks, so an item can convert at any step; the first recipe matching the dropped stack decides, and only as many items as the energy covers convert at once, with the leftover re-spawned still convertible and only the output marked so a later shot cannot convert it twice. Proven in game: a redstone item in the beam becomes one crystal with none left, the output carries the marker, a stack of three yields one crystal and two redstone, and an item outside the box stays redstone while the buffer keeps its energy. One defect in the reference is fixed rather than copied: its box is built from the machine to the hit block with unordered corners, so for three of the six facings the box is inverted and no item ever converted — this port orders the corners and the same test proves a west-facing beam converts. The marker rides a saved scoreboard tag because this pin has no per-entity persistent data."""
+
+[[versions]]
+version = "0.2.6"
+published = "2026-11-23"
+game = "26.3"
+file = "actuallyadditions.hmod"
+sha256 = "414c0ab9ad5da8795420261ecd04720d5cc030c76d001832d395d2c34693d52b"
+changelog = """This version adds the atomic reconstructor, the machine that turns blocks into other blocks along a beam, and with it the crystal the crusher's own recipe needs, so the crafting chain the last two slices opened now closes. The brief's numbers were the shot rather than the buffer: a thousand energy is the price of firing at all and the conversion is paid again per block, so a leg charged with exactly a thousand converts nothing and the working cases are a thousand and forty, a thousand and thirty-nine, and one thousand one hundred and twenty for two blocks in the plane. Proven in game on all of them: one shot turns a redstone dust block into a crystal drop with the block gone and the buffer empty, stone in the beam leaves forty and converts nothing, the reach is ten and not eleven, two blocks in one plane both convert, a powered machine freezes its cycle and resumes when the power is removed, and a broken one carries its charge back on its item. The jar's own three block-reachable laser recipes are carried and two of them are proved with their own prices, and the crusher's recipe now crafts from the crystals this machine makes.
+"""
+
+[[versions]]
+version = "0.2.5"
+published = "2026-11-23"
+game = "26.3"
+file = "actuallyadditions.hmod"
+sha256 = "de43f029a98fa818f59dfb7ce6cbbb777d3436497ab67195ee1bbb1805662486"
+changelog = """This version carries the black quartz ore, the gem, and the tags the iron casing and basic coil needed, so the crafting chain that gates both machines is now reachable on the data path. The generation claim is the interesting part and it is recorded as blocked rather than claimed: the placed feature reaches the content root and the biome modifier is read, but the configured feature never merges at this pin, so the log says one placed feature cannot run and will be skipped, and the leg asserts that gap so it fails the day it closes. Everything else is proved by placing the block and using it: a break drops one gem and stone at the same stance drops cobblestone, a silk touch pickaxe returns the ore and no gem, the furnace and blast furnace each give one gem, the crusher gives two with its input consumed, and an iron casing crafts from four ingots, four sticks and one gem with the wrong-ingredient controls producing nothing. One measurement changed the emitter: the reference's custom biome-modifier type is skipped at this pin, so the supported add-features file is what ships, and the registrar call is accepted but consumed by nothing, so both are emitted and the data file is the one that works.
+"""
+
+[[versions]]
+version = "0.2.4"
+published = "2026-11-23"
+game = "26.3"
+file = "actuallyadditions.hmod"
+sha256 = "f7767ebadf65127b0f0d5b38d0152296051a49243d9b0c98251e54fbaadd1d67"
+changelog = """This version makes the coal generator's own recipe craft: an iron casing, a basic coil and the cobblestones tag, so the recipe that had been carried since the second slice now resolves its keys instead of being dropped at load. Proven in game with the ingredients counted rather than the result alone: six cobblestone, two casings and a coal become one generator and the grid empties; a mossy cobblestone in the same cells still crafts, which shows the key is a tag rather than a single item, and stone in those cells crafts nothing, which shows the tag is not a wildcard; iron ingots where the casings go craft nothing. The crusher's own recipe remains refused with its reason, because the crystal it needs is grown rather than crafted, and a negative run asserts that the generator's recipe is unlocked so the check cannot pass by accident. One count in the brief was wrong and the artefact won: the grid is six cobblestone and nine items, not four and seven.
+"""
+
+[[versions]]
+version = "0.2.3"
+published = "2026-11-23"
+game = "26.3"
+file = "actuallyadditions.hmod"
+sha256 = "e0b1f95ad260a2a8fc81ab0906cf902a42a11a07db3aae3161b8b21a88369600"
+changelog = """This version answers a review rather than adding a family. The blocker was real: a broken machine's item carried the whole saved block entity, including its inventory, so a loaded crusher dropped its contents twice. The payload is now built from an allowlist of the four fields the machine actually restores, and it is attached only to the drop whose item is that machine. Proven in game by reading the dropped item's own components: it names the energy and the progress and no item list, the machine's input spills separately as the engine's job, and placing the item back restores the energy with an empty container. An empty machine's payload names nothing but its type, which is the differential. Two smaller review items are also fixed: the lock file its declared dependency needs is now packed, and the original licence text is the upstream file byte for byte, including the copyright line our previous version had rewritten.
+"""
+
+[[versions]]
 version = "0.2.1"
 published = "2026-11-09"
 game = "26.3"
 file = "actuallyadditions.hmod"
 sha256 = "0ce6483c0e7fbcbfac4bb3c8c74ff9f0fbb2aacfddd5ac52e78834aa43110854"
-changelog = "First release: the Coal Generator and the Crusher."
+changelog = """First release: the Coal Generator and the Crusher.
+"""

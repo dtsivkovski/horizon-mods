@@ -1,0 +1,29 @@
+id = "clumps"
+kind = "mod"
+name = "Clumps"
+summary = "Clumps XP orbs together."
+description = """
+A Horizon WebAssembly port of [Clumps](https://github.com/jaredlll08/Clumps) by Jaredlll08 (MIT License).
+
+- Merges nearby experience orbs regardless of their XP value or entity ID (`experience_orb_can_merge`).
+- Combines exact XP totals into representable `(value, count)` pairs without transient state or XP loss, canceling merges when no exact representation exists and treating negative denominations as zero XP (`experience_orb_merge`).
+- Collapses multi-count orbs on pickup when representable in `i32` and removes the XP pickup cooldown (`set_exp_cooldown(0)`) (`pickup_xp`).
+
+Original mod: https://github.com/jaredlll08/Clumps (Jaredlll08, MIT License).
+"""
+authors = ["Jaredlll08", "GoldenRose01"]
+owners = ["GoldenRose01"]
+owner_ids = [116004785]
+license = "MIT"
+source = "https://github.com/GoldenRose01/Clumps/tree/horizon-port/horizon"
+icon = "icons/clumps.png"
+categories = ["utility"]
+tags = ["xp", "optimization", "port"]
+
+[[versions]]
+version = "26.3.2"
+published = "2026-11-22"
+game = "26.3"
+file = "clumps.hmod"
+sha256 = "43af825f42673998c648483b5d8b74984f60c7f0b84f4df23b332aafe09f7929"
+changelog = "Initial Horizon WebAssembly (.hmod) port; stateless exact XP merging and embedded MIT LICENSE"

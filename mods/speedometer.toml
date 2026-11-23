@@ -1,0 +1,32 @@
+id = "speedometer"
+kind = "mod"
+name = "Speedometer"
+summary = "How fast you move, in a corner of the screen: blocks per second or km/h, walking, riding, boating or flying."
+description = """
+Your speed over the last second, in a corner of the screen.
+
+- Measured from where you were each client tick, so walking, sprinting, riding, boats and elytra flight all count.
+- Blocks per second (a block is a metre) or km/h.
+- Across the ground by default. Turn on "Count climbing and falling" to count height changes too, as in a fall or an elytra dive.
+- Gives way to the debug screen (F3) in its corner.
+- Settings: Options > Mods > Speedometer (shown, corner, unit, climbing and falling).
+
+It reads only your own position and draws on the HUD: nothing else. A WebAssembly mod for Horizon's mod API 0.2, client-side.
+Source and build pipeline: [abuzar310/horizon-mod-ports](https://github.com/abuzar310/horizon-mod-ports/tree/main/mods/speedometer).
+"""
+authors = ["abuzar310"]
+owners = ["abuzar310"]
+owner_ids = [238496494]
+license = "MIT"
+source = "https://github.com/abuzar310/horizon-mod-ports/tree/main/mods/speedometer"
+icon = "icons/speedometer.png"
+categories = ["utility"]
+tags = ["speed", "speedometer", "hud", "elytra", "client-side"]
+
+[[versions]]
+version = "1.0.0"
+published = "2026-11-23"
+game = "26.3"
+file = "speedometer-1.0.0.hmod"
+sha256 = "cc5cace6df7e83cd5a728928c50c4a915ae73e91080122f656a8a2c20cd2838a"
+changelog = "First version. Built on the f1bb66f SDK."

@@ -4,12 +4,12 @@ kind = "native-mod"
 
 name = "Auto Login"
 
-summary = "Detects login/register prompts in chat and logs you in or registers you, per server."
+summary = "Logs you in on join when a password is saved and consent is given, and watches for login/register prompts in chat, per server."
 
 description = """
-Auto Login watches for login and register prompts — in chat and in the action bar — and acts on them: when the server asks you to log in, it sends /login with the password saved for that server and player; when the server asks you to register and no password is saved, it generates a random password, sends /register, and saves it for next time.
+Auto Login logs you in on join when a password is saved for that server and player and you allowed it on that server — no prompt needed. When no password is saved, it watches for login and register prompts — in chat, in the action bar and on the boss bar — and acts on them: when the server asks you to register, it first asks you to allow it on that server; once allowed, it generates a random password, sends /register, and saves it for next time. On a Friends world it sends nothing: a friend-invite connection has no stable address, so no credential is looked up or sent there.
 
-Manual commands /autologin and /autoregister do the same on demand, and /autologin set, pattern, delay, toggle and status configure it without rebuilding.
+Manual commands /autologin and /autoregister do the same on demand, and /autologin allow, set, pattern, delay, toggle and status configure it without rebuilding; /al is a short alias for /autologin.
 
 Passwords are stored in plain text on the device, one line per server, in the mod's own data files — use a password made just for that server."""
 
@@ -42,3 +42,31 @@ file = "autologin-1.1.1.hmod"
 sha256 = "503994d0aa7aa7521f94fcb70ebaca28b8607690d3b1ec023014c4bdb2b53e0e"
 
 changelog = "The .hmod now also reads action-bar (overlay) chat lines for login/register prompts. Title text has no hook in the mod API, so title-only prompts are caught by the .hnmod only."
+
+[[versions]]
+
+version = "1.1.3"
+
+published = "2026-11-22"
+
+game = "26.3"
+
+file = "autologin-1.1.3.hmod"
+
+sha256 = "50c0ab0ae098b45ec8a9c35b493349de4b693b79b177ebe1daa5cc3297919b3a"
+
+changelog = "Boss-bar prompts are now deduplicated per bar and per connection, so two bars on screen no longer re-trigger processing each frame; the mod manifest now declares the MIT license."
+
+[[versions]]
+
+version = "1.1.8"
+
+published = "2026-11-23"
+
+game = "26.3"
+
+file = "autologin-1.1.8.hmod"
+
+sha256 = "46955524fe0488719bdca5edab5b7e2345b1d83ed246e13b27a850b31d7902cb"
+
+changelog = "Packaging fix: the .hmod archive now includes the repository's MIT LICENSE. Nothing else changes — the Friends-worlds fix and the per-server consent model carry over from 1.1.7 and 1.1.6."

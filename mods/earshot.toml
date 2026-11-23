@@ -1,0 +1,88 @@
+id = "earshot"
+kind = "native-mod"
+name = "Earshot"
+summary = "Proximity voice chat for servers running Simple Voice Chat or Plasmo Voice: 3D voices, push to talk, whisper and voice groups"
+description = """
+Proximity voice chat for Horizon. Talk to the players near you on servers that run **Simple Voice Chat** or **Plasmo Voice** 2.x: with Java players using either mod, and with other Horizon players using Earshot. Earshot finds which one the server has by itself.
+
+- **Proximity voice** with 3D audio: voices come from where players stand and fade with distance.
+- **Push to talk** (Mouse 4), held or toggled, or **voice activation** with an adjustable threshold and a live mic level.
+- A **mic test**: hear yourself as the others would.
+- **Whisper** (Mouse 5, held): only players close by hear you.
+- **Voice groups**: create one (normal, open or isolated, with an optional password), join one with a click; a panel lists the members and lights up whoever is talking.
+- **Noise reduction**, **per-player volume**, **mute** and **deafen**.
+- A **mic icon** on the HUD, and a **speaker icon** beside other players' name tags: green while they talk, red if they turned voice chat off, grey and crossed out if they have no voice chat.
+- Opus audio and the encryption each server expects (AES-128-GCM for Simple Voice Chat; RSA key exchange and AES-128-CBC for Plasmo Voice).
+
+On Plasmo Voice servers, proximity voice, positions, push to talk, voice activation and mute work; Plasmo's own groups, broadcasts and addons aren't supported yet. Whisper and voice groups are Simple Voice Chat features.
+
+Keys: V opens the voice menu, M mutes, N deafens; rebind them in Controls. Mods > Earshot > Config has a voice chat switch and debug info.
+
+**Network use:** when you join a server that runs Simple Voice Chat or Plasmo Voice, Earshot asks it for a voice key over the game connection (for Plasmo Voice, by sending a public key made new for each voice connection), then sends and receives encrypted voice over UDP to the address the server names (default port 24454 for Simple Voice Chat; Plasmo Voice servers name their own). It contacts nothing else, and stays quiet on servers without either. With voice chat off, Earshot doesn't register Plasmo Voice's channel or answer the server, and switching it off drops the Plasmo Voice connection, its key and anything not yet sent. From 2.0.6, muting closes the microphone within a moment (tested on Windows), and it is only opened while voice chat is on and you're not muted, once a server's voice session or the mic test needs it. Nothing is ever sent while you're muted. 2.0.4 and older keep the microphone open while muted.
+
+**Platforms:** tested on Windows. macOS should work but is untested. On Linux the launcher refuses it: its audio library uses ALSA there, which the game links too.
+
+Works with Simple Voice Chat 2.6.27 (compatibility version 20), Fabric and Paper. Hosting voice on a Horizon dedicated server is off in this version, until its game patch is tested again (horizon-rust/horizon#18462 is fixed).
+
+Source: https://github.com/selfmonoraque5/earshot
+
+Plasmo Voice support works on Plasmo Voice 2.1 and 2.2 (tested with 2.2.0-beta.4 on Paper).
+
+Earshot is an independent project, not affiliated with or endorsed by Simple Voice Chat, Plasmo Voice or their authors. It contains no Simple Voice Chat code or assets; its protocol support was worked out from our own network captures (PROTOCOL.md). Its Plasmo Voice support is written from the protocol in Plasmo Voice's LGPL-3.0 source, with thanks to its authors; Earshot's code is its own (PLASMO.md). Opus by opus-rs (BSD-3-Clause)."""
+authors = ["selfmonoraque5"]
+owners = ["selfmonoraque5"]
+owner_ids = [86315101]
+license = "MIT AND BSD-3-Clause"
+source = "https://github.com/selfmonoraque5/earshot"
+icon = "icons/earshot.png"
+categories = ["social", "utility"]
+tags = ["voice-chat", "proximity", "multiplayer", "audio", "simple-voice-chat", "plasmo-voice"]
+screenshots = ["screenshots/earshot/1.jpg", "screenshots/earshot/2.jpg", "screenshots/earshot/3.jpg", "screenshots/earshot/4.jpg", "screenshots/earshot/5.jpg", "screenshots/earshot/6.jpg"]
+
+[[versions]]
+version = "2.1.3"
+published = "2026-11-23"
+game = "26.3"
+file = "earshot-2.1.3.hmod"
+sha256 = "79e7f018569a0a94b61049eaf95a9ad7a4bfbe52aa5cdf09d4840a8fc226ec74"
+changelog = "Plasmo Voice support: Earshot also talks on servers running Plasmo Voice 2.x, found by itself (no whisper there: Plasmo Voice has none). With voice chat off, nothing is sent to a Plasmo Voice server; each connection uses a new key, and Simple Voice Chat and Plasmo Voice never share a connection or queued messages; when the server reconnects you, a new session with a new key starts and nothing of the old one is reused. The speaker icon beside name tags now shows. Other players' voices now come from where they stand on remote servers, and you no longer show up in your own Players list. Built for Nightly 2026-11-22 f1bb66f."
+
+[[versions]]
+version = "2.0.10"
+published = "2026-11-23"
+game = "26.3"
+file = "earshot-2.0.10.hmod"
+sha256 = "68872ba4e1658839e05a6be8ec07a8cfe86a2ac5543767864b316e1b4184e1c8"
+changelog = "The voice menu reacts only to a confirmed group join, or the removal of the group a password screen shows; no group lists are scanned. Fixes by TheApple05: the voice chat switch is saved across restarts; player volumes survive leaving a server; a lost voice connection closes the microphone and speakers; a busy microphone or speaker is retried; long player and group lists get pages; the password box releases the keyboard after joining. Built for Nightly 2026-11-22 f1bb66f."
+
+[[versions]]
+version = "2.0.7"
+published = "2026-11-22"
+game = "26.3"
+file = "earshot-2.0.7.hmod"
+sha256 = "a6f6961b3c53feafb9cdb7df5ede7e89126d694a838ae3a5e8e93424c3a6efa4"
+changelog = "Earshot is now client-only, so you can join Horizon servers and friends' worlds that don't have it (2.0.6 and older were refused with \"These mods are not on this server: earshot\"). Its voice server part was already off. Nothing else changed."
+
+[[versions]]
+version = "2.0.6"
+published = "2026-11-21"
+game = "26.3"
+file = "earshot-2.0.6.hmod"
+sha256 = "1ad5b6d17535f9b678b7ebebb3c5f6b01090ba9756578312bade7f404fa4712d"
+changelog = "Muting now closes the microphone within a moment (Windows stops listing it in use) while playback keeps going; switching Voice chat off closes both. Nothing is sent while you're muted. The mic test can't be started while muted or off. Mute release contributed by TheApple05 (selfmonoraque5/earshot#1). Built for Nightly 2026-11-21 f037744."
+
+[[versions]]
+version = "2.0.4"
+published = "2026-11-21"
+game = "26.3"
+file = "earshot-2.0.4.hmod"
+sha256 = "cf0b6ccbf67b506aa15674902b217bce292dcc9de41b5d80dd22a099c44b08bd"
+changelog = "Built for Nightly 2026-11-21 f037744. Review follow-ups: the vendored Opus decoder no longer has its OPUS_TRACE_PLC debug file trace; at most 64 players are decoded at once, so a server can't make it start a decoder per invented speaker; corrected the licence paths and the vendoring note. The entry now says only Windows is tested."
+
+[[versions]]
+version = "2.0.3"
+published = "2026-11-20"
+game = "26.3"
+file = "earshot-2.0.3.hmod"
+sha256 = "aaf66534a1391bf990b0bc817f7a0a412c0c6f248358d7589b6178597541c182"
+changelog = "First release on the Horizon registry: built on Horizon's mod API for Nightly 2026-11-19 5ef7734, and also builds on later Nightlies where the mod API it uses is unchanged (tested on 2026-11-20 0a875da). Fixes a crash report on every game exit on Windows."

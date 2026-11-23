@@ -1,0 +1,81 @@
+id = "server_flags"
+kind = "native-mod"
+name = "Server Flags"
+summary = "A flag beside each server in the Multiplayer list for the country it's hosted in"
+description = """
+A small flag beside each server in your Multiplayer list for the country it's hosted in. Hover the flag for the country's name, and pick servers close to you for a better ping at a glance.
+
+- **Pixel-art flags** after each server's name, or on its icon when the name is long.
+- **67 drawn flags**, the countries servers are most often hosted in; any other country shows its two-letter code.
+- **Country name on hover**, like "Germany (DE)".
+- Private and local IP addresses are never sent to the country lookup service.
+- A grey **?** marks a server whose location can't be shown; hover it for why (an ad blocker blocking the lookup, DDoS protection, or a wrong address).
+
+Settings in Mods > Server Flags > Config: lookups on/off, flag position, hover tooltip, codes for countries without a flag.
+
+**Privacy:** Location lookups are on by default. The mod resolves saved server hostnames through your configured DNS resolver. For a hostname with no explicit port, it first asks for a Minecraft SRV record using the system's `nslookup`. Eligible hostnames can be queried before the mod checks whether the resolved IP is local. For a public address, it sends only the resolved server IP to https://api.country.is (open source, no account or key) to get a country code. Local IPs, including IPv4 addresses written as IPv6, are never sent to that service. Lookups run in the background once per server per game session while "Look up server locations" is on. A failed lookup can retry up to three times, with one minute between attempts. Turning lookups off stops new jobs, and a job already in progress may finish. The country request uses `curl --disable` so it ignores your `.curlrc`.
+
+The request is made by the system's `curl` program (built into Windows 10 and 11, macOS and most Linux systems), run with only the service address and the server's IP. Rust's HTTPS libraries bring a second copy of a native library the game already has, which a mod may not link.
+
+Horizon has no hook for the server list, so besides the mod API this mod patches one game function (draw_title_screen_with_post_hook) to draw the flags. It works on the Horizon build it is made for.
+
+Source: https://github.com/selfmonoraque5/server-flags
+
+Inspired by Server Country Flags by Khajiitos (https://modrinth.com/mod/server-country-flags). Written from scratch for Horizon: it contains none of its code or images (the flags are drawn in code) and is not made or endorsed by Khajiitos. Locations by country.is."""
+authors = ["selfmonoraque5"]
+owners = ["selfmonoraque5"]
+owner_ids = [86315101]
+license = "MIT"
+source = "https://github.com/selfmonoraque5/server-flags"
+icon = "icons/server_flags.png"
+categories = ["utility", "social"]
+tags = ["servers", "multiplayer", "flags", "country", "client-side"]
+screenshots = ["screenshots/server_flags/1.jpg", "screenshots/server_flags/2.jpg"]
+
+[[versions]]
+version = "2.0.7"
+published = "2026-11-23"
+game = "26.3"
+file = "server_flags-2.0.7.hmod"
+sha256 = "c453ae02b03b82b82298f949ad6c92cbcc9ec5bbc79cc7854c7dbf17c14d6b2e"
+changelog = "Servers whose address only has a Minecraft SRV record (a bare domain like sagang.fun, with no address of its own) now get their flag instead of \"the address doesn't resolve\": the record is read first with the system's nslookup when no port is given. Built for Nightly 2026-11-22 f1bb66f."
+
+[[versions]]
+version = "2.0.6"
+published = "2026-11-23"
+game = "26.3"
+file = "server_flags-2.0.6.hmod"
+sha256 = "516d3b6238f9cc3d9424af9cb31c10e2d968b0996bd0d5b828b16fe91fe7500c"
+changelog = "Built for Nightly 2026-11-22 f1bb66f: the game code it patches still accepts its patches, so there are no code changes."
+
+[[versions]]
+version = "2.0.5"
+published = "2026-11-22"
+game = "26.3"
+file = "server_flags-2.0.5.hmod"
+sha256 = "92b7966c3cfcd06311dc99e05fe1d7d6efc73db21618ed24301bc0362db183a9"
+changelog = "Built for Nightly 2026-11-22 2b77287: the game function it patches is unchanged from f037744, so there are no code changes. The README now has a screenshot."
+
+[[versions]]
+version = "2.0.4"
+published = "2026-11-21"
+game = "26.3"
+file = "server_flags-2.0.4.hmod"
+sha256 = "b0e7a323a9c0cd5584dc5782b2323d384fa2edbffdec12ffe3c3fde6c7c00bd7"
+changelog = "Built for Nightly 2026-11-21 f037744. NAT64 addresses (64:ff9b::/96) count as the IPv4 address inside, and 64:ff9b:1::/48 as local, so a local server behind NAT64 is never looked up. Switching lookups off and on no longer restarts a server's retry count."
+
+[[versions]]
+version = "2.0.3"
+published = "2026-11-21"
+game = "26.3"
+file = "server_flags-2.0.3.hmod"
+sha256 = "e2a0a26f7e1e2db7962c6976f0560630ebf15c71e9e287a53ff4cafc61e9d93b"
+changelog = "Built for Nightly 2026-11-21 8f83e5c: the game function it patches is unchanged from 5ef7734, so there are no code changes beyond 2.0.2's privacy fixes to the country lookup."
+
+[[versions]]
+version = "2.0.2"
+published = "2026-11-21"
+game = "26.3"
+file = "server_flags-2.0.2.hmod"
+sha256 = "84fd36d13caf97372effa5dfefd9fd8a1dcc659b456095aca6dcb7f76cc303b2"
+changelog = "Rebuilt on Horizon's new mod API (the .hmod SDK) for Nightly 2026-11-19 5ef7734, with its game patches checked for that build. Settings now open from Mods > Server Flags > Config and start from the defaults once. The country lookup ignores the user's own curl config, never sends local-network addresses written as IPv6, and stops if lookups are switched off while it resolves."

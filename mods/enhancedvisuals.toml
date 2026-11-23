@@ -1,0 +1,108 @@
+id = "enhancedvisuals"
+kind = "native-mod"
+name = "EnhancedVisuals"
+summary = "Feel the pain: the original's blood, hurt overlays, heartbeat, explosions and rain, with a real blur through its own shader pack."
+description = """
+A Horizon port of [EnhancedVisuals](https://modrinth.com/mod/enhancedvisuals) 1.8.35 (Fabric, Minecraft 26.3), made by
+[CreativeMD](https://github.com/CreativeMD) and AriaFreeze, originally by Sonicjumper. It is a reimplementation of the
+original's client-side effects against Horizon's SDK, not a rewrite: every number, texture and sound was taken from the
+1.8.35 jar, so the effects fire at the same strengths, counts and lifetimes as they do there.
+
+**What it draws**
+
+- **Blood when you are hurt.** The damage type picks the splat: slashes for a melee hit, impact for a fall, pierce for
+  an arrow or cactus, the splatter for anything the original names no species or weapon for (a sting, thorns, the
+  warden's boom, a mace). The count is the original's `min(5000, damage × healthScaler(health) × amount%)`, so a
+  nearly dead player bleeds about three times as much for the same hit. Lifetimes of 25–75 s, placed centre-biased
+  (`1 − rand²`), random size and one of eight stored rotations.
+- **Elemental damage**, with the original's own counts and lifetimes: fire, freezing, drowning, wither, lightning,
+  `fly_into_wall`, parasites and hyperthermia.
+- **A low-health pulse and a heartbeat.** Below 6 health the red pulse follows the beat, the buffer is
+  `health / max × 100 + 15` ticks, the two beats five ticks apart, and `heartbeatin.ogg` / `heartbeatout.ogg` play with
+  it. The picture blurs on each beat, `min(0.7, intensity) × 50` pixels.
+- **Explosions**: dust, the ringing that fades over the blast's own curve, everything else muffled, and the picture
+  blurred by 50–100 px over 10–20 ticks. Blast strength is multiplied by how much of the player the blast can see (a
+  3×3×3 ray sample of the player's box), as the original does, so a wall between you and the blast means no effect.
+- **Splash potions**, the **sand** kicked up while sprinting on sand, the **slender** overlay when an Enderman is close,
+  **hunger** desaturation as food drops, **rain** drops by look angle, and **splash blur** of 5–10 px for 10 ticks when
+  the eyes go into or out of water.
+- **Death-screen quips**: a line under "You died!", centred, quoted, from the original's nine.
+- **Twelve settings** on the mod's page in Options > Mods: blood, hit flash, blood amount, blood duration, max
+  splatters, the low-health pulse and its strength, heartbeat volume and intensity, sounds, rain, the death screen's
+  quips, and the shader-pack switch.
+
+**The blur needs its pack, and the mod installs it for you**
+
+The original blurred the screen with its own post shaders. A Horizon mod cannot read the frame it draws on, so the blur
+is a two-pass `σ = radius` Gaussian in Horizon's shader language, shipped inside this package as
+`assets/enhancedvisuals/native-enhancedvisuals.hshader` and written to `shaderpacks/native-enhancedvisuals.hshader` the
+first time the game starts with the mod. Pick **Enhanced Visuals** under **Options > Horizon > Shader Packs** and the
+blur and desaturation come from the pack, with the original's own radii and its `Saturation` maths. Without a pack
+picked the mod draws a flat haze on the same curves instead (the switch "Shader pack draws the blur" picks between the
+two), so the mod is complete without it, only softer.
+
+**Deviations and gaps**
+
+- Splats use eight stored rotations (45° apart) instead of a random 0–360°, because HUD sprites cannot be rotated.
+- A blood splat cannot take its shape from the attacker's held item: the pin has no read for another entity's
+  equipment and no way to name an entity type, so a melee hit draws the slash.
+- A splash potion's overlay stays white: the pin's splash event carries the item but not its potion contents.
+- Textures are baked into small atlases: 96 px for the non-blood splats and 256 px for the overlays.
+- The original's per-effect `opacity` and `disabled` switches are not exposed, nor its `damageBlackList` and
+  `useHealthPercentage`; the effect toggles cover the enabled/disabled half.
+- `/displayvisual`, `/clearvisual` and the three effect packets are not ported. In single player the world's hooks reach
+  the client in the same process, and on a server with the mod installed they run there; a client-only install on
+  someone else's server still draws the health-based effects, but not damage types or blast centres.
+- `HealthHandler` and `UnderwaterHandler` are `enabled = false` in the original and are not ported either; the `snow`
+  textures are in the jar with no handler drawing them; the `Focus` shader belongs to the thirst addons.
+
+**Licence and provenance**
+
+LGPL-3.0-only, as the original jar declares (`license = "LGPL-3.0-only"`), and the port keeps its notices: the
+original's `LICENSE` and a `NOTICE` crediting CreativeMD, AriaFreeze and Sonicjumper travel inside the package and are
+in the repository. Textures are the original's, unmodified apart from being turned into the rotation grids and, for
+the overlays, downscaled; the sounds are byte for byte the original's. Built from this repository against Horizon
+`0a875da91dbb0fdcb7ba8c42c11341aa229af51a` (Nightly 2026-11-20) and horizon-mixins
+`e59da9094f0c2fdda6c627fe9eff22dec6a906f0`; the textures, sprites and icon are rebuilt from the jar by
+`tools/gen_assets.py`, and the pack by `tools/pack_shader.py`.
+"""
+authors = ["CreativeMD", "AriaFreeze", "Sonicjumper", "chase0023"]
+owners = ["chase0023"]
+owner_ids = [193886252]
+license = "LGPL-3.0-only"
+source = "https://github.com/chase0023/enhanced-visuals-port"
+icon = "icons/enhancedvisuals.png"
+categories = ["adventure", "decoration", "utility"]
+screenshots = ["screenshots/enhancedvisuals/1.jpg", "screenshots/enhancedvisuals/2.jpg", "screenshots/enhancedvisuals/3.jpg"]
+tags = ["port", "hud", "immersion", "blood", "blur", "shaders", "client-side"]
+key = "RWRWs/XGouk786RwIuxz/WdYAiQUf/1jZbsjtq+ekxQVSk5SXrp2d/As"
+
+[[versions]]
+version = "1.0.4"
+published = "2026-11-23"
+game = "26.3"
+file = "enhancedvisuals.hmod"
+sha256 = "c1b4572d26214a73fd82737fd5d5f9c211dc0f73b4dbd3d22205f7f15d933157"
+signature = """
+untrusted comment: signature from minisign secret key
+RURWs/XGouk788YCeNCpL26lKeD/rELC7FMjZL0Xp3Bw7YRjBs43JhkKQay6AJTHqoLPRVNYL7wRQFzx5M0yQwN/2PjE86HmEwc=
+trusted comment: timestamp:1795406859	file:enhancedvisuals.hmod	hashed
+wpZJnty7tbiCrInZR2dT+9cipAHBtam+IG6xQMIABuJ6HIxuui4Xc9jXtBA1gp2qJWukZJsLLCpzEIbigi9EBg=="""
+changelog = """Pinned to Nightly 2026-11-22 (f1bb66f), the build the launcher installs; cargo horizon-mod update
+from 2b77287 reported none of the 275 API items this mod uses changed, so nothing else changed."""
+
+[[versions]]
+version = "1.0.3"
+published = "2026-11-22"
+game = "26.3"
+file = "enhancedvisuals.hmod"
+sha256 = "41df409cfa46ad54485ba726476188ac9257a72a767bb82fcc5159a234dd2c3c"
+signature = """
+untrusted comment: signature from minisign secret key
+RURWs/XGouk7842YV4QcMAOQxtRISRXRICDANLO7UXZSiPzfEGfPyUWbkpAW6Kz1zi4q2no7BZ6/TFUcl8yuXEY0zj1PffYNEQo=
+trusted comment: timestamp:1795344118	file:enhancedvisuals.hmod	hashed
+Fr4YftcFDSjly8O/aUhpYctOy7gnRYtS18gxpuZUJ7qjwH0mTLMLietRo18RO95NiD2avoORwf4l/9QnmJKUDQ=="""
+changelog = """Pinned to Nightly 2026-11-22 (2b77287); cargo horizon-mod update reported none of the 275 API
+items this mod uses changed, so this is a repin and a rebuild. Carries the review fixes from 1.0.2:
+the complete GNU GPL v3 text as COPYING, the shader toggle's corrected default, and hits matched to
+the player they landed on."""

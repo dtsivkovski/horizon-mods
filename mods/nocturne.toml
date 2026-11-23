@@ -1,0 +1,31 @@
+id = "nocturne"
+kind = "shader"
+name = "Nocturne"
+summary = "Dark fantasy & gothic horror shader pack with Blood Moon skies, thick rolling mist, eerie lantern halation, wet reflections, and AgX filmic grading."
+description = """
+**Nocturne** transforms Minecraft `26.3` into a brooding dark fantasy and gothic horror world built natively from scratch on **Horizon Shader API `0.2`**. Inspired by classic atmospheric horror shaders, every daytime sky becomes an overcast, mist-shrouded vale while nightfall awakens a towering **Crimson Blood Moon** with abyssal starfields and creeping dread fog.
+
+### Key Features
+- **Overcast Gothic Daylight & Crimson Blood Moon**: Veiled pale sun, ominous storm-lit horizons, blood-tinted lunar corona, and subtle horror sky pulse.
+- **Rolling Multi-Layer Dread Mist & Volumetric Shafts**: Swirling noise-driven valley mist, claustrophobic distance fog, and shadowed crepuscular rays.
+- **Flickering Sanctuary Lanterns & Spectral Soul-Fire**: Warm 1950K torch/lantern flicker contrasted against cold cyan soul-fire and glowing cursed ores/eyes.
+- **Dark Mirror Water & Rain-Slicked Reflections**: Deep obsidian-teal water with Gerstner waves, Fresnel sky/SSR reflections, and storm rain ripples.
+- **Gothic Cinema Lens & AgX Tonemapping**: Soft eerie halation bloom, gothic SSAO, subtle chromatic fringe, organic 35mm film grain, FXAA, and bleach-bypass AgX color grading.
+- **39 In-Game Options**: Customize Blood Moon intensity, fog density, lantern warmth, water darkness, film grain, vignette, and horror effects live in Horizon's shader settings."""
+authors = ["Mikolaj Labuda"]
+owners = ["mikolajlabuda17-lang"]
+owner_ids = [224315142]
+license = "MIT"
+source = "https://github.com/mikolajlabuda17-lang/nocturne"
+icon = "icons/nocturne.png"
+categories = ["fantasy", "atmosphere", "colored-lighting"]
+tags = ["horror", "dark-fantasy", "blood-moon", "fog", "shadows", "volumetric-clouds", "reflections", "pbr", "spooky", "gothic"]
+screenshots = ["screenshots/nocturne/1.jpg", "screenshots/nocturne/2.jpg", "screenshots/nocturne/3.jpg"]
+
+[[versions]]
+version = "1.0.0"
+published = "2026-11-23"
+game = "26.3"
+file = "nocturne-1.0.0.hshader"
+sha256 = "312aeec10dceecc5df27bcd69356ab2b1e1824dd8812823a705d28c80af4f133"
+changelog = "Initial release for Horizon Shader API 0.2 (26.3)."

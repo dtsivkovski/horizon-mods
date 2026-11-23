@@ -1,0 +1,27 @@
+id = "mifa"
+kind = "mod"
+name = "mifa"
+summary = "A Horizon port of mifa."
+description = """
+Requires [Industrial Foregoing](https://github.com/AdLf0208/industrialforegoing) 0.2.5 or later: every item here carries that mod's augment component, and every carried recipe is its dissolution chamber's type. The package declares it, so the launcher installs the parent and the game refuses this add-on by name when the parent is absent.
+
+A port of [mifa](https://github.com/Christofmeg/MoreIndustrialForegoingAddons) by Christofmeg. The tag's LICENSE credits the original author; this package now carries that MIT notice inside the archive too.
+
+The third attempt at this mod, and the first to ship: the two blockers that stopped the earlier passes now exist in the parent, so nineteen addon items with their augment payloads, ten machine recipes and the smithing recipe are carried as content. The measurement that says it is real: of the sixty-one external symbols the jar names, fifty-six now resolve, and the five that do not are named individually as missing parent fluids, a fluid tag with no member, and a processing addon the parent does not ship at all. Proven in game on a two-mod game with the parent: all nineteen items and names, every tier from three to eight seating its own speed and efficiency values where the efficiency bar reads thirty-nine and nineteen rather than forty and twenty, because those are the jar's own literals; a rate that falls fifty-eight to twenty-six over eight ticks; a crafted addon seating at nine; the smithing recipe producing netherite gear with its inputs consumed; and all ten carried recipes running to product with their fluid and inputs consumed while a wrong grid matches nothing. Two harness facts are recorded with it, both of which had silently corrupted earlier reads: the message list is newest first, so tailing it reads the oldest reply, and the console command returns success even when it refuses.
+"""
+authors = ["AdLf0208"]
+owners = ["AdLf0208"]
+owner_ids = [107615167]
+license = "MIT"
+source = "https://github.com/AdLf0208/mifa"
+icon = "icons/mifa.png"
+categories = ["utility"]
+tags = ["port", "horizon"]
+
+[[versions]]
+version = "0.2.2"
+published = "2026-11-23"
+game = "26.3"
+file = "mifa.hmod"
+sha256 = "cb56241774645af99b4135a0fe01668b4bdac47eba40a75945b369f9f7849149"
+changelog = """This version answers a review with one declaration: the package now names the parent it binds to, so the launcher installs that parent and the game refuses this one rather than loading add-ons whose component and recipe type do not exist. The floor is the later of the two surfaces used, and it was measured rather than copied: the augment component arrived in one parent release and the dissolution chamber with its recipe type in another, so the requirement is the second. The refusal is proved by launching without the parent, where the loader names both mods and repeats the declaration's own reason and link, and by launching with it, where the parent compiles and the carried recipes read 33 of 33 against the chamber. Nothing in the content changed, which is the point of the version, and the test harness that produced the earlier evidence is kept as a script."""

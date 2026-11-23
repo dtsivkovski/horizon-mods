@@ -1,23 +1,48 @@
-# An owner's update of a resource pack, shader pack or data pack merges without a reviewer once its check passes:
-# scripts/owner_update.py (main's copy) lists the rules. Everything else waits for a reviewer as before.
+# An owner's update of a resource pack, shader pack or data pack merges without a reviewer once its check passes.
+# So may a vouched owner's update of a native mod whose whole new package passes tools/native-subset, while the
+# repository variable NATIVE_AUTO_MERGE is `on`; `shadow` checks and reports it but never merges, and unset (or
+# anything else) is off. scripts/owner_update.py (main's copy) lists the rules. Everything else waits for a reviewer
+# as before.
 #
 # workflow_run runs main's copy of this file. `decide` reads the pull request through the API and as git objects,
-# never checks it out or runs it, and holds no secret. `merge` holds the GitHub App's token, which may merge past the
-# review rule; a merge by GITHUB_TOKEN would not start publish.yml. Without the App (vars.REGISTRY_APP_ID, and
-# REGISTRY_APP_KEY in the `registry-merge` environment, which only main may use) it only says the pull request was
-# eligible.
+# never checks it out or runs it, and holds no secret. For a native mod, `inspect` builds tools/native-subset from
+# main (no Actions cache, nothing prebuilt to trust: it builds in about a minute), then downloads both packages by
+# their public URLs and checks them in a step that gets no token and an empty environment
+# (scripts/native-inspect.sh); it passes on only a verdict and fixed rule ids. `merge` holds the GitHub App's token,
+# which may merge past the review rule; a merge by GITHUB_TOKEN would not start publish.yml. Without the App
+# (vars.REGISTRY_APP_ID, and REGISTRY_APP_KEY in the `registry-merge` environment, which only main may use) it only
+# says the pull request was eligible. It runs one at a time across the repository and authorizes the decision again
+# at the main of that moment, right before it merges (`owner_update.py merge` says how, and what is left). `report`
+# comments on a native update with fixed text and labels it `needs-review` when it waits for a reviewer, one run a
+# pull request at a time, and not when the head moved on. Every checkout is main's. No script here interpolates an
+# expression: values reach them as environment variables.
+#
+# workflow_dispatch replays the native checks over open pull requests (or the pull requests and merge commits on
+# main it names) without merging, commenting or labelling: the run's summary is the result.
 name: owner-update
 on:
   workflow_run:
     workflows: [check]
     types: [completed]
+  workflow_dispatch:
+    inputs:
+      prs:
+        description: Pull request numbers to replay, space-separated (with no commits either, every open one)
+        required: false
+        default: ""
+      commits:
+        description: Merge commits on main to replay, space-separated
+        required: false
+        default: ""
 permissions: {}
 concurrency:
-  group: owner-update-${{ github.event.workflow_run.head_sha }}
+  group: owner-update-${{ github.event.workflow_run.head_sha || github.run_id }}
   cancel-in-progress: false
 jobs:
   decide:
-    if: github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.event == 'pull_request'
+    if: >-
+      github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success'
+      && github.event.workflow_run.event == 'pull_request'
     runs-on: ubuntu-latest
     timeout-minutes: 10
     permissions:
@@ -29,11 +54,22 @@ jobs:
       sha: ${{ steps.decide.outputs.sha }}
       kind: ${{ steps.decide.outputs.kind }}
       id: ${{ steps.decide.outputs.id }}
+      base: ${{ steps.decide.outputs.base }}
       entry: ${{ steps.decide.outputs.entry }}
       revoked: ${{ steps.decide.outputs.revoked }}
+      native: ${{ steps.decide.outputs.native }}
+      version: ${{ steps.decide.outputs.version }}
+      old_url: ${{ steps.decide.outputs.old_url }}
+      old_sha256: ${{ steps.decide.outputs.old_sha256 }}
+      new_url: ${{ steps.decide.outputs.new_url }}
+      new_sha256: ${{ steps.decide.outputs.new_sha256 }}
+      pins: ${{ steps.decide.outputs.pins }}
+      owners: ${{ steps.decide.outputs.owners }}
+      transfers: ${{ steps.decide.outputs.transfers }}
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
+          ref: main
           persist-credentials: false
       - run: python3 -I scripts/test_owner_update.py
       - name: Is it an owner update?
@@ -46,25 +82,100 @@ jobs:
           HEAD_BRANCH: ${{ github.event.workflow_run.head_branch }}
           RUN_EVENT: ${{ github.event.workflow_run.event }}
           RUN_PATH: ${{ github.event.workflow_run.path }}
+          NATIVE_AUTO_MERGE: ${{ vars.NATIVE_AUTO_MERGE }}
         run: python3 -I scripts/owner_update.py
 
-  merge:
+  inspect:
     needs: decide
+    if: needs.decide.outputs.native == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: read
+    outputs:
+      verdict: ${{ steps.check.outputs.verdict }}
+      rules: ${{ steps.check.outputs.rules }}
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: main
+          persist-credentials: false
+          sparse-checkout: |
+            scripts
+            tools/native-subset
+      # Before any package is downloaded.
+      - name: Build the checker from main
+        run: cargo build --locked --release --manifest-path tools/native-subset/Cargo.toml
+      - name: Check both packages (no token)
+        id: check
+        env:
+          GH_REPO: ${{ github.repository }}
+          ID: ${{ needs.decide.outputs.id }}
+          VERSION: ${{ needs.decide.outputs.version }}
+          OLD_URL: ${{ needs.decide.outputs.old_url }}
+          OLD_SHA256: ${{ needs.decide.outputs.old_sha256 }}
+          NEW_URL: ${{ needs.decide.outputs.new_url }}
+          NEW_SHA256: ${{ needs.decide.outputs.new_sha256 }}
+          PINS: ${{ needs.decide.outputs.pins }}
+        run: |
+          set -uo pipefail
+          # The findings name the package's files: none of their lines may be a workflow command.
+          echo "::stop-commands::$(openssl rand -hex 16)"
+          status=0
+          scripts/native-inspect.sh tools/native-subset/target/release/native-subset "$ID" "$VERSION" \
+            "$OLD_URL" "$OLD_SHA256" "$NEW_URL" "$NEW_SHA256" "$PINS" > result.json || status=$?
+          rules=""
+          case $status in
+            0) verdict=pass ;;
+            1)
+              verdict=refused
+              rules="$(jq -r '.rules | join(",")' result.json 2>/dev/null)" || rules=""
+              [[ "$rules" =~ ^R[0-9]{1,2}(,R[0-9]{1,2})*$ ]] || { verdict=error; rules=""; }
+              ;;
+            *) verdict=error ;;
+          esac
+          echo "verdict=$verdict" >> "$GITHUB_OUTPUT"
+          echo "rules=$rules" >> "$GITHUB_OUTPUT"
+          echo "native-subset: $verdict $rules" | tee -a "$GITHUB_STEP_SUMMARY"
+          jq . result.json 2>/dev/null || true
+
+  merge:
+    needs: [decide, inspect]
     # Holds the App's key: deployments limited to main, so a workflow on another branch can't make its token.
     environment: registry-merge
-    if: needs.decide.outputs.pr != ''
+    # One merge at a time across the repository, so no owner update lands between another's authorization and its
+    # merge. queue: max keeps every waiting run (by default only the newest waits and the others are cancelled), as
+    # stage.yml's staging group does; each authorizes again when its turn comes.
+    concurrency:
+      group: owner-update-merge
+      queue: max
+    # A native update only when its packages passed and the switch is on; `inspect` is skipped for the others.
+    if: >-
+      ${{ !cancelled() && github.event_name == 'workflow_run' && needs.decide.result == 'success'
+      && needs.decide.outputs.pr != '' && (needs.decide.outputs.native != 'true'
+      || (vars.NATIVE_AUTO_MERGE == 'on' && needs.inspect.result == 'success'
+      && needs.inspect.outputs.verdict == 'pass')) }}
     runs-on: ubuntu-latest
     timeout-minutes: 10
     permissions:
+      contents: read
       pull-requests: write
+    outputs:
+      merged: ${{ steps.merge.outputs.merged }}
     env:
       GH_REPO: ${{ github.repository }}
       PR: ${{ needs.decide.outputs.pr }}
       SHA: ${{ needs.decide.outputs.sha }}
+      BASE: ${{ needs.decide.outputs.base }}
       KIND: ${{ needs.decide.outputs.kind }}
       ID: ${{ needs.decide.outputs.id }}
       ENTRY: ${{ needs.decide.outputs.entry }}
       REVOKED: ${{ needs.decide.outputs.revoked }}
+      NATIVE: ${{ needs.decide.outputs.native }}
+      OWNERS: ${{ needs.decide.outputs.owners }}
+      TRANSFERS: ${{ needs.decide.outputs.transfers }}
+      MODE: ${{ vars.NATIVE_AUTO_MERGE }}
+      VERDICT: ${{ needs.inspect.outputs.verdict }}
     steps:
       - name: Merge identity
         id: identity
@@ -72,11 +183,19 @@ jobs:
           APP_ID: ${{ vars.REGISTRY_APP_ID }}
           HAS_KEY: ${{ secrets.REGISTRY_APP_KEY != '' }}
         run: |
-          if [ -n "$APP_ID" ] && [ "$HAS_KEY" = true ]; then
+          if [ "$NATIVE" = true ] && { [ "$MODE" != on ] || [ "$VERDICT" != pass ]; }; then
+            echo "#$PR: a native update merges only when NATIVE_AUTO_MERGE is on and its packages pass" | tee -a "$GITHUB_STEP_SUMMARY"
+          elif [ -n "$APP_ID" ] && [ "$HAS_KEY" = true ]; then
             echo "ok=true" >> "$GITHUB_OUTPUT"
           else
             echo "#$PR is eligible, no merge identity configured" | tee -a "$GITHUB_STEP_SUMMARY"
           fi
+      - if: steps.identity.outputs.ok == 'true'
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: main
+          persist-credentials: false
+          sparse-checkout: scripts
       - if: steps.identity.outputs.ok == 'true'
         id: app
         uses: actions/create-github-app-token@64ab729a6294000f5aa4a4bc0b73d1f32bc45510 # v3.3.0
@@ -85,29 +204,130 @@ jobs:
           client-id: ${{ vars.REGISTRY_APP_ID }}
           private-key: ${{ secrets.REGISTRY_APP_KEY }}
           permission-contents: write
+      # Authorizes again at main as it is now (one commit for every read), merges only the checked head, and reads
+      # the merge back: a merge onto another main than the authorized one fails this job (see `merge`).
       - name: Merge
         id: merge
         if: steps.identity.outputs.ok == 'true'
         env:
-          GH_TOKEN: ${{ steps.app.outputs.token }}
-        # The REST call, not `gh pr merge`: gh refuses a pull request whose review is still required before asking
-        # GitHub, which lets the App past that rule. `sha` merges only the head that was checked. This job may wait
-        # in the queue after `decide`: the entry and revoked.toml must still be what it read on main (other files
-        # may change).
-        run: |
-          set -euo pipefail
-          for pair in "mods/$ID.toml $ENTRY" "revoked.toml $REVOKED"; do
-            read -r path blob <<< "$pair"
-            if [ "$(gh api "repos/$GH_REPO/contents/$path?ref=main" --jq .sha)" != "$blob" ]; then
-              echo "main changed $path since the decision; waits for a reviewer" | tee -a "$GITHUB_STEP_SUMMARY"
-              exit 0
-            fi
-          done
-          gh api --silent -X PUT "repos/$GH_REPO/pulls/$PR/merge" -f merge_method=squash -f sha="$SHA"
-          echo "merged=true" >> "$GITHUB_OUTPUT"
-          echo "merged #$PR at $SHA" | tee -a "$GITHUB_STEP_SUMMARY"
+          GH_TOKEN: ${{ github.token }}
+          MERGE_TOKEN: ${{ steps.app.outputs.token }}
+        run: python3 -I scripts/owner_update.py merge
       - if: steps.merge.outputs.merged == 'true'
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           gh pr comment "$PR" --body "Published automatically: owner update of $KIND."
+
+  report:
+    needs: [decide, inspect, merge]
+    # always(): a merge that was cancelled still gets its comment. queue: max keeps every waiting report: a slower
+    # run for an older head must not displace the current head's, and it writes nothing once it sees the new head.
+    if: ${{ always() && github.event_name == 'workflow_run' && needs.decide.outputs.native == 'true' }}
+    concurrency:
+      group: owner-update-report-${{ needs.decide.outputs.pr }}
+      queue: max
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+      pull-requests: write
+      issues: write
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: main
+          persist-credentials: false
+          sparse-checkout: scripts
+      # Fixed text (owner_update.py report_plan), in one comment edited on each new head; nothing when it merged or
+      # the head moved on.
+      - name: Comment and label
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          PR: ${{ needs.decide.outputs.pr }}
+          SHA: ${{ needs.decide.outputs.sha }}
+          NATIVE_AUTO_MERGE: ${{ vars.NATIVE_AUTO_MERGE }}
+          VERDICT: ${{ needs.inspect.outputs.verdict }}
+          RULES: ${{ needs.inspect.outputs.rules }}
+          MERGED: ${{ needs.merge.outputs.merged }}
+        run: python3 -I scripts/owner_update.py report
+
+  replay:
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: read
+      pull-requests: read
+    outputs:
+      pairs: ${{ steps.replay.outputs.pairs }}
+      pins: ${{ steps.replay.outputs.pins }}
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: main
+          persist-credentials: false
+      - run: python3 -I scripts/test_owner_update.py
+      - name: Read the entries
+        id: replay
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          REPLAY_PRS: ${{ inputs.prs }}
+          REPLAY_COMMITS: ${{ inputs.commits }}
+        run: python3 -I scripts/owner_update.py replay
+
+  replay-inspect:
+    needs: replay
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: main
+          persist-credentials: false
+          sparse-checkout: |
+            scripts
+            tools/native-subset
+      - name: Build the checker
+        run: cargo build --locked --release --manifest-path tools/native-subset/Cargo.toml
+      - name: Check every pair (no token)
+        env:
+          GH_REPO: ${{ github.repository }}
+          PAIRS: ${{ needs.replay.outputs.pairs }}
+          PINS: ${{ needs.replay.outputs.pins }}
+        run: |
+          set -uo pipefail
+          echo "::stop-commands::$(openssl rand -hex 16)"
+          printf '%s' "$PAIRS" > pairs.json
+          {
+            echo "## Packages"
+            echo
+            echo "| Pull request or commit | Mod | Entry rules | Package check |"
+            echo "| --- | --- | --- | --- |"
+          } >> "$GITHUB_STEP_SUMMARY"
+          total=0 passed=0 both=0
+          while IFS=$'\t' read -r label id version old_url old_sha new_url new_sha entry; do
+            [[ "$label" =~ ^(#[0-9]+|[0-9a-f]{12})$ ]] || label="?"
+            [[ "$entry" =~ ^(eligible|refused)$ ]] || entry="?"
+            status=0
+            scripts/native-inspect.sh tools/native-subset/target/release/native-subset "$id" "$version" \
+              "$old_url" "$old_sha" "$new_url" "$new_sha" "$PINS" > result.json || status=$?
+            case $status in
+              0) check=pass; passed=$((passed + 1)); [ "$entry" = eligible ] && both=$((both + 1)) ;;
+              1)
+                check="$(jq -r '.rules | join(", ")' result.json 2>/dev/null)" || check=""
+                [[ "$check" =~ ^R[0-9]{1,2}(,\ R[0-9]{1,2})*$ ]] && check="refused $check" || check=error
+                ;;
+              *) check=error ;;
+            esac
+            total=$((total + 1))
+            [[ "$id" =~ ^[a-z0-9_]{1,64}$ && "$version" =~ ^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$ ]] || { id="?"; version="?"; }
+            echo "| $label | $id $version | $entry | $check |" >> "$GITHUB_STEP_SUMMARY"
+            echo "$label $id $version: $check"
+            jq -c '.findings[]?' result.json 2>/dev/null | head -n 20 || true
+          done < <(jq -r '.[] | [.label, .id, .version, .old_url, .old_sha256, .new_url, .new_sha256, .entry] | @tsv' pairs.json)
+          echo "**$passed of $total** packages pass; $both of them also pass the entry rules." | tee -a "$GITHUB_STEP_SUMMARY"

@@ -24,6 +24,13 @@ owned by its own authors, not by the Horizon project or its maintainers. A listi
 [mod policy](MOD-POLICY.md): what authors promise when they submit (ports of other mods included), the licences
 it accepts, and how to have a project taken down.
 
+## Making a mod
+
+Start a new code mod (native or WebAssembly `.hmod`) from the official
+[horizon-mod-template](https://github.com/horizon-rust/horizon-mod-template) (a working Veinminer example on
+`horizon-mod-api` and the exact-build Mod SDK), or scaffold one with `cargo horizon-mod new`. Full guides live in the
+[Horizon modding book](https://github.com/horizon-rust/horizon/tree/main/docs/modding/src).
+
 ## Submit
 
 Submit with a pull request:
@@ -42,8 +49,9 @@ Then:
 2. Checks compare the entry with main, verify package structure, hashes and signatures, and build the candidate
    index. They never compile or execute submitted code. Their report and candidate index are in the pull request.
 3. A reviewer (see [`.github/CODEOWNERS`](.github/CODEOWNERS)) reads the entry, the source and the report (a native
-   mod's source also gets a security review), and asks for changes in the pull request if needed. An owner's update
-   of a pack skips this step (see Updates below).
+   mod's source also gets a security review), and merges it unless one of the blocking reasons in
+   [REVIEWING.md](REVIEWING.md) applies. Bugs get a comment, not a hold, and small problems in the submission are
+   fixed by the reviewer in the pull request. An owner's update of a pack skips this step (see Updates below).
 4. Merging publishes it: the file becomes a release, the project appears on the site and in the launcher within
    minutes.
 
@@ -59,7 +67,8 @@ cargo horizon-mod check target/horizon-mod/my_mod.hmod
 ```
 
 **Updates** come the same way: a pull request adds a version to your entry, and a reviewer reads it before it is
-published, except an owner's update of a pack (below). Only an entry's `owners` can add versions, and every version
+published, except an owner's update of a pack (below). Only an entry's `owners` can add versions (Horizon's own former
+extras are the exception, see the archive section below), and every version
 of a mod, native or not, is reviewed, owner or not: a native mod's code runs with the player's account permissions.
 
 An owner's update of a `kind = "resourcepack"`, `"shader"` (`.hshader`) or `"datapack"` entry publishes without a
@@ -87,8 +96,8 @@ entry, and every later version must be signed with it, so nobody else can publis
 
 ## Staging by hand
 
-A file linked somewhere `stage` doesn't take (not a GitHub release download, or more than 3 files) is staged by a
-maintainer, as is any file once `staging` holds 900 (a release takes 1000; `cleanup.yml` makes room). From a checkout of main they trust, signed in to `gh` as a maintainer, they run
+A file `stage` doesn't take (a GitHub release download linked outside the pull request's description, or more than 3
+files) is staged by a maintainer, as is any file once `staging` holds 900 (a release takes 1000; `cleanup.yml` makes room). From a checkout of main they trust, signed in to `gh` as a maintainer, they run
 `scripts/stage.sh <pull request> <base sha> <head sha> <link>` with the head they reviewed and
 `git merge-base origin/main <head sha>`. To have both commits without checking the pull request out, first run
 `git fetch origin main refs/pull/<pull request>/head`. The script reads the pull request as data and runs none of its
@@ -113,7 +122,7 @@ why.
 | `.github/workflows/check.yml` | A pull request's checks |
 | `.github/workflows/owner-update.yml` | After the check: merges an owner's update of a resource, shader or data pack |
 | `.github/workflows/publish.yml` | On merge: releases, then `index.json` on Pages |
-| `.github/workflows/cleanup.yml` | Weekly: staging files nobody needs any more |
+| `.github/workflows/cleanup.yml` | Daily: staging files nobody needs any more |
 | `.github/workflows/checker.yml` | When the pin changes: builds the checker once, attested, as release `checker@<rev>` |
 | `archive/native-v1/mods/` | Frozen original native-project histories, including earlier `.hmod` releases, and their dependent modpack; never installed or validated as current packages |
 | `archive/api-0.1/mods/` | Frozen shader API 0.1 packs and content mods with pre-SDK manifests, whole projects with no version the current tool reads; same rules as native-v1 |
@@ -151,13 +160,21 @@ index. Modpack dependencies in the current index must all refer to current packa
 is archived rather than offered with missing dependencies.
 
 Archived IDs are reserved by the pull request check: a `mods/<id>.toml` for an archived id passes only when the
-pull request was opened by an account whose numeric GitHub id is in the archived entry's `owner_ids`. Anything else
+pull request was opened by an account whose numeric GitHub id is in the archived entry's `owner_ids` (after a
+reviewed transfer, below, the new account's id instead of the old one's). Anything else
 fails, including an archived entry without `owner_ids` and every pull request the submission form opens (as its bot).
 That failure comes last: every other check still runs, and the final step says "owner not confirmed; every other check
 passed" (or that other checks failed too). A maintainer may then admin-merge a reactivation only after verifying the
 owner by hand, and only when every step except that final owner step is green on the exact head they reviewed.
 The form service itself still checks only live ids. Owners reactivate a project through a manually reviewed `mods/<id>.toml` with a genuinely new `.hmod`
-version, preserving kind, owners, numeric owner IDs and signing key. The one kind change allowed is a legacy
+version, preserving kind, owners, numeric owner IDs and signing key. An archived id moves to another account only
+with evidence that it is the same person (a deleted account, say), or, for Horizon's own former extras, to the
+`horizon-rust` organization: a maintainer adds a line to `.github/owner-transfers.txt` on main, and from then on the
+new account is the owner. Those extras (`authors = ["Horizon"]`: Zoom, FPS Counter, Coordinates HUD, Keystrokes,
+Minimap and Recipes) belong to the organization rather than a person. An organization never opens a pull request, so
+anyone may open one on GitHub with a new version of them, and a maintainer confirms the owner step by hand; the
+submission form refuses them, because it accepts only an owner's own account. The entry may keep the archived
+owners until it is changed, or name the new login and id together. The one kind change allowed is a legacy
 `native-mod` coming back as a `mod` (content or sandboxed wasm), which can do less than native code. The frozen entry stays unchanged. That review checks the port, its source and
 exact-SDK proof, and the normal package/index checks still run. Consumer-mod ports are not part of this cutover.
 

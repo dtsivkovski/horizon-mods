@@ -1,0 +1,39 @@
+id = "finteredit"
+kind = "mod"
+name = "finteredit"
+summary = "Two-point block selection, fill, copy/paste and undo for Horizon."
+description = """
+finteredit is a utility mod for Horizon (Minecraft Java Edition 26.3 rewritten in Rust).
+
+- `/wand` or `//wand` gives you a marked wooden axe and starts a new selection.
+- With the axe in hand, left-click sets the first point and right-click sets the second. The clicked block is not broken.
+- `//set <block>` fills the selected cuboid. Block names come from Minecraft's registry with tab completion; legacy numeric IDs are also supported.
+- `//copy` stores the region, `//paste` pastes it relative to your current position, and `//paste -o` pastes at the original coordinates.
+- `//undo` or `/undo` reverts the last change. Failed positions stay in history for retry.
+- Block entity data is preserved on copy, paste and undo.
+- The wand works only in Creative mode. Vanilla wooden axes do not work.
+
+Requires Horizon 26.3. Source: https://github.com/sinvides/finteredit"""
+authors = ["sinvides"]
+owners = ["sinvides"]
+owner_ids = [162040889]
+license = "MIT"
+source = "https://github.com/sinvides/finteredit"
+icon = "icons/finteredit.png"
+categories = ["game-mechanics", "utility"]
+tags = ["world-edit", "block-selection", "fill", "copy", "paste", "undo"]
+
+[[versions]]
+version = "0.1.8"
+published = "2026-11-23"
+game = "26.3"
+file = "finteredit-0.1.8.hmod"
+sha256 = "d3e111179ea94dc417d3799c103313ca93bf68b8907dfc524544a3e04a0d7853"
+
+[[versions]]
+version = "0.1.7"
+published = "2026-11-23"
+game = "26.3"
+file = "finteredit-0.1.7.hmod"
+sha256 = "b41e663b2e4ab7fa78a979e1faa40097ec8880f22735f7219b068fa810ab3ca6"
+changelog = "0.1.7: preserve block entity data on copy, paste and undo; keep failed undo positions for retry; allow the wand only in Creative mode and only for the axe issued by /wand."

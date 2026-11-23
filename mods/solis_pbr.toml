@@ -1,0 +1,65 @@
+id = "solis_pbr"
+kind = "shader"
+name = "Solis PBR"
+summary = "Realistic PBR shader pack: physical sky, 3D clouds, Total Solar Eclipse (5800), coloured shadows, water caustics, puddles & AgX."
+description = """
+Realistic, physically-based WGSL shader pack built from scratch for Horizon's final **Shader API 0.2** (linear HDR pipeline).
+
+## Features
+
+- **Physical Sky & Celestial Bodies:** Rayleigh/Mie atmospheric scattering, HDR sun with limb darkening, cratered 3D moon with phases & earthshine, rotating starfield, Milky Way and cold-biome Aurora Borealis.
+- **Total Solar Eclipse at `5800`:** Run `/time set 5800` for a 20-second Total Solar Eclipse with magnetic coronal streamers, H-alpha prominences, Diamond Ring flash, 360° twilight horizon and daytime stars.
+- **The End & Relativistic "Gargantua" Black Hole:** Full End dimension overhaul featuring curved-spacetime Schwarzschild gravitational lensing, pitch-black Event Horizon, Photon Ring, Doppler-beamed golden Keplerian accretion disk, Einstein-lensed starfield, IMAX anamorphic flare, water reflections and directional GGX End lighting.
+- **3D Volumetric Clouds:** Perlin-Worley cumulus clouds with Beer-Powder multi-scattering, temporal reprojection and high-altitude cirrus.
+- **Lighting & Shadows:** Soft rotated Vogel-disk PCF shadows, stained-glass & water coloured shadows, normal-aware SSAO, coloured block lights, dynamic hand/particle lights and glowing mineral ore veins.
+- **Water & Rain:** Multi-wave Gerstner normals, depth-checked refraction, Beer-Lambert spectral absorption, Voronoi seabed caustics, shore foam, planar water mirror, wet porous darkening, rain puddles with ripples and Screen-Space Reflections (SSR).
+- **LabPBR & Camera:** LabPBR normal/specular/emission support with geometric relief, foliage wind, volumetric god rays, Karis HDR bloom, FXAA and AgX / ACES / Neutral tonemapping (48 in-game options).
+
+## GPU Requirements
+
+*No hardware Ray Tracing (RTX) required — runs on Vulkan 1.2 / DirectX 12 / Metal.*
+
+- **Minimum (1080p ~60 FPS, 1024 shadows, Fast clouds):** GTX 1050 Ti / RX 560 / Intel Iris Xe / Radeon 680M / Apple M1 / Steam Deck (2 GB+ VRAM)
+- **Recommended (1080p 90+ FPS / 1440p 60+ FPS):** GTX 1660 Super / RTX 2060 / RX 6600 / Intel Arc A580 / Apple M2+ (4–6 GB VRAM)
+- **Ultra / 4K (4096 shadows):** RTX 3060 Ti / RTX 4060 / RX 6700 XT or higher (8 GB+ VRAM)"""
+authors = ["mikolajlabuda17-lang"]
+owners = ["mikolajlabuda17-lang"]
+owner_ids = [224315142]
+license = "MIT"
+source = "https://github.com/mikolajlabuda17-lang/solis-pbr"
+icon = "icons/solis_pbr.png"
+categories = ["realistic", "pbr", "atmosphere"]
+screenshots = ["screenshots/solis_pbr/1.jpg", "screenshots/solis_pbr/2.jpg", "screenshots/solis_pbr/3.jpg", "screenshots/solis_pbr/8.jpg"]
+
+[[versions]]
+version = "1.1.5"
+published = "2026-11-23"
+game = "26.3"
+file = "solis_pbr-1.1.5.hshader"
+sha256 = "90d8458fa8d2d299bf9c93dc1284b5dd93a256ddd3ca746419df23ce106c78a2"
+changelog = """
+Solis PBR 1.1.5 — Astronomical & Volcanic Nether Update:
+- Morning 22-deg Ice-Crystal Halo, Twin Sundogs (Parhelia), Parhelic Circle & Circumzenithal Arc (/time set 1200)
+- Great Comet C/Solis with C2 emerald coma, curved golden Mie dust tail & straight blue CO+ ion tail (/time set 13200)
+- Galactic Supernova, Hubble V838 / SN 1987A Light-Echo Nebula & Perseid meteor shower (/time set 15500)
+- Total Lunar Eclipse Copper-Red Blood Supermoon with Earth umbra & Chappuis turquoise ozone rim (/time set 18000)
+- Extreme G5 Geomagnetic Storm with crimson SAR & emerald magnetic-zenith corona aurora (/time set 20500)
+- Post-rain 42/51-deg Double Rainbow & Alexander's Dark Band + intracloud storm sheet-lightning
+- Full Volcanic Nether PBR Overhaul (Pahoehoe basalt-crusted molten lava, 3D volumetric biome fog, GGX specular & thermal heat mirage)
+- Fixed Gargantua photon-sphere capture at small black hole scales and opaque convective magma when submerged in lava"""
+
+[[versions]]
+version = "1.1.0"
+published = "2026-11-23"
+game = "26.3"
+file = "solis_pbr-1.1.0.hshader"
+sha256 = "a6204789660f2f2cf8d7434200a0d02d0b7462948e0b2939c8d23a673850a980"
+changelog = "Added full End dimension support featuring a relativistic Interstellar-style Gargantua Black Hole (gravitational lensing, photon ring, Doppler-beamed accretion disk), GGX End island lighting, black hole water reflections, IMAX flare, and a new End settings page."
+
+[[versions]]
+version = "1.0.0"
+published = "2026-11-23"
+game = "26.3"
+file = "solis_pbr-1.0.0.hshader"
+sha256 = "32f4ebb7e7c7a55fdd8934b9fde52947ea0e997f09b0490e61b450a5352aa7d4"
+changelog = "First release for Horizon Shader API 0.2."

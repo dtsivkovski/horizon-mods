@@ -38,3 +38,11 @@ game = "26.3"
 file = "rftoolsbase.hmod"
 sha256 = "965003c8970f103385f2c8303fbfc72d0f0a3663beddc91e16c8535d1b9429de"
 changelog = "First release"
+
+[[versions]]
+version = "0.2.2"
+published = "2026-11-21"
+game = "26.3"
+file = "rftoolsbase.hmod"
+sha256 = "4e09f4f800aafaa4f6cc511a2b2781bf1c297484941668d67d9dbe3d831fed20"
+changelog = """A repin rather than a new family, and it buys something no single port could: the RFTools family can now be built into one game. This port was pinned to an older build of the engine, and a game refuses two packages that disagree, so a sibling port could not craft its own recipe in the same world as this one. Moved to the campaign pin, rebuilt twice byte-identically, and the whole ladder re-run. The proof is the thing it unblocks: a three-package game carrying this port, the storage port and the power port, in which the storage scanner is crafted from a real machine frame in a real crafting table with the frame consumed, a stone in the frame's cell crafts nothing, and the coal generator is likewise crafted from its own frame, with the result taken out of the slot and the inventory asserted for every ingredient. A run against the unmodified game fails at the first give, as it must, and an inverted assertion fails too. Two harness facts came out of it: a give lands on the next tick, and the launcher reuses a build when the manifest is unchanged, so the version bump is what forces the recompile."""

@@ -1,0 +1,68 @@
+id = "rftoolsutility"
+kind = "native-mod"
+name = "rftoolsutility"
+summary = "The RFTools tank: 32,000 mB of one fluid, filled and drained with a bucket."
+description = """A Horizon port of [RFTools Utility](https://github.com/McJtyMods/RFToolsUtility) (MIT, by **McJty**) for Horizon. This first slice is **the tank**.
+
+**Implemented so far**
+
+- **`rftoolsutility:tank`, 32,000 mB of one fluid** — the jar's own manual says "up to 32 buckets" and `TankConfiguration.maxCapacity` defaults to 32,000 mB.
+- **Every face accepts and provides** the fluid, and the contents live in the block entity's saved data, so they survive a save, quit and relaunch.
+- **The bucket loop:** a water or lava bucket fills it by 1,000 mB and leaves an empty bucket in hand, an empty bucket drains 1,000 mB and fills, and a full tank, a different fluid or a partial amount is refused.
+- **A declared level 0–8** picks the jar's own `tank0…tank8` textures, and `/rftoolsutility info|tank` reads and sets the contents.
+
+**Not yet ported**
+
+- the mod's other four families: the teleporters, the screens and their 30 modules, the logic gates, the environmental controller, the spawner and the three crafters;
+- the tank's own GUI (this slice uses the commands);
+- fluid push/pull between neighbouring tanks (the slice is the bucket and tank loop).
+
+Original copyright and licence notices are kept in this repository. Pinned to Horizon `0b14f8a` and horizon-mixins `e59da90`. Help with the remaining slices is welcome."""
+authors = ["AdLf0208"]
+owners = ["AdLf0208"]
+owner_ids = [107615167]
+license = "MIT"
+source = "https://github.com/AdLf0208/rftoolsutility"
+icon = "icons/rftoolsutility.png"
+categories = ["utility"]
+tags = ["port", "horizon"]
+
+[[versions]]
+version = "0.2.7"
+published = "2026-11-22"
+game = "26.3"
+file = "rftoolsutility.hmod"
+sha256 = "2f4706bc8c2e35c148df11762cc2219ddca249fbefa23e625341e93c1d22adaf"
+changelog = """Slice 8, the matter beamers: a block that eats a stack of material and sends matter to a spawner it is linked to, which closes the feed half of the matter gate. The beamer reads a recipe's three material sources itself rather than trusting the recipe's older object form, and it carries the four living tags so the empty living form yields its own reduced amounts. Proven in game with parsed values across nine phases: a link to a stone block is refused, to a spawner four blocks away is made, a target twelve blocks away is refused and a beamer cannot link to itself; eight items and four thousand FE give exactly two sends, the store growing by two for the first material, two for the list form and three for the living form at its one and a half per block, with the buffer emptied; cobblestone is refused with both the items and the energy kept; no power and no redstone send nothing; and a broken beamer carries its link, its count, its energy and its contents back. Two defects in the reference are fixed rather than copied: it spends the energy before it knows the material is accepted and burns it on a refusal, and it consumes a zero-yield living item for no matter. The link is a command because no wrench exists in this port or its parent, and the twenty tick clock is the tick's own game time rather than a saved counter."""
+
+[[versions]]
+version = "0.2.6"
+published = "2026-11-22"
+game = "26.3"
+file = "rftoolsutility.hmod"
+sha256 = "f476e13730dc1888e823c84002135ba4260f5cb4e19f4c64b48d5d5c6253bbcb"
+changelog = """Slice 7, the spawner's matter gate: a spawn now needs three matter amounts as well as its energy, and it spends each by its own amount. Our brief called for three fluid tanks and the artefact says otherwise: the reference stores three floats in the machine's own data, filled by a beamer that sends an item rather than a fluid, and there is no fluid anywhere in that module. So the port keeps the three floats, and a command writes what a beamer's send would add, which is provenance rather than an API gap — the pin can declare fluids, it is simply not what this machine does, and inventing them would have let pipes feed a spawner that upstream cannot feed. Proven in game with a three-step differential on the same machine: eight hundred FE and empty stores spawn nothing and spend nothing; stores a hair short of the recipe spawn nothing and keep both their energy and their matter; exactly enough spawns one zombie and leaves the energy at zero with all three stores emptied. A second spawn spends each store by its own amount and leaves the remainder, changing the mob clears the stores, the broken item carries them, and the unfed twin in the other dimension keeps its zeros."""
+
+[[versions]]
+version = "0.2.5"
+published = "2026-11-21"
+game = "26.3"
+file = "rftoolsutility.hmod"
+sha256 = "213695fc2d98491ee0a99dfd38ceaa4bb3ee9b591d41fa7921a19d9fca2ee4fb"
+changelog = """The crafter and spawner ticks now act in the dimension the tick runs in rather than in whichever dimension happens to hold a matching block at those coordinates. With the same machine at the same position in two loaded dimensions the defect was sharper than a wrong choice: the spawner paid its energy and spawned nothing, because a level that is not in place refuses a spawn, so it silently died while the twin stood idle. Proven by placing a crafter and a spawner at identical coordinates in the End and the Overworld, feeding only the End pair, and reading both back through their own dimension: the End crafter crafts twelve planks for its three logs and the Overworld twin stays empty, the End spawner produces its zombie and spends its eight hundred while the twin stays at zero, and a selftest that expects zero there fails."""
+
+[[versions]]
+version = "0.2.0"
+published = "2026-11-10"
+game = "26.3"
+file = "rftoolsutility.hmod"
+sha256 = "7121e48f95642d568cd0561181c9cafbd4d458eb94fa4f5d0febdb1089710a5a"
+changelog = "First release"
+
+[[versions]]
+version = "0.2.3"
+published = "2026-11-21"
+game = "26.3"
+file = "rftoolsutility.hmod"
+sha256 = "d12c3646abde71c541adc707add6a044a934a77ce375a301d4de1a46e52c27b7"
+changelog = """Slice 4, the spawner: a machine that sets a mob and spawns it on the neighbour its facing names, at the cost the mob's own recipe declares, with the mob chosen by a data recipe rather than a menu. The jar ships seventy such recipes, not the hundred our notes guessed, and all seventy travel byte for byte, because they carry the ingredient lists in a form this port deliberately never parses. Proven in game with the counterfactual on the same machine: with no energy it spawns nothing across sixty ticks and its counter stays at zero, and with the eight hundred its zombie recipe costs it spawns exactly one zombie within five blocks and leaves nothing in the buffer; a blaze costs a thousand and sets the second spawn's offsets. An absent mob is refused with the recipe count named, and an unknown id is refused before any energy is spent. That last point is a defect this port does not reproduce: upstream consumes the energy and clears the matter amounts before it checks whether the mob exists, so a recipe for an absent entity costs everything for a spawn that never happens. This port pays only once the spawn has answered."""

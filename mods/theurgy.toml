@@ -36,3 +36,11 @@ game = "26.3"
 file = "theurgy.hmod"
 sha256 = "5fe7edbdcb7cc45065727761656a261d646282c8155c8587d3a5d94d588cbc7a"
 changelog = "First release"
+
+[[versions]]
+version = "0.2.3"
+published = "2026-11-21"
+game = "26.3"
+file = "theurgy.hmod"
+sha256 = "9e2d1543215a32116a2ecc7f435da10390498f2c986657ce030ddeb849f33805"
+changelog = """Carry-dialect repair: two recipes were in the 1.21.1 object ingredient form 26.3 rejects, and two loot pools carried `bonus_rolls` with `1.0` rolls. Converted. Proven in game: `calcination_oven` crafts with its copper block consumed and the grid emptied; the loot conditions were already singular and are untouched."""

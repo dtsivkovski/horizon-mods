@@ -38,3 +38,11 @@ game = "26.3"
 file = "refinedstorage.hmod"
 sha256 = "7be4a4152b9d5ecab139b8c4f9ae87208788f4e9f6842c9d167fb4316830fd38"
 changelog = "First release"
+
+[[versions]]
+version = "0.2.6"
+published = "2026-11-21"
+game = "26.3"
+file = "refinedstorage.hmod"
+sha256 = "5aa7faa89f85979a6347dc23b5982f9b993c895f0e3f8efdda34c8adab729743"
+changelog = """Slice 6, the upgrade items: the transmitter's four upgrade slots and the range upgrade that makes the sixteen-block rule a starting point rather than a ceiling. Only the range half is real here and the other eight upgrades are refused rather than shipped, because speed, stack, regulator and autocrafting bind to importers, exporters, destructors and the crafting grid, none of which this port has, and the four enchantment upgrades need a recipe type the pin does not offer. The numbers are read from the reference rather than guessed: eight blocks per upgrade, four slots, and the creative variant at the top of the priority chain. Proven in game with the differential the brief asked for: a use at seventeen blocks is refused at sixteen and accepted at twenty-four once one range upgrade sits in a slot, the creative upgrade takes the same transmitter to unlimited, the transmitter's own menu shows four slots, and a diamond shift-clicked into that menu does not enter an upgrade slot. The dimension rule is unaffected and still refuses a use from another dimension with an unlimited range in place. This version also fixes a port defect: the transmitter's template could never open a menu, because the game posts the open only for a container class, so the block keeps its nub shape and collision through declared shapes while carrying a container template, and the binding moved to the block's own click hook because the container's click runs first."""

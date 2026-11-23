@@ -1,0 +1,61 @@
+id = "industrialforegoingsouls"
+kind = "native-mod"
+name = "industrialforegoingsouls"
+summary = "A Horizon port of industrialforegoingsouls."
+description = """
+A port of [Industrial Foregoing Souls](https://github.com/InnovativeOnlineIndustries/Industrial-Foregoing-Souls) by Buuz135 and Rid. Requires [industrialforegoing](https://github.com/AdLf0208/industrialforegoing) 0.2.7 or later, which provides the blue laser lens and the laser drill ore recipe type it registers against.
+
+The first port of Industrial Foregoing Souls, and the three blocks are one mechanic: a laser base that turns a warden in range into souls, pipes that move them, and a surge that spends them to accelerate a block. The gate is the parent's own: the base produces nothing until a blue laser lens sits in its catalyst slot, which is exactly how the jar gates it. Proven in game with that differential in one run: sixty ticks with no lens leaves the bar at zero and the warden at full health, seating the lens makes four operations land sixteen damage and eight souls, and pulling the lens freezes the tank for the next sixty ticks. The pipes move four and then eight souls at one transfer a tick, and the surge takes a wheat crop from age zero to age four with random ticks disabled while its own counter falls from two hundred and ninety-three to two hundred and merely waits while it has no signal. Three recipes craft with their ingredients consumed and each block drops itself. Two of the agent's own expectations were wrong against upstream and were corrected in the test rather than in the code, which is the right way round: a nearly full tank still fires and clamps, and a surge facing nothing still spends its ticks.
+"""
+authors = ["AdLf0208"]
+owners = ["AdLf0208"]
+owner_ids = [107615167]
+license = "MIT"
+source = "https://github.com/AdLf0208/industrialforegoingsouls"
+icon = "icons/industrialforegoingsouls.png"
+categories = ["utility"]
+tags = ["port", "horizon"]
+
+[[versions]]
+version = "0.2.6"
+published = "2026-11-23"
+game = "26.3"
+file = "industrialforegoingsouls.hmod"
+sha256 = "45b62107ace1e3d80a6d25c71571f30b3671fb1b0578045c3c3627bda36fe439"
+changelog = """This version fixes a join the port had been drawing wrong: a soul pipe beside the laser base showed no arm, because the tag the package generates named only the pipe and the surge, and at this pin a join is decided by that tag rather than by code. The reference joins a pipe to a soul handler, so the base belongs in the tag, and one line of generated data is the whole fix. Proven in game by reading the pipe's own block state with each neighbour: a pipe beside a pipe joins to the east, a pipe beside stone shows nothing on that side, and the same cell reads joined once the laser base replaces the stone, in both placement orders, and beside a surge as well. The base itself carries no pipe property, so the join belongs to the pipe. The negative run asserts the joined side reads false and fails, which is what makes the positive reading evidence."""
+
+[[versions]]
+version = "0.2.5"
+published = "2026-11-23"
+game = "26.3"
+file = "industrialforegoingsouls.hmod"
+sha256 = "e73258cc4aef8ff5e5e4e46d0f78b22b64c70a457dcf93a1932e0878d4474157"
+changelog = """This version turns the jar's tuning into a real config file, so the machines can be adjusted without rebuilding: twelve keys with their own defaults and ranges, written as a template on first run and read once at load and once on change, never inside a tick. Proven by launching the same world twice: the first run writes the template and a warden gives two souls into a tank of thirteen hundred and fifty, while a file tuned to five souls and a five-hundred tank, written before the second launch, makes the same warden give five into a tank that clamps at five hundred with a saved nine hundred cut to it. The parser cannot fail: a missing, partial or foreign file is the jar's defaults, and every value is clamped to the range the jar declares. Two keys are accepted and unused because the behaviours they feed are blocked at this pin, and the report names both rather than leaving them silently inert. Two of my expectations were wrong against the source and were corrected in the tests, not in the code.
+"""
+
+[[versions]]
+version = "0.2.4"
+published = "2026-11-23"
+game = "26.3"
+file = "industrialforegoingsouls.hmod"
+sha256 = "79159d3fead5c82aec88e3526e17098e0c76511244b487147ccc046b36bda82b"
+changelog = """This version gives the laser base the screen its slots have been missing, so a player can seat a lens and two augments without reading a command. The menu is the mod's own, declared as a menu type in the package's data and drawn by a screen part, and three data slots carry the tank and the bar; the machine opens it itself on a plain right-click because this pin's own click path never opens a mod container's menu, a limit another port measured. Proven in game: a right-click opens three slots, a lens seated through the menu harvests and the readout's data array grows with it, a second efficiency addon is refused in both augment slots and stays on the cursor, and a vanilla barrel beside it opens twenty-seven slots from the same click, which is the differential. Two limits are recorded rather than worked around: this harness cannot read a menu's data slot directly, so the array is asserted through the block entity's own readout, and clicking the same addon onto a seated one goes through the pin's top-up path, which ignores the slot rule, so the refusal is shown with a different tier instead.
+"""
+
+[[versions]]
+version = "0.2.3"
+published = "2026-11-23"
+game = "26.3"
+file = "industrialforegoingsouls.hmod"
+sha256 = "68b1485efc1539b665aeb623e986d042bb73626723bc3d9cd4c6b1d3124c88b8"
+changelog = """This version gives the pipe and the surge the water state their reference declares, so a water bucket fills a dry one and an empty bucket drains a filled one without breaking the network. The proof keeps the machine working through the state change: a fresh pipe reads unwaterlogged, a bucket makes it waterlogged and leaves an empty bucket in hand, the waterlogged pipe still pulls a machine's souls into its own store, and an empty bucket returns it to dry with the water handed back. The surge reads both of its properties at once and still spends a soul. Two things the pin cannot do are recorded rather than faked: a content block's interfaces are its template's, so the reference's waterlogged interface does not exist to copy, and flowing water or a dispenser does not fill these blocks. One measurement changed a decision: this build reverts a water bucket written into the held slot from a click, so a drained bucket goes to the first free slot that is not the hand and a full inventory refuses the drain instead of losing the water.
+"""
+
+[[versions]]
+version = "0.2.2"
+published = "2026-11-23"
+game = "26.3"
+file = "industrialforegoingsouls.hmod"
+sha256 = "7397e359a64ddb7b34f46e870ae8a8dc7c60ec2da15145b0a9dc735a50fb0e16"
+changelog = """This version answers a review. The package now declares the parent it binds to, with the reason and the link, and the proof is a refusal rather than an assurance: installed alone, the loader stops before compiling anything and names both mods, repeating the declaration's own reason and address; installed with the parent, both packages compile and the machine leg passes. Three behaviour defects are fixed with them. The pipe network was walked in full by every pipe every tick, with a linear membership test at each neighbour, so a large network cost work that grew faster than it; it is now set-based, walked once per tick per component, cached for the tick and bounded. A second lens no longer consumes the new item and voids the seated one: the swap reserves a destination first and refuses the click when there is none, because a full inventory is not permission to destroy one. And a broken machine now carries its lens and its augment on its own item and restores them, while an empty machine's item carries nothing. The original notice is the upstream text verbatim, including the second copyright holder our first archive had dropped.
+"""

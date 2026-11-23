@@ -30,9 +30,115 @@ categories = ["utility"]
 tags = ["port", "horizon"]
 
 [[versions]]
+version = "0.2.15"
+published = "2026-11-23"
+game = "26.3"
+file = "modularrouters.hmod"
+sha256 = "dd7db49377876fd14d18f2abeca0e9d78b72bf460105ede8a96e9f93c4bf3805"
+changelog = """This version adds the placer module, which puts the router's buffer into the block beside it and stops once that block is occupied. One thing the brief had wrong is worth stating because the machine is right and the brief was not: a placer has exactly one destination, so eight stone cannot mean eight placements — the first one fills the block, every later attempt finds it occupied and takes nothing, and the buffer stays at seven. That is the reference's rule and it is what the game shows. Proven in nine rigs whose differences are the claims: a front-facing placer places one and keeps seven, a direction of none places nothing, a stick has no block form and places nothing, a whitelist naming dirt moves nothing, a pre-filled destination changes nothing, an upward placer fills the block above, and a regulator of three places only when the buffer is above three. The two augment rules the port had unit-tested but marked blocked are now shown in game: the module refuses a stack augment outright and accepts exactly one regulator, and the recipe crafts with its ingredients consumed."""
+
+[[versions]]
+version = "0.2.14"
+published = "2026-11-23"
+game = "26.3"
+file = "modularrouters.hmod"
+sha256 = "5f5bc461a58c94e3829a17f68dfc80c9c7789f7f54b576c9643566cf21e57e5d"
+changelog = """This version adds the flinger module, which throws the router's buffer along an aim the player sets: speed, pitch and yaw, with the reference's own geometry and its rule that one field out of range resets all three. The operation, filter and count are the dropper's, already proved, because the reference's flinger extends it and overrides only the velocity. Proven in game with six rigs whose differences are the claims: a throw at speed one puts all eight past the adjacent block while the same module at speed zero leaves them in it, an upward facing throws them above the router, a pitch of ninety on a horizontal aim throws them beside it, a yaw of sixty throws them out of the row, and a whitelist naming dirt throws nothing. It also answers a performance review on the vacuum: the buffer's room is checked before any dropped item is resolved, inspection is capped at sixty-four candidates, and the read stops once the budget is filled — proved by counted unit tests rather than by a stopwatch, because this harness cannot isolate one operation's resolutions from the twenty-tick cadence."""
+
+[[versions]]
+version = "0.2.13"
+published = "2026-11-23"
+game = "26.3"
+file = "modularrouters.hmod"
+sha256 = "c7972fcd89193953e23351e030f569347d14bcdc0df261292924735115a34bad"
+changelog = """This version adds the vacuum module, and it is the port's first slice that reads and writes the world's dropped items rather than a container. The rule is the reference's and it is stricter than the obvious one: the box is a cube around the router, a pick-up delay skips an item, and the module only takes what matches the item the router already holds, because the reference compares the buffer's own stack rather than accepting the first entity it finds. Proven in game with five rigs whose differences are the claims: eight stone inside the reach end up in the buffer with nothing left on the ground, a whitelist naming dirt takes nothing, the same module one block past its six-block reach takes nothing, a router already holding dirt takes no stone, and a regulator set to three stops the buffer at three with five still lying there. The first two rigs are one block apart at the reach boundary, which is what makes the reach a measurement rather than a description. One defect in the reference is fixed rather than copied: it reads a stale buffer stack, so with more than one item per operation the amount can be exceeded. The API this needed was measured before it was used, including that a write during a tick is staged and a rejected tick restores both the ground stack and its removal."""
+
+[[versions]]
+version = "0.2.12"
+published = "2026-11-23"
+game = "26.3"
+file = "modularrouters.hmod"
+sha256 = "3ad02ddcacdffa72ca41d33792cfd83772187fae40b6b8ebcf90d3482ea4b9dc"
+changelog = """This version adds the dropper module, which throws what the router holds at the block its direction names, and its rule is the void module's turned outward: it drops at most what one operation moves, honours the module's filter, and honours the regulator amount as a floor left in the buffer. Proven in game with four rigs in one run: eight stone leave the buffer and land as eight on the floor north, an identical router with a void module destroys its eight and leaves nothing on the floor, a whitelist naming dirt keeps all eight in the buffer, and a regulator set to three leaves three while dropping five. The count is summed by stack rather than by entity, because two drops merge into one; and the floor is cleared before the run so the number cannot be inherited. One deviation is recorded: the call the brief named for dropping is hidden at this pin, so the item is spawned with zero motion through the supported handle, which is also what the reference does.
+"""
+
+[[versions]]
+version = "0.2.11"
+published = "2026-11-23"
+game = "26.3"
+file = "modularrouters.hmod"
+sha256 = "3431d2f6491e8410bdab08682be453fa83cf4157e17c78b1b8f67b3543b594e4"
+changelog = """This version makes the regulator augment act on the sending side, which was carried but inert: a sender with an amount set now tops the destination up to that amount and stops, rather than moving whatever its operation allows. Proven in game with four rigs in one run: a chest of six takes four from a sender holding eight, because ten is the amount; an identical sender without the augment takes all eight; one already at the amount sends nothing and keeps its buffer; and the Mk2 sender obeys the same rule. The brief's first choice, a sender that reaches another dimension, is not buildable at this pin and is recorded with the measurement rather than shipped: a level that is not the acting one lends no capability, and the alternative write path answers stale, so the machine keeps its items. The probe that proved it wrote into the router's own save and is kept as a script rather than in the package. One defect the leg found is fixed: re-saving an unchanged amount answered that the module had no augment.
+"""
+
+[[versions]]
+version = "0.2.10"
+published = "2026-11-23"
+game = "26.3"
+file = "modularrouters.hmod"
+sha256 = "a6da9bf8dac0b6082b52e6d4832e966e74a3b8f219acfbbe4a97e0687b15469e"
+changelog = """Slice 10, the sender module Mk2: the sender that needs a container chosen in advance and reaches twenty-four blocks, or forty-eight with range augments, rather than the four directions of the plain sender. Proven in game with four rigs whose differences are the whole claim: a selected chest ten blocks out takes all eight and the buffer empties, an identical module with no selection sends nothing, a target twenty-five blocks out sends nothing at the base reach of twenty-four, and one range up takes the reach to twenty-five and the items start moving one per operation. Both of the jar's recipes craft, one and four at a time, with the pearl consumed and a stick in its place producing nothing. One rule is carried but inert and is recorded as such rather than implied: the reference lets the sender's filter cap how many of an item the target may hold, and this port keeps the setting without acting on it.
+"""
+
+[[versions]]
+version = "0.2.9"
+published = "2026-11-23"
+game = "26.3"
+file = "modularrouters.hmod"
+sha256 = "24a902dd7bdaa9872e453cb82f74104d266d61b3fa42980d99b7758fa93ea685"
+changelog = """Slice 9, the void module: the module that destroys what the router holds, which is the first one whose operation is on the router itself rather than on a neighbour. Its rule is not "delete everything": it deletes at most what one operation moves, honours the module's filter, and honours the regulator augment that slice 8 proved on the pull side, so a router with a regulator set to three keeps three. Proven in game with four rigs in one run: eight stone in the buffer go to nothing, the same eight with a regulator stop at three, an identical router whose module is a sender with no target keeps all eight, and a whitelist for dirt leaves stone untouched. The recipe is the jar's, and its lava bucket leaves the vanilla bucket behind, so the grid is asserted to hold exactly that rather than to be empty. One measurement in the brief was wrong: one operation is twenty ticks, so a hundred ticks cannot empty eight stone, and the leg waits three hundred.
+"""
+
+[[versions]]
+version = "0.2.8"
+published = "2026-11-23"
+game = "26.3"
+file = "modularrouters.hmod"
+sha256 = "f03fcc7bff45d7620dab1435bf41bd8ec396f5f12fa85da7a92953b05167dad1"
+changelog = """Slice 8, the regulator augment: the augment that tells a module to leave a quantity behind rather than to move more. A puller with a regulator set to three empties twelve stone down to nine in its own buffer and stops with three still in the chest, where the identical router without the augment takes all twelve; and a source holding exactly three is never touched at all, because the reference refuses the whole operation rather than taking part of it, which is the difference between a rule and a rounding. The amount is refused on a module that does not carry the augment, and shown on the line only when it does. One measurement in the brief was wrong and the artefact won: one operation is twenty ticks, so a hundred ticks is five operations and could never leave nine of twelve, and the leg waits three hundred ticks so the numbers are reachable rather than adjusting the numbers to the wait. A first attempt also failed for a harness reason worth recording: the modules ran at their chests before the amount was saved, so the rig now starts facing away and turns after the setting is written.
+"""
+
+[[versions]]
+version = "0.2.5"
+published = "2026-11-22"
+game = "26.3"
+file = "modularrouters.hmod"
+sha256 = "0f73d1fb08113b105e5ee4c6b367fa75feee4e43d8d71108425f4831494b375a"
+changelog = """Slice 5, the ranged puller module: the module takes a container the player selects by sneaking and right-clicking it, and pulls from it up to twelve blocks away, twenty-four once range augments exist. The selection is stored on the module item itself, so the same module moved to another router keeps its target. Proven in game with four differential rigs inside one run: the selected chest ten blocks out moves exactly one item per operation until empty; the same router keeps pulling north after its direction is set to the left, because the target rather than the facing decides; a module with no selection facing the same chest moves nothing in a hundred ticks; a target thirteen blocks out moves nothing, the reach being twelve; and a plain puller at the same ten blocks moves nothing, which is what proves the range rather than the pull. The reference turned out to be a targeted module rather than a scanned one, so the selection is what shipped and the readout names the selected block, its dimension and the range; a scan would have pulled from a chest the player never chose, which is behaviour the mod does not have.
+"""
+
+[[versions]]
+version = "0.2.4"
+published = "2026-11-22"
+game = "26.3"
+file = "modularrouters.hmod"
+sha256 = "52e4ebe3fc95a163ae5a815b38cffd25c61b5b36c40675d683c04742cc45c621"
+changelog = """Slice 4, the Speed and Stack upgrades and the router's five upgrade slots: two rules the port already computed and tested — items per operation and ticks per operation — were unreachable, because nothing could put an upgrade on a router. Now they can, with the reference's own per-slot limits of nine speed and six stack and the five-slot cap, and a foreign upgrade id carried verbatim exactly as a foreign module is. Proven in game with a differential router beside each case: a Stack upgrade makes every sampled operation move two items where the un-upgraded router moves one, four Speed upgrades in one slot take the interval from twenty ticks to twelve, and a tick-exact window reads sixty stone against eighteen over three hundred and sixty ticks. Removing an upgrade hands the item back and the interval returns to twenty, a doctored save with forty-five speed reads one item every two ticks and refuses a further add because the slots are full, and a tagged gunpowder answers that it is an upgrade this build does not install. Two intermediate failures are kept as evidence because each names a platform fact rather than a port bug: replacing a chest to empty it is refused at this pin, so a window that relied on that counted cumulative items, and the no-upgrade reply names the item id.
+"""
+
+[[versions]]
+version = "0.2.3"
+published = "2026-11-21"
+game = "26.3"
+file = "modularrouters.hmod"
+sha256 = "33461229aba38b7da9b2d9522ba9bf915bae94a3869c28fa0702a4c4d5e6c72c"
+changelog = """Slice 3, the registered module path: a module this port does not implement is now carried instead of destroyed. A router keeps the foreign id in its saved list, reports it, and leaves it alone on the tick, so a module from a mod this campaign never ported survives an install, a rewrite and a relaunch. The install path accepts either a module id this port knows or an item in the modules tag, and the refusal now names both. Proven in game with the old refusal quoted as the red: the shipped 0.2.2 package answers that only puller and sender modules may be installed and has already dropped the entry, while 0.2.3 keeps a foreign id written straight into the entity, shows it as two of nine, and never erases it. One platform limit is measured and recorded rather than worked around silently: a content mod loaded for development cannot add to another namespace's data, so the tag harness in the test world is a world data pack, and the port's own side stays independent of it.
+"""
+
+[[versions]]
+version = "0.2.2"
+published = "2026-11-21"
+game = "26.3"
+file = "modularrouters.hmod"
+sha256 = "28892b6a3e074d0f1da71a633d9c3fec769706436f7cc9057c995411708debbc"
+changelog = """Slice 2, the carried recipes and the content/loot proof: the mod's whole crafting progression — blank module, router, puller and sender — plus the router's own drop. Both were dead in 26.3, and neither error was upstream's: the carried JSON was still in the 1.21.1 dialect. The recipes used the `{"item": …}` / `{"tag": …}` ingredient form, which 26.3 rejects, so the game logged `invalid ingredient` and every recipe returned nothing; the loot table used `"conditions": [ … ]`, while 26.3 wants a singular `"condition"`, so a broken router dropped nothing. Both are converted, and the port gains two fail-capable nets: `tools/data_shape.py` checks the dialect on the built package, and `tools/craft_check.py` crafts each recipe in a real table. Proven in game: the four recipes craft with their declared counts and consume their ingredients, two wrong-ingredient controls return nothing, the router drops itself, and the log has zero `invalid ingredient` lines.
+"""
+
+[[versions]]
 version = "0.2.1"
 published = "2026-11-10"
 game = "26.3"
 file = "modularrouters.hmod"
 sha256 = "9f0852ff830e0c68bbec6644a639c20964a5eeb7126ee38cf79eeb95d3ce6756"
-changelog = "First release"
+changelog = """First release
+"""

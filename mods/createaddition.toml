@@ -29,9 +29,79 @@ categories = ["utility"]
 tags = ["port", "horizon"]
 
 [[versions]]
+version = "0.2.12"
+published = "2026-11-23"
+game = "26.3"
+file = "createaddition.hmod"
+sha256 = "63062d5fdcd07e7a573b3910727be91444332f42b9bd1b9e05daef0b25d82e4e"
+changelog = """This version makes a connector whose mounting block is taken away disappear with its wires, instead of being left hanging in the air. The reference's own mechanism could not be used as written and the reason is recorded: the engine asks a block whether it can survive only for blocks whose template checks survival, and a connector's template does not, so the rule is answered where the reference answers it — a neighbour changed, plus the level's own pass — and it breaks the block with drops exactly as a player's break would. One measured thing changes the shape of the fix: the reference deliberately allows a connector to be placed floating, so only a connector that had a support and lost it is removed, and every existing rig that floats one is left alone. Proven in game on the drop itself: breaking the far mounting block removes that connector and its four wires with a drop map naming the connector and the wires, its peer's link list ends up empty, and a connector on a support that stays keeps both."""
+
+[[versions]]
+version = "0.2.11"
+published = "2026-11-23"
+game = "26.3"
+file = "createaddition.hmod"
+sha256 = "0b1b8184af405689c80154aacdc718949f701cc6466d473106e50a2c0705f6fc"
+changelog = """This version answers a review that the port had recorded as a deviation instead of fixing: a comparator answer outlived the block that gave it, the chunk that held it and the session that computed it. Four clears now sit on the four events that matter, and each was chosen from the pin's own declarations rather than guessed: a state change scoped to our block for removal or replacement, a chunk unload told by dimension and column, a level close, and a player leaving for the selection that is keyed to them. A save deliberately does not clear anything, because a save is not an unload and clearing there would blank a live answer; the leg proves that a save keeps them. Proven in game by counting the answers the mod holds: two accumulators, then one after a removal, then two when replaced, then one after a chunk unload with the survivor's own reading intact, then back to two, unchanged across a save, and only what the new session computed after a relaunch. One limit is declared rather than implied: a level close cannot be separated from the chunk unloads that precede it, so it is unit-tested and the relaunch leg covers the session's half."""
+
+[[versions]]
+version = "0.2.10"
+published = "2026-11-23"
+game = "26.3"
+file = "createaddition.hmod"
+sha256 = "db4306b2ce83cbc58d0ce71919f87741285391ae1dd7f18dc39cdbce1c912f76"
+changelog = """This version gives a broken connector the wires it was carrying, which the port had never done: a wire could be taken out with a spool but never lost, so breaking a connector dropped the block and left the wire in its peer's list. The rules are the reference's and are read per wire kind: four wire items of that kind in one stack, its own order across kinds, the festive wire dropping copper wire rather than a festive item, and a creative break disconnecting without dropping anything. The peer's reciprocal entry goes with it and is not counted twice, which the leg checks by reading the other end's link list as empty. Proven in game on six cases: each of the three wire kinds drops its four items beside the block, the festive kind drops copper, an unlinked connector drops no wire at all, a creative break drops nothing, and the peer's list empties either way. Two harness bugs the leg found in itself are recorded: a bare hand does not drop the connector because its loot needs a tool, which made the no-wire differential vacuous until the player held a pickaxe, and a reply pattern ending in a space never matches. This package carries a mixin, so the compatibility check declines with its own message and the launcher's patch line stands in its place."""
+
+[[versions]]
+version = "0.2.9"
+published = "2026-11-23"
+game = "26.3"
+file = "createaddition.hmod"
+sha256 = "a9f4dcac05edbb72835f122f94514e034b41848aaa332266311bf8044a0e23e9"
+changelog = """This version draws the wires, which is the first client half in this package and the first thing here that a player sees rather than queries. The route is a native mixin: the render entry point is outside the mod API by design, so the package replaces it at its head and the launcher patches two functions into an existing game in about a second, without a rebuild. The geometry is pure arithmetic with its own tests, taken from the reference: each wire kind is drawn in its own colour, a wire sags below the straight line by the reference's catenary, and the festive kind carries its string of lights while the others do not. Proven by counting pixels in a fixed box on screen: nineteen hundred and one festive-green pixels with a mean colour in the wire's own green, and zero in the same box after the wire is removed, with the negative run inverted and the package-less control failing first. The compatibility check now declines for this package rather than passing or failing it, because a mixin is compiled into one build's own source; the launcher's patch log and the game run replace it as evidence, and the package gate accepts that refusal explicitly.
+"""
+
+[[versions]]
+version = "0.2.8"
+published = "2026-11-23"
+game = "26.3"
+file = "createaddition.hmod"
+sha256 = "715ce0ea799f9ad7c16d8bbc33df8b6c3fcafa2057ddf03bf60b84620a5025a4"
+changelog = """Slice 8, the festive wire and its spool: the jar's fourth wire kind, which carries copper's current rule and its own spool, with the iron wire carried as an item the reference registers but never lets you lay. The rules were read from the wire type rather than inferred from the names, and the surprise is worth recording: there is no per-kind loss rate at all in this release, so throughput belongs to the connector and the festive wire measures exactly one thousand a tick like copper. The low-current rule is not a field either: copper and festive are refused only between two large connectors, while a large and a small pair take any of the four. Proving the empty spool gives back the right kind found a defect of ours that had been shipping since the first version: the click that lays a wire wrote the changed spool back through an extract and insert, which loses a stack whose components differ, so one spool became three and the copper spool could not be used at all. The selection now belongs to the player rather than the item, and one spool makes one wire and returns exactly one empty spool. The second build check stays red for the reason established two slices ago.
+"""
+
+[[versions]]
+version = "0.2.5"
+published = "2026-11-22"
+game = "26.3"
+file = "createaddition.hmod"
+sha256 = "854e9d6ac9a8b9af0501310053c8e9c833215694663959501447a15199372b41"
+changelog = """Slice 5, the small light connector: the lamp variant of the small connector, which draws one FE a tick from its network and lights after a period that depends on where it stands, then darkens just as slowly when the energy stops. The period is the reference's own hash of the block's position, ten to twenty-eight ticks, and the counter clamps, so a lamp that has gone dark needs twice its period of energy before it lights again — the game leg waits that long and says why, rather than pretending the first figure was wrong. Proven in game with the numbers: at no energy the lamp is unpowered and its emitted light reads zero; seeded with five thousand and linked it is powered, its light reads fifteen, and the source falls forty-two FE over forty-two ticks, exactly one a tick, with the source, the pool and the lamp's draw adding up. Unlinked, it darkens and the source stops falling. This is also the first slice whose second build check is red, and that is the honest result: the light emission handle this family needs does not exist in the older build, so the pin run is not a tautology. Recorded in the notes for whoever repins next.
+"""
+
+[[versions]]
+version = "0.2.4"
+published = "2026-11-22"
+game = "26.3"
+file = "createaddition.hmod"
+sha256 = "8b5b1c2250b1d884d0b35fdc90a1cff5d46e3de7354dd95640ed34572783eacd"
+changelog = """Slice 4, the redstone relay: a wire block that passes energy only while it has a redstone signal, with two separate ports so the input pool and the output pool are different networks rather than one, and a thousand FE of in-flight energy that is conserved across the gap. The gate is what the slice is about: unpowered, nothing crosses and the sink stays exactly where it was; powered, twenty-four thousand and twenty FE arrive and the books balance to the last FE, with the block's own `powered` state read back before and after the redstone block is placed. The reference has no energy capability on this block, so none was declared here either — declaring one would let a neighbour bypass the gate entirely, and that is recorded as a deviation from our brief rather than from the mod. A selftest that trips the conservation assertion fails, and a second one that flips the gate fails on its own, so the two claims are independent. One harness defect is recorded with the fix: a local variable shadowed the readout's field name through bash's dynamic scoping, which made a restore branch never run and produced a false no-movement reading.
+"""
+
+[[versions]]
+version = "0.2.3"
+published = "2026-11-21"
+game = "26.3"
+file = "createaddition.hmod"
+sha256 = "1b29b731068bc6a2f21281fc88f60b7643b39f819a4a2f8885d0ad0818fe53d6"
+changelog = """The tower plan is linear in the number of disconnected accumulators, proven by counting set lookups rather than wall time; a saved tower outside the three by five limit is refused before any capacity arithmetic and a controller near the coordinate limit no longer overflows; and the upstream MIT notice travels inside the package verbatim. Credit: a port of Create Crafts & Additions by MRH0, https://github.com/MRH0/createaddition.
+"""
+
+[[versions]]
 version = "0.2.1"
 published = "2026-11-10"
 game = "26.3"
 file = "createaddition.hmod"
 sha256 = "16ce1dec5e002333871794ca3839e837b6d3b04a7b0139d2c1d52ca36926d50c"
-changelog = "First release"
+changelog = """First release
+"""

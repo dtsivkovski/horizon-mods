@@ -1,0 +1,27 @@
+id = "mekanismcovers"
+kind = "native-mod"
+name = "mekanismcovers"
+summary = "A Horizon port of mekanismcovers."
+description = """
+A port of [Mekanism Covers](https://github.com/lucaargolo/mekanism-covers) by D4rkness_King, built on [Mekanism](https://github.com/AdLf0208/mekanism) 0.2.2 or later, which it declares as a required dependency.
+
+The first port of Mekanism Covers, two items and a component that let a transmitter wear a block. Right-click a universal cable with a cover to make it look like stone, glass or anything else you can craft a cover from, and the choice is written into the cable's own saved data, so it survives a save and reload and can be replaced by a second cover or stripped back off. Proven in game on a game carrying both this package and the parent, since the cable's block entity is the parent's code: the shaped recipe crafts four empty covers and consumes all nine cells, the special recipe fills one and the held stack's components name the block, the cable has no such key before the click and names the block afterwards while still holding it forty ticks later, a second cover replaces the first, sneaking with an empty cover strips it and returns both the cover and the block, and a plain stone block or a torch is refused by name. The tests count the cover consumed in survival and untouched in creative, which is the difference between the two hands. The appearance half is recorded as blocked with its symbols: the cover is carried but not yet drawn, because the API has no per-position appearance, shape or dynamic-light hook.
+"""
+authors = ["AdLf0208"]
+owners = ["AdLf0208"]
+owner_ids = [107615167]
+license = "MPL-2.0"
+source = "https://github.com/AdLf0208/mekanismcovers"
+icon = "icons/mekanismcovers.png"
+categories = ["utility"]
+tags = ["port", "horizon"]
+
+[[versions]]
+version = "0.2.3"
+published = "2026-11-23"
+game = "26.3"
+file = "mekanismcovers.hmod"
+sha256 = "c9d4e8705f37f5a10dc8f70bed96c35b3bb1fa4da3d77b2172ace386c33b631f"
+changelog = """
+This version applies the same rule to the other path a cover can be consumed by. A cover renamed in an anvil carries a component besides its block, and clicking it onto a transmitter used to store only the block, so the name was gone when the cover came back off. The click now refuses such a cover exactly as the crafting grid refuses a stack with components, through the same predicate, and the cover stays in hand with nothing written. Proven in game beside the plain case: a named cover clicked on a cable leaves the transmitter wearing nothing and the cover in the inventory, while a plain cover in the same session writes its block. Three harness faults the legs forced are fixed and recorded: an item given lands in the first free hotbar slot rather than the first, a spawned drop can miss its first sample, and the game's folder is the launching command's working directory, which had been writing worlds into the campaign root instead of the run's scratch directory.
+"""

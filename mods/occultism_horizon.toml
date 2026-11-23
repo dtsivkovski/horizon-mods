@@ -1,0 +1,75 @@
+id = "occultism_horizon"
+kind = "native-mod"
+name = "Occultism"
+summary = "Occultism by KliKli, ported to Horizon: ritual circles, spirits and their jobs, possessed creatures, the guide book, dimensional storage and the mineshaft."
+description = """
+An unofficial, alpha port to Horizon of [Occultism](https://github.com/klikli-dev/occultism), the mod by KliKli ([klikli-dev](https://github.com/klikli-dev)), made with their permission. It isn't made or supported by KliKli, so please report problems [to this port](https://github.com/Dawnforger/occultism-horizon/issues), not to them. Occultism's code is MIT and some of its art is CC BY 3.0, both credited in the package's NOTICE.
+
+**What's in this alpha**
+
+- **Ritual circles.** All sixteen chalks, crafted as in Occultism, with glyphs that wear down as you use them, sacrificial bowls and a golden bowl, and Occultism's rituals and pentacles, with their sacrifices and item uses.
+- **The Dictionary of Spirits.** Occultism's guide book, with its ritual pages, pentacle previews placed in the world, and the ritual satchels that build a previewed circle for you.
+- **Spirit names.** Books of binding carry their spirit's name, and what is made from them passes it on.
+- **Working foliots.** Summoned with a job and bound to a book of calling: the janitor gathers dropped items, the transporter moves stacks between containers, the lumberjack fells and replants trees, and the farmer harvests and replants crops, each bringing what it gathers to a container.
+- **Soul gems.** Capture a creature whole and let it out elsewhere.
+- **Crusher, smelter and crystallizer spirits** in all four ranks, as Occultism's, at their rank's speed.
+- **Possessed creatures.** Occultism's sixteen possession rituals and the creatures they make.
+- **Unbound spirits.** Summon a hostile Afrit or Marid, drawn from Occultism's own models and animations, with its stats, immunities and helpers.
+- **Spirit fire and Demon's Dream.** Datura, otherstone, books of binding, inks, pastes, cursed honey and more.
+- **The otherworld tree.** An oak sapling in spirit fire grows into it, with its logs and fruit.
+- **The Third Eye and otherworld goggles.** Raw iesnium in silver ore, otherworld logs among the oaks you chop.
+- **Dimensional storage.** The Storage Actuator in Occultism's terminal look with its crafting grid, stabilizer plates, stable wormholes, the Storage Accessor, and hoppers that pull from it.
+- **The dimensional mineshaft.** Miner spirits dig ores into it.
+- **Weather and time magic, and traders.** Djinni and afrit rituals that bring day, night, clear skies, rain or thunder, and spirits that trade stone for otherstone and otherrock, or gamble gems.
+- **Wild rituals.** The wild hordes, the Wild Hunt, the illager invasion and the trial breezes, whose followers shield their leader; random-animal possessions, and resurrections into allays and undead mounts.
+- **Equipment.** Silver and infused tools and armour, made infused in Occultism's upgrade rituals, the butcher knives and their extra drops, flaming paste, and silver and infused horse and nautilus armour.
+- **Furnishings and blocks.** Large candles, copper, silver and dark bowls, the iesnium bowls that run a ritual four times as fast, silver and otherrock building blocks, the spirit lantern and torch, and Occultism's ritual particles.
+
+**Different from Occultism for now:** the book of calling has no screen (its mode and work area change when you use it, and its tooltip shows them); spirits take no item filters; the transporter doesn't open doors.
+
+**Not in yet:** familiars, the higher spirits' other jobs, satchels and tablets, and the dark storage blocks.
+
+This is a native mod: the launcher builds it after asking you to trust its code, and it runs with your account's permissions. It contains no Minecraft code or assets. Pinned to game 26.3, Horizon SDK `0b14f8a` and horizon-mixins `e59da90`, and fits the Nightly of 2026-11-21 (`8f83e5c`); the full corresponding source is the linked repository.
+"""
+authors = ["KliKli", "Dawnforger"]
+owners = ["Dawnforger"]
+owner_ids = [73370299]
+license = "MIT AND CC-BY-3.0"
+source = "https://github.com/Dawnforger/occultism-horizon"
+icon = "icons/occultism_horizon.png"
+categories = ["magic", "storage"]
+tags = ["occultism", "rituals", "spirits", "chalk", "storage", "port", "alpha"]
+screenshots = [
+  "screenshots/occultism_horizon/1-fatma-circle.jpg",
+  "screenshots/occultism_horizon/2-all-pentacles.jpg",
+  "screenshots/occultism_horizon/3-afrit-in-circle.jpg",
+  "screenshots/occultism_horizon/4-spirits.jpg",
+  "screenshots/occultism_horizon/5-book-ritual-page.jpg",
+  "screenshots/occultism_horizon/6-circle-preview.jpg",
+  "screenshots/occultism_horizon/7-storage-terminal.jpg",
+  "screenshots/occultism_horizon/8-storage-and-mineshaft.jpg",
+]
+
+[[versions]]
+version = "0.9.0-alpha.4"
+published = "2026-11-21"
+game = "26.3"
+file = "occultism_horizon-0.9.0-alpha.4.hmod"
+sha256 = "e82b9eddef8b451c64d1563b6a5207628bf7d58d15de3897715d7d857358dce8"
+changelog = "Registered under its own id, occultism_horizon, because occultism is taken: id, namespaces = [\"occultism\"] (files, in-game ids and saved worlds are unchanged) and [incompatible] with occultism; remove any installed occultism first. Security fixes from the registry review: store ids read from items and worlds are accepted only in the mod's own form, so a forged one can't make a save write outside the world, and a soul gem's work area only at its real sizes, so a forged one can't stall the server."
+
+[[versions]]
+version = "0.11.2-alpha.1"
+published = "2026-11-21"
+game = "26.3"
+file = "occultism_horizon-0.11.2-alpha.1.hmod"
+sha256 = "470fb1c115f772a9ccfbda6647dab042fe1bbe672cfd50fe1814a39a008f1520"
+changelog = "0.10 and 0.11 in one step. Added: Occultism's chalk crafting in all sixteen colours, crusher spirits (in place of the Demonic Altar and its cores, removed), smelter and crystallizer spirits, sixteen possessed creatures, pastes, cursed honey and demonic meat, the otherworld tree, the spirit campfire, and the Dictionary of Spirits with pentacle previews and ritual satchels. Fixed: whole cubes on the dimensional matrix, no see-through floor under the mineshaft, Actuator and wormhole, and ritual pages' text. Security: a ritual satchel builds only for a player who may build, within reach of the place clicked, as part of the previewed pentacle and inside the world border, with at most 4 builds waiting per player; and 0.9.0-alpha.4's fixes. Same id, namespace and saved worlds as 0.9.0-alpha.4."
+
+[[versions]]
+version = "0.12.2-alpha.1"
+published = "2026-11-23"
+game = "26.3"
+file = "occultism_horizon-0.12.2-alpha.1.hmod"
+sha256 = "83089f9281a9997c2ee331b9e983e77e097bec597cee591059ff89f2eca1530d"
+changelog = "Much more of Occultism. Added: weather and time magic; otherstone, otherrock and gambler traders; the wild hordes, Wild Hunt, illager invasion and trial breezes; random-animal possessions and resurrections; flaming paste; silver and infused tools and armour, the butcher knives and their drops; large candles, golden pitayas, otherglass, the otherflower, otherrock and silver building blocks; copper, silver, dark and iesnium bowls (iesnium runs rituals four times as fast); the spirit lantern and torch; ritual particles and chalk-coloured spirit fire. Security, from the registry review: flaming paste no longer sets fire or pours lava beside the block it is used on, throws fireballs or primes TNT, and the spirit torch isn't put on walls, as none of these could go through the server's own checks (spawn protection, the world border, TNT's priming) at this SDK pin. Same id, namespace and saved worlds as 0.11.2-alpha.1."

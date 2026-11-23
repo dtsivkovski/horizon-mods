@@ -1,0 +1,53 @@
+id = "item_scroller"
+kind = "mod"
+name = "Item Scroller"
+summary = "Move items with the mouse wheel, sort chests with one key, and refill crafting grids from saved recipes."
+description = """
+Item Scroller gives you shortcuts for moving items between your inventory and an open container in Horizon.
+
+- **Move items with the wheel.** Hover over a stack and scroll up to send one item to the other inventory. Scroll down to pull one back. Hold Shift to move a stack or Ctrl to move all matching stacks.
+- **Move several stacks at once.** Hold Shift and drag across slots with the left mouse button to move each stack. Use the right button to leave one item in each slot.
+- **Sort a chest.** Hover over its slots and press R to merge matching stacks and sort the contents.
+- **Reuse crafting recipes.** Middle-click a crafting result to save its ingredient layout. Hold S to open your 18 recipe slots, then click a saved recipe to refill the grid.
+
+Requires Horizon mod API 0.2 and runs client-side. Controls are rebindable, and the interface supports English and Russian.
+
+Horizon port by **caskh**, based on [Sakura-Ryoko’s Java version](https://github.com/sakura-ryoko/itemscroller/tree/26.3) of [masa’s original Item Scroller](https://github.com/maruohon/itemscroller).
+"""
+authors = ["caskh"]
+owners = ["caskh"]
+owner_ids = [194096617]
+license = "LGPL-3.0-only"
+source = "https://github.com/caskh/item-scroller"
+icon = "icons/item_scroller.png"
+categories = ["storage", "management", "utility"]
+tags = ["inventory", "storage", "sorting", "crafting", "item-transfer", "mouse-wheel", "recipe-memory", "client-side", "quality-of-life"]
+key = "RWR5VyGz8HewUdY5eOVOa0F5QKhlgvHmXqF+Hnk842B/iYtyKYb4BjNc"
+
+[[versions]]
+version = "0.4.7"
+published = "2026-11-23"
+game = "26.3"
+file = "item_scroller-0.4.7.hmod"
+sha256 = "37e4e379b9ee176c33d101fda4dbe3dec2456c34f4fbba2a0111b2ae75f6d88e"
+signature = """
+untrusted comment: signature from minisign secret key
+RUR5VyGz8HewUcvjvTo22b8N4XFwVejuRaK/r1F8A2bN5vpuAbe5NL0gaWwLes8oK+tIRtM8qSo973VfE2HwWEA20cTgj3+kbQs=
+trusted comment: timestamp:1795450457\tfile:item_scroller.hmod\thashed
+v1QDitaeZJSdNm4eGPE8DOEwGkyxoBDpafRSk2KhVDPjjcu558LxxdPAeUXvQgTPLSpQjuOSUwZ/tB7/CFrtDQ=="""
+changelog = """
+Fixed Shift + left-click in Item Scroller 0.4.7. Coal and other fuel-only items now go to the bottom slot. Items the open furnace can cook go to the top slot, including items that can also serve as fuel. Blast furnaces and smokers use their own cooking rules.
+"""
+
+[[versions]]
+version = "0.4.6"
+published = "2026-11-23"
+game = "26.3"
+file = "item_scroller-0.4.6.hmod"
+sha256 = "375be48e4264dd1732f8732be97e62369147f712ae3c7c752120e2e3daffcd93"
+signature = """
+untrusted comment: signature from minisign secret key
+RUR5VyGz8HewUenoZ57ZFlxN68CjFI+l0rRJ+B2plV7o1DFgugAPHUybAuoK/EanV8bWXQjRYwXj3DFDWgG61BYXTG8BOsBHuQ8=
+trusted comment: timestamp:1795419337\tfile:item_scroller.hmod\thashed
+HBl8ICdKY/Op6hTQ1yVAMQGEeUXkpz/LoposFY2LBa46fXndml4QRrv+eOxI1Mh1TTbpeGBJFdTXfIIW4QLZDA=="""
+changelog = "Fixed the recipe-save bug from #1752 and submitted signed Item Scroller 0.4.6. Saving now updates only the selected slot. If a save fails, the previous recipe stays intact and the player sees an error in English or Russian."

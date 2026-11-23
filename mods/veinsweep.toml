@@ -1,0 +1,65 @@
+id = "veinsweep"
+kind = "native-mod"
+name = "VeinSweep"
+summary = "按住触发键挖方块，同种相连方块一起挖掉，可随时关闭。/ Hold the trigger key to chain-break connected blocks of the same type; can be switched off."
+description = """
+VeinSweep 是连锁挖掘模组：按住触发键（默认潜行键，可在控制中改）挖掉一个方块，与它相连的同种方块会一起被挖掉。
+
+- 矿脉和原木整条带走；泥土、石头等普通方块在附近连成一小片不规则区域。
+- 只在同种方块内扩散：泥土不会蔓延到草方块，沙子不会蔓延到砂砾。
+- 与手持物无关；工具在连锁中途损坏时会立即停止。
+- 黑名单：`/veinsweep blacklist add|remove|list|clear`，支持 Tab 补全，重启后仍有效；修改黑名单需要权限等级 2，`list` 公开。
+- 设置页：总开关、最大方块数（8–256）、保留工具耐久、创造模式连锁。
+- 连锁由客户端按键触发，只在单人游戏或自己主持的局域网世界生效；专用服务器上不触发（模组仍会正常加载）。
+
+---
+
+VeinSweep is a chain-mining mod: hold the trigger key (sneak by default; rebindable) and break a block to break the connected blocks of the same type.
+
+- Ores and logs come out as a whole vein; dirt, stone and similar blocks break in a small irregular patch nearby.
+- It only spreads through the same block type: dirt does not spread to grass, sand does not spread to gravel.
+- It works with any held item, and stops at once if the tool breaks mid-chain.
+- Blacklist: `/veinsweep blacklist add|remove|list|clear`, with tab completion and persistence across restarts. Changing it needs permission level 2; `list` is public.
+- Settings: master switch, maximum blocks (8–256), keep tool durability, and chaining in creative mode.
+- Chaining is client-triggered: it works in single player and in a LAN world you host. A dedicated server has no client key input, so chaining does not trigger there (the mod still loads).
+"""
+authors = ["ChangGengCN"]
+owners = ["ChangGengCN"]
+owner_ids = [41566656]
+license = "MIT"
+source = "https://github.com/ChangGengCN/VeinSweep"
+icon = "icons/veinsweep.png"
+categories = ["game-mechanics", "utility"]
+tags = ["vein-mining", "chain-mining", "mining", "blacklist"]
+
+[[versions]]
+version = "0.6.5"
+published = "2026-11-23"
+game = "26.3"
+file = "veinsweep-0.6.5.hmod"
+sha256 = "6eccbec432b5a665935be0e98d7ab59dd4b2eddba5a272b995a06bea86686c31"
+changelog = "移除「掉落直接入包」设置，掉落一律在世界中散落（与原开关关闭时一致）；设置页现为四项：连锁破坏、最大方块数、保留工具耐久、创造模式连锁。构建固定更新为 Nightly 2026-11-22 最新构建（f1bb66f）与 Horizon Mixins e59da90（未变），已在生存模式实测连锁触发、同种方块扩散、矿脉整条带走、上限、黑名单、总开关与工具中途损坏即停。\n\nRemoved the \"Drops go to inventory\" setting; drops always scatter in the world (the behaviour of the old switch when off). The settings screen now has four entries: chain breaking, maximum blocks, keep tool durability, and chaining in creative mode. Repinned to the newest Nightly 2026-11-22 build (f1bb66f) with Horizon Mixins e59da90 (unchanged); chaining, same-type spread, whole-vein mining, the limit, the blacklist, the master switch and stopping when the tool breaks were re-verified in-game in survival."
+
+[[versions]]
+version = "0.6.4"
+published = "2026-11-22"
+game = "26.3"
+file = "veinsweep-0.6.4.hmod"
+sha256 = "4935989ca58db5dcf8102fa28c551d462ec34dc69539344a8351de791c1fe0eb"
+changelog = "构建固定更新为 Nightly 2026-11-22（2b77287）与 Horizon Mixins e59da90（未变）；功能与设置不变，已在生存模式实测连锁、同种方块扩散、黑名单、上限与总开关。\n\nRepinned to Nightly 2026-11-22 (2b77287) with Horizon Mixins e59da90 (unchanged). Behaviour and settings are identical; chaining, same-type spread, the blacklist, the limit and the master switch were re-verified in-game in survival."
+
+[[versions]]
+version = "0.6.3"
+published = "2026-11-22"
+game = "26.3"
+file = "veinsweep-0.6.3.hmod"
+sha256 = "ef3fd5cac362a040abe24fc6bcff2bb8ff07d06fb53e67bba46234f3953528f1"
+changelog = "构建固定更新为 Nightly 2026-11-21（f037744）与 Horizon Mixins e59da90（未变）；功能与设置不变，已在生存模式实测连锁、同种方块扩散、黑名单与总开关。\n\nRepinned to Nightly 2026-11-21 (f037744) with Horizon Mixins e59da90 (unchanged). Behaviour and settings are identical; chaining, same-type spread, the blacklist and the master switch were re-verified in-game in survival."
+
+[[versions]]
+version = "0.6.2"
+published = "2026-11-22"
+game = "26.3"
+file = "veinsweep-0.6.2.hmod"
+sha256 = "b81034c3eafbd964e85395e7a4d3388e17ebd6dc5ec901ecd048f3df8208bd42"
+changelog = "构建固定为 Nightly 2026-11-20（0a875da）与 Horizon Mixins e59da90。包内加入 MIT LICENSE；黑名单 add/remove/clear 改为需要权限等级 2（list 仍公开）；连锁中途工具损坏时立即停止，不再徒手继续；清单 authors 统一为 ChangGengCN；条目摘要与描述改为中英双语。游戏内其余行为不变。"

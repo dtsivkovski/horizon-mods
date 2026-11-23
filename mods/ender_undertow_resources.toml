@@ -1,0 +1,23 @@
+id = "ender_undertow_resources"
+kind = "resourcepack"
+name = "Ender Undertow Resources"
+summary = "The Gentleman brings his bowler hat, moustache and a very polite apology to Ender Undertow."
+description = "Enable this companion resource pack alongside the Ender Undertow beta world data pack for the encounter sounds and wardrobe.\n\n**Installing Ender Undertow on Horizon 26.3**\n\n- [Ender Undertow](https://playhorizon.dev/mods/ender_undertow) — World data pack for the mining and teleport encounter. It works on its own.\n- [Cinematic](https://playhorizon.dev/mods/ender_undertow_cinematic) — Native mod for the camera turn, lowered hands and color fade. Install on the host and each participating client, then opt in with `/trigger eu.scene set 1`.\n- **Resources** (this listing) — Client resource pack for the Gentleman’s voice and wardrobe and the lingering portal sound. Enable it in Resource Packs.\n- [Focus](https://playhorizon.dev/mods/ender_undertow_focus) — Optional client shader for blur and warble during the cinematic. Select it in Shader Packs.\n\n[Download all four in one ZIP and see installation instructions](https://michado.dk/projects/ender-undertow/#install)."
+authors = ["Fnux8890"]
+owners = ["Fnux8890"]
+owner_ids = [21344589]
+license = "MIT"
+icon = "icons/ender_undertow_resources.png"
+categories = ["audio", "entities"]
+tags = ["enderman", "mining", "survival", "teleportation"]
+key = "RWTXlLLUSOJS7XRVRqmgOEH3c0rwDY/1CqXd64/Debkiy6bJOe0mzt4K"
+source = "https://github.com/Fnux8890/ender-undertow/tree/2c5491918c87dcce0e9e8ae3527d238beb14da5f"
+
+[[versions]]
+version = "0.1.0-beta.2"
+published = "2026-11-21"
+game = "26.3"
+file = "ender-undertow-horizon-resources-26.3-beta.2.zip"
+sha256 = "52e7a4ef0f6a14eba05dd8956112c63e61e1170338f407bf0cebbf61b39d06b5"
+changelog = "Cinematic beta with the full MIT notice in this standalone download."
+signature = "untrusted comment: signature from minisign secret key\nRUTXlLLUSOJS7SaFJNanTW7V9kOFuTPCoydbobcS/eVThX5b/3Iqry6VooacHbKtz6dgJwSraMDEerJCqALHNCBXfYMA8TMTegk=\ntrusted comment: timestamp:1795292611\tfile:ender-undertow-horizon-resources-26.3-beta.2.zip\thashed\n78snhfqKU0GhxEmtNO8sEJjS3z8YCpeE6PLLX1aAY80Ak1Z26gZETSqeRl792hIanU4/Y6qCqzmXpaCm9icxCQ==\n"

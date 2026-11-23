@@ -1,0 +1,122 @@
+id = "occultism"
+kind = "native-mod"
+name = "occultism"
+summary = "A Horizon port of occultism."
+description = """
+A port of [Occultism](https://github.com/klikli-dev/occultism) (MIT, by klikli-dev) for Horizon. This first slice is **spirit fire**: the block, its ignition, and the chalk colours it takes.
+
+**Implemented so far**
+
+- `occultism:spirit_fire` on the `minecraft:torch` template (vanilla's only fire-like class with no fire damage and a sturdy-face survival rule): no collision, instant break, light 12, wool sound, purple map colour, empty drops, and a declinable `color` state with the jar's 18 values (default `white`), with the jar's animated model and blockstate.
+- Ignition: flint and steel or a fire charge struck on a block with a `#occultism:start_spiritfire` item entity (datura) inside upstream's `AABB(-1,-1,-1,1,1,1)` around the clicked block's centre lights one spirit fire on the target and consumes **every** datura in that box, as upstream does. With no datura in range nothing happens and the lighter's own use runs.
+- Chalk: right-clicking a spirit fire with any of the jar's chalks (16 colours, pure and impure) sets the block's `color` property.
+- The datura item, the 33 chalk items, the spirit fire's own recipe, loot and language, carried inside the one `.hnmod`.
+- `/occultism` readout commands for the harness.
+
+**Not yet ported**
+
+| Declared upstream library | What it would have provided | What this slice does |
+|---|---|---|
+| Modonomicon (required) | the guide book and its 260 pages, ritual and recipe pages | nothing: there is no guide-book reader at this pin |
+| Curios (required) | accessory slots (familiar ring, spirit lamp) | nothing: there is no accessory-slot API |
+| GeckoLib | the 21 animated spirit models | nothing: no spirits in this slice |
+| SmartBrainLib | the spirits' job AI | nothing: no spirits in this slice |
+
+- The remaining machines (crusher, smelter, sacrificial bowl, pentacles and rituals), every spirit and their jobs, the storage system and the dimensional mineshaft are later slices.
+- The ritual and chalk recipes beyond the ones carried, and the sapling models the carried sapling item references.
+
+MIT; the original copyright and permission notices (klikli-dev, 2020) ship inside the package: `LICENSE` and `LICENSE-NOTICE.md` at its root, with the same texts in the source repository.
+"""
+authors = ["Kli Kli", "AdLf0208"]
+owners = ["AdLf0208"]
+owner_ids = [107615167]
+license = "MIT"
+source = "https://github.com/AdLf0208/occultism"
+icon = "icons/occultism.png"
+categories = ["utility"]
+tags = ["port", "horizon"]
+
+[[versions]]
+version = "0.2.12"
+published = "2026-11-23"
+game = "26.3"
+file = "occultism.hmod"
+sha256 = "d8c69505e24b2be9012ab6e5ad326735063fbe514bb2c82b90599a1b098aa292"
+changelog = """This version carries the six sacrificial bowls, the family's first block entity, and it holds one item at a time and gives it back. The reference is precise here and the port follows it: one slot with a limit of one, so five dirt put one in and leave four in the hand; a right-click with an empty hand returns the stored stack with its components intact, damage included; breaking a full bowl drops the bowl and spills what it held; and a plain bowl converts its stored item over spirit fire while a golden one deliberately does not. Proven in game on all of those plus the tool pair, which was measured rather than inherited — these blocks do not require a tool, so a hand break drops them and the template's own requirement had to be overridden. The game leg also found a port defect the unit tests could not: a click is dispatched once per hand, so the main hand stored the sword and the off hand's empty turn took it straight back, which is now a rule that only the main hand fills a bowl. The ritual itself stays blocked and is named, not approximated."""
+
+[[versions]]
+version = "0.2.11"
+published = "2026-11-23"
+game = "26.3"
+file = "occultism.hmod"
+sha256 = "3d335fe802e7668d869bac6ab47ffacb9770b1d9b602cc7fe74805e4fe8d5998"
+changelog = """This version carries the frames and pedestals, and the brief's premise was wrong twice over, which made the slice simpler rather than harder: the frames are items with a model and no block at all, and the pedestals are plain blocks with no block entity, so nothing here needed a container or a renderer and nothing was faked to look like a machine. The frame being an item is itself asserted in game, since a block could not pass that check: a grid makes one, an item model draws it, and there is no blockstate, no loot table and no block item to find. The pedestals are proved like blocks: their grids, both of their tables, their full default state, and the tool pair those templates carry, with a plain stone's hand break as the differential. The storage controller bases are not carried and the reason is exact: they are ritual results, and their model also needs the controller this port does not have, so the row names the ritual rather than shipping an item that cannot be made.
+"""
+
+[[versions]]
+version = "0.2.10"
+published = "2026-11-23"
+game = "26.3"
+file = "occultism.hmod"
+sha256 = "b4807a007516b46c6a5b8684a2bd84f0d65a7e14d65391fd3a62d8d3deb4d978"
+changelog = """This version carries the redstone pair of the building family, two buttons and two pressure plates, plus the reverse smelt that takes each cobbled stone back to its smooth form. The behaviour is the engine's rather than ours: the blocks copy vanilla's stone button and stone pressure plate, so the press, the player scan and the release come with the template, and the game proves them as states — both plates read powered while the player stands on them and unpowered after stepping off, both buttons read pressed and then released, with the ticks recorded rather than assumed. Two corrections came from the artefact. These blocks do not need a tool, so the assertion is one drop by hand and one by pickaxe, with a plain stone's hand break for nothing as the differential, rather than the hand-zero the brief asked for. And this pin cannot express the reference's thirty-tick stone button, so the vanilla twenty ships and the leg asserts it, chosen over a wooden button that would have the right interval and the wrong feel. A third omission in the jar is fixed: its item tag lists one button while its block tag lists both.
+"""
+
+[[versions]]
+version = "0.2.9"
+published = "2026-11-23"
+game = "26.3"
+file = "occultism.hmod"
+sha256 = "8c31154f9a07a6a6d97c62a0d919127ad0a41707341d5ff71be5591d002375e8"
+changelog = """Slice 8, the cobblestone tier: the two cobbled stones and their slabs, stairs and walls, eight blocks built from six grids, plus the pair of loot tables that make the raw stones drop their cobbled forms when broken without silk touch and keep the raw stone when broken with it. That last part is the interesting one: the reference's own table for the raw stones had never been carried, so breaking an otherstone dropped itself rather than its cobble, and with it the whole tier had no source. Proving it needs both hands: a bare or pickaxe break gives the cobbled block, and a silk-touch break gives the stone back. The jar's fourth omitted slab table is also found and fixed rather than copied, and the pattern is now exact enough to state: every slab of the rock family is missing its table while every slab of the stone family has one, which the unit test now checks across all eight paths so the next omission fails a test instead of shipping. Six stonecutting shortcuts the jar ships are not carried, and the reason is corrected from last slice: the engine does read stonecutting, but the harness has no way to select a station recipe, so a carried shortcut could not be proven in game.
+"""
+
+[[versions]]
+version = "0.2.8"
+published = "2026-11-23"
+game = "26.3"
+file = "occultism.hmod"
+sha256 = "c1faa25ad14a03c78cdea9183c48b38985997518e033f1e0d1a089f7f1e1d0e2"
+changelog = """Slice 7, the polished tier of the building family: two polished stones made by smelting the raw stones in a furnace, and their slabs, stairs and walls, eight blocks in all with their grids, smelting recipes, loot tables, models, states, textures and tags. The game leg proves the pair through a real furnace with fuel and the absence of one without, then proves every variant by its own grid, its full default state read back, a bare hand for nothing and a wooden pickaxe for one, a joining wall pair, and two from a double slab. One correction to the brief worth stating: the family is eight results, not nine, because the jar carries no ninth block. A third instance of the same reference omission is fixed rather than copied: the polished otherrock slab has no loot table in the jar while seven of its eight siblings do, so it would have dropped nothing, and this package ships the table with the double-slab branch and proves one drops. The six stonecutting shortcuts the jar also ships are not carried, because the crafting grids produce the same blocks, and that is recorded as the family's one unported half.
+"""
+
+[[versions]]
+version = "0.2.7"
+published = "2026-11-22"
+game = "26.3"
+file = "occultism.hmod"
+sha256 = "b746bfac30f361eaf4693c83cf4aec016702f3f8b3567fbb4480d84cf044ff59"
+changelog = """Slice 6, the bricks tier of the building family: twelve blocks made from the two stones the package already carries, with ten crafting recipes, two smelting recipes, twelve loot tables, their models, states, textures, tags and lang. This makes twenty-two more of the family's recipes pay off. The reference's shapes are kept exactly where they differ from the obvious guess: bricks are a two-by-two into four rather than a row, and the chiseled block is made from two brick slabs rather than from bricks, so the game leg runs a four-step chain in one opened table from twelve stones down to one chiseled block, with the intermediate outputs feeding the next recipe. The cracked pair has no crafting recipe at all, it is smelting, which the leg proves in a real furnace beside a furnace with no fuel that stays idle. Every one of the twelve blocks is placed, its default state read back, and broken both by hand for nothing and with a wooden pickaxe for one. A second instance of the same reference defect is fixed rather than copied: the otherrock brick slab has no loot table in the jar while every sibling slab has one, so it would drop nothing, and this package ships the table and proves one drops. One test of my own was wrong and is recorded as such: I counted three slabs in the chiseled recipe and the reference stacks two.
+"""
+
+[[versions]]
+version = "0.2.6"
+published = "2026-11-22"
+game = "26.3"
+file = "occultism.hmod"
+sha256 = "7b382835c0b9b7325809c4b542d803c47c0f617865b5d51168aefd828120992c"
+changelog = """Slice 5, the first tier of the otherstone and otherrock building family: slabs, stairs and walls for both stones, six blocks with their recipes, loot tables and tags, which makes thirty-eight recipes' worth of ingredients already carried finally pay off. Proven in game with the full default state of each block read back rather than a bare id: six slabs, four stairs and six walls per stone with every ingredient consumed, three dirt making nothing, both a hand break and a wooden pickaxe break asserted because these blocks do need the tool, a double slab dropping two through the table's own branch, and the wall pair joining through the wall tag. One defect in the reference is fixed rather than copied: the otherstone rock slab has no loot table in the jar at all while every sibling table ships, so upstream it drops nothing, and this port ships the table and proves one drops with a wooden pickaxe. One assertion of my own was also wrong and is recorded as such: I required a modifier list in every table and the engine does not, so the test was corrected rather than the data."""
+
+[[versions]]
+version = "0.2.5"
+published = "2026-11-21"
+game = "26.3"
+file = "occultism.hmod"
+sha256 = "658ed0f7a8ae06c06ae6b786930ac3d4124027631b2935791e3506cdf315e4e4"
+changelog = """Slice 4, the crafting recipes that make an item obtainable for the first time: the dream essence, from datura fruit or from its seeds, now that the crop and its tags exist. Only two of the nineteen recipes whose result the package carries actually qualify, and the table of what was left out is part of the report: the impure chalks need a dust the package does not carry, and the otherstone building family has every ingredient but an unregistered result, so carrying its thirty-eight recipes would ship dead data. Proven in game in a real crafting table: the three-by-three fruit grid makes exactly one essence with the ingredients consumed, the same for seeds, and a mixed five-and-four grid also makes exactly one; nine dirt makes nothing, and the shapeless binding book crafts. This version also fixes a defect of our own, found only in the game: the crop harvest ran once per hand, so one click gave two fruit and six seeds, where the engine reaches the off hand only after the main hand fails. Only the main hand harvests now, and the run reads one fruit and three seeds. Two harness facts are recorded with it: a menu phase needs the offscreen renderer, and a death screen makes every later break answer that the screen is open, which silently cost two runs."""
+
+[[versions]]
+version = "0.2.3"
+published = "2026-11-21"
+game = "26.3"
+file = "occultism.hmod"
+sha256 = "e81ce0172de24411deefb93a3479b1c043e1e57c93c04924cb726b1ff93e5949"
+changelog = """Slice 2, the datura crop and its seed source: before this the seed was creative-only, so the mod's own first step, the spirit fire loop, was unreachable in survival. A wheat-shaped crop that grows through eight ages, harvests ripe into one datura and three seeds while a young one gives a single seed, and replants itself at age zero; plus the jar's two seed modifiers on short and tall grass, two percent by hand and inverted on shears. Proven in game across four legs: the eight ages read back, a planted crop advanced from age zero to age seven under random ticks, a ripe crop dropped one fruit and three seeds while a young one dropped only a seed, and twenty-five hand breaks landed three seeds where twenty-five shear breaks dropped grass and no seed at all, which is the deterministic half of the rule. An honest gap is recorded rather than papered over: an explosion reaches the loot callback with no block at this pin, so the two percent modifier fires only on a player or mob break, and the statistical positive is reported rather than asserted because the harness cannot land hundreds of aimed breaks reliably here."""
+
+[[versions]]
+version = "0.2.2"
+published = "2026-11-21"
+game = "26.3"
+file = "occultism.hmod"
+sha256 = "35714e6fd044bf52c4d2a3c63c68dabee5a3aa898525700e5ffdbfd54bdd38e2"
+changelog = """First publication, with the review repairs. Spirit fire, its datura ignition rule and the 18 chalk colours, with the jar's models, recipes and loot. `/occultism info` is now a level-2 command **with** a body re-check, and a position holding no spirit fire answers only that it is not one — the readout no longer doubles as a world probe. A spectator's click changes nothing: the hook checks the player's game mode before recolouring, lighting a fire or consuming datura, and fails closed on an unknown mode. The conversion ring is bounded and keyed per world and dimension."""

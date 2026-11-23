@@ -1,8 +1,10 @@
 # Every change needs a review from one of these before it merges (branch protection:
-# "Require review from Code Owners"). The reviewers are the Horizon Team, GitHub team horizon-rust/horizon-team
-# (Ludovic decides who is in it). /.github/ and takedowns stay Ludovic's.
-*            @ludovic111 @horizon-rust/horizon-team
-/.github/    @ludovic111
-/revoked.toml @ludovic111
-/scripts/    @ludovic111
-/archive/    @ludovic111
+# "Require review from Code Owners"). Ordinary mod submissions are reviewed by the Horizon Team
+# (@horizon-rust/horizon-team); workflow, script, native-subset, archive, and takedown changes
+# require @horizon-rust/council review (matching horizon-rust/horizon/.github/CODEOWNERS).
+*                     @horizon-rust/horizon-team
+/.github/             @horizon-rust/council
+/revoked.toml         @horizon-rust/council
+/scripts/             @horizon-rust/council
+/tools/native-subset/ @horizon-rust/council
+/archive/             @horizon-rust/council

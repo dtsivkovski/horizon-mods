@@ -23,3 +23,8 @@ id = "baritone"
 sha256 = "b1a79d09061c30f757f428d9702a1a9f39a3c11d7ad17c96d48e101150e98e0c"
 reason = "Replaced by 1.1.52: the secret half of the key that signed 1.1.38 was lost, so the entry has a new key and this version can no longer be verified."
 date = "2026-11-08"
+
+[[revoked]]
+id = "twilightforest"
+reason = "Taken down at the request of TeamTwilight, the mod's owners: they do not permit ports of Twilight Forest, and parts of the mod are All Rights Reserved."
+date = "2026-11-23"

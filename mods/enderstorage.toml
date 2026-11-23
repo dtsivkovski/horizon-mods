@@ -31,9 +31,25 @@ categories = ["utility"]
 tags = ["port", "horizon"]
 
 [[versions]]
+version = "0.2.4"
+published = "2026-11-21"
+game = "26.3"
+file = "enderstorage.hmod"
+sha256 = "6509360807e1711a0bd2c2b77859f348926060895764f16d023b485721d9b5a7"
+changelog = """Two inventory-loss repairs. A stack of empty buckets now drains one bucket and keeps the rest of the stack, where the old path replaced the whole held slot with a single item and seven buckets vanished. And a tank placed on a stocked frequency no longer erases the shared fluid: the merged tank and the obligation to write it are one value, so the snapshot is only ever what the entity holds. A third defect surfaced while proving the first: the click path ran a second exchange on the already-swapped hand, duplicating a bucket, so the swap now happens in the bucket item phase where it belongs."""
+
+[[versions]]
 version = "0.2.2"
 published = "2026-11-10"
 game = "26.3"
 file = "enderstorage.hmod"
 sha256 = "38aa56337e172376ca638088617f26e40a728781e6303ea38a11fccfd5d586ac"
 changelog = "Review fixes: sibling-mirror commit and reach-gated readout, hand exchange in the tank transaction, and the load-time double Part attach. The tank fluid gap at 0b14f8a is now measured and stated."
+
+[[versions]]
+version = "0.2.3"
+published = "2026-11-21"
+game = "26.3"
+file = "enderstorage.hmod"
+sha256 = "9ad59a8b9d0981471497eea8e26196b1b1460e0327b7bb298148c3229a8f62b7"
+changelog = """Carry-dialect repair: two recipes were in the 1.21.1 object ingredient form 26.3 rejects, so the ender chest and the tank could not be crafted at all. Converted to bare ids. Proven in game: `ender_chest` crafts with its ender pearl consumed and the grid emptied. Both loot tables were already in the 26.3 shape and are untouched."""

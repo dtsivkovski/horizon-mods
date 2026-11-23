@@ -1,0 +1,24 @@
+id = "ender_undertow_focus"
+kind = "shader"
+name = "Ender Undertow Focus"
+summary = "Optional teleport blur and warble for Ender Undertow Cinematic. Your sight clears from the center outward."
+description = "Focus adds a brief screen effect to the Ender Undertow teleport. The cave wavers, then sharpens from the center out. Outside the encounter it passes the scene through unchanged. [Watch the animated effect on a still cave scene](https://github.com/Fnux8890/ender-undertow/blob/23b193cc5d7c5e100919fe6612bdd8e7e4854fc4/media/listings/focus-recovery.gif).\n\nThe targeted Horizon 26.3 Nightly lets you select one shader pack at a time. Select Focus for this effect, or keep your usual shader selected to play the encounter with its camera turn, hand motion and color fade.\n\n**Installing Ender Undertow on Horizon 26.3**\n\n- [Ender Undertow](https://playhorizon.dev/mods/ender_undertow) — World data pack for the mining and teleport encounter. It works on its own.\n- [Cinematic](https://playhorizon.dev/mods/ender_undertow_cinematic) — Native mod for the camera turn, lowered hands and color fade. Install on the host and each participating client, then opt in with `/trigger eu.scene set 1`.\n- [Resources](https://playhorizon.dev/mods/ender_undertow_resources) — Client resource pack for the Gentleman’s voice and wardrobe and the lingering portal sound. Enable it in Resource Packs.\n- **Focus** (this listing) — Optional client shader for blur and warble during the cinematic. Select it in Shader Packs.\n\n[Download all four in one ZIP and see installation instructions](https://michado.dk/projects/ender-undertow/#install)."
+authors = ["Fnux8890"]
+owners = ["Fnux8890"]
+owner_ids = [21344589]
+license = "MIT"
+icon = "icons/ender_undertow_focus.png"
+screenshots = ["screenshots/ender_undertow_focus/recovery.jpg"]
+categories = ["atmosphere"]
+tags = ["enderman", "mining", "survival", "teleportation"]
+key = "RWTXlLLUSOJS7XRVRqmgOEH3c0rwDY/1CqXd64/Debkiy6bJOe0mzt4K"
+source = "https://github.com/Fnux8890/ender-undertow/tree/2c5491918c87dcce0e9e8ae3527d238beb14da5f"
+
+[[versions]]
+version = "0.1.1"
+published = "2026-11-21"
+game = "26.3"
+file = "ender_undertow_focus.hshader"
+sha256 = "a222505a3d39ceca10e8aee107e40c60196afa6cceab6cf8bdbcbf4ecb200024"
+changelog = "Cinematic beta with the full MIT notice in this standalone download."
+signature = "untrusted comment: signature from minisign secret key\nRUTXlLLUSOJS7QJU6zAkaxerMFyYIN/IGZUj02JtbL6+zqfAeq+/A5nSKZpSokYpSbiQvBnTUQvM02cFBmTJr/F5A+3xU+mlbQk=\ntrusted comment: timestamp:1795292611\tfile:ender_undertow_focus.hshader\thashed\nJFbd/9ciHCjRtJh5aJhLL9I1UqaZY/OHSbOLmXX3/TBI/Tul7TM5vbDfvRFPHUoXqUJakw9kaEu+/TohYbzOAg==\n"

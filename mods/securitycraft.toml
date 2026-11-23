@@ -31,9 +31,25 @@ categories = ["game-mechanics", "utility"]
 tags = ["port", "security", "keypad", "door", "redstone"]
 
 [[versions]]
+version = "0.2.4"
+published = "2026-11-22"
+game = "26.3"
+file = "securitycraft.hmod"
+sha256 = "eb42fd50fa0b81da38a083b2dd0c6b25847133d4aa8705469f15992b07679b91"
+changelog = """Slice 4, the owner gate on setting a code: a keypad's code can now only be set by the player who owns it, at the moment the set screen would open and again when the code is submitted, which is the reference's two checks rather than one. Proven in game with the three refusals and their reasons: a stranger's right click opens no screen at all, a stranger's submit stores nothing, and a stranger's command answers that only the owner may set the code, while the owner's submit sets it and the check reads back. A keypad with no owner matches nobody, which is recorded rather than guessed. The testing needed a harness-only command that puts a stranger's identity in front of the block, because a single-player run has only one player; that command is op-gated and exists only for the leg. This version also carries the lock file its declared dependency needs, and its own clean build compiles from the archive."""
+
+[[versions]]
+version = "0.2.3"
+published = "2026-11-21"
+game = "26.3"
+file = "securitycraft.hmod"
+sha256 = "978a23652d2580b7e0486ff0d7f819c20330593fff3ab140edde5ef1f19e7112"
+changelog = """Three review fixes. The package now ships the Cargo.lock its declared sha2 dependency needs, proven by a clean build that refuses without it and compiles from scratch with it. An installed module survives a removal that is not a loot roll: a level-side write removes the block entity without calling the removal hook, so the module list is kept while the block stands and the drop is queued from the only notice every path reaches, then spawned after the tick. And the upstream MIT copyright line is kept verbatim above this port's own. Credit: a port of SecurityCraft by Geforce, bl4ckscor3, Redstone_Dubstep and ChainmailPickaxe, https://github.com/Geforce132/SecurityCraft."""
+
+[[versions]]
 version = "0.2.1"
 published = "2026-11-09"
 game = "26.3"
 file = "securitycraft.hmod"
 sha256 = "9bb21d4c189066b6b1720f8df235b3056e0d0047586b59f260a04c0aed490830"
-changelog = "First release"
+changelog = """First release"""

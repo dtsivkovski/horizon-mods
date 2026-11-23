@@ -1,0 +1,52 @@
+id = "stepcrafter"
+kind = "native-mod"
+name = "stepcrafter"
+summary = "A Horizon port of stepcrafter."
+description = """
+A port of [Step Crafter](https://github.com/starforcraft/Step-Crafter) by Ultramega (Starforcraft).
+
+The first port of Step Crafter, and it opens with the family the mod exists for: a machine that keeps a stock of one target item inside a minimum and maximum band by crafting one step at a time from its own inventory. Set the target and the band, load the ingredients, and it crafts until the maximum and then holds rather than overshooting; empty one ingredient and it reports not enough ingredients and resumes when the stock returns. Proven in game across a full band and a half one: a zero to sixteen run in steps of four consumes exactly four coal and four sticks and holds over sixty more ticks, taking eight torches moves them to the inventory, and a sixty-four to one-hundred-and-twenty-eight band fills to one hundred and twenty-eight with the active state reading true while running and false when idle. A survival break drops the machine and spills its eight torches, a non-operator is refused, and the carried recipe crafts with its ingredients consumed while a wrong grid makes nothing. Two things were only visible in game and are recorded rather than hidden: a stock kept in the block entity's own saved compound was lost between ticks, so it moved to a container the engine owns, and a moved machine must be re-targeted because a container block lets the engine spill rather than carrying a payload. The parts that need the parent's autocrafting network are recorded as blocked with their symbols instead of being shipped inert.
+"""
+authors = ["AdLf0208"]
+owners = ["AdLf0208"]
+owner_ids = [107615167]
+license = "MIT"
+source = "https://github.com/AdLf0208/stepcrafter"
+icon = "icons/stepcrafter.png"
+categories = ["utility"]
+tags = ["port", "horizon"]
+
+[[versions]]
+version = "0.2.7"
+published = "2026-11-23"
+game = "26.3"
+file = "stepcrafter.hmod"
+sha256 = "968321fd7ef5c64b9825fbe4eb87a1b0c4910512cab89f1d5ebe27f225c24bbc"
+changelog = """This version gives the crafter a work queue, so two requesters asking the same machine for different things each get their own share instead of one anonymous count. The reference's shape backs it — every request becomes a task with its own remaining amount, and a failed task belongs to the requester that asked. The queue is ordered by requester position and then by item, so two askers in the same tick cannot race for the head; the head is spent one step per tick and credited to its own asker; a refused ask keeps its place and only its asker reports the refusal and times out. Proven in game on exactly that: after forty ticks the first requester reads four served and one queued while the second reads zero served and one queued, and after a two-step restock the first reads eight and the second four, with the crafter naming both asks and the single serve beside them. The older single-ask field is dropped on write because it is operational state — the asker simply re-asks."""
+
+[[versions]]
+version = "0.2.6"
+published = "2026-11-23"
+game = "26.3"
+file = "stepcrafter.hmod"
+sha256 = "6463ca1d05de67a3a2d6d890a76658b672e98aad82b655ff7b65479c4ea251b9"
+changelog = """This version gives the requester a screen, so a player edits its filter entries by clicking rather than by typing commands, and the screen and the command write the same saved container. The surface was measured before anything was written: a menu declared as a menu type in the package's data, a screen part that draws cells and numbers, button presses for stepping an amount, and data slots that are a view of the saved compound rather than a second source of truth. Proven in game: a right-click opens the container, a carried torch clicked onto a cell becomes an entry with its band, raising the minimum past the maximum is refused, clicking a second carried item repoints the cell and keeps the band, the screen's remove button drops the entry, a command adding an entry shows up as two, and a requester that was never opened reads zero. Four traps cost runs and are recorded: the engine opens a mod container's menu for nobody so the machine must ask, the menu field must name a declared menu type, a panel taller than the screen is clipped and its clicks land elsewhere, and the harness numbers slots from the hotbar.
+"""
+
+[[versions]]
+version = "0.2.5"
+published = "2026-11-23"
+game = "26.3"
+file = "stepcrafter.hmod"
+sha256 = "70e238c3a262ee33e31db0ab10afc44dc14e7655189a258fc56b411413b34525"
+changelog = """This version gives the requester the forty-five filter entries the reference keeps rather than the one this port had, so a single requester can ask several crafters for several different things in the same tick. Each entry carries its own band, batch, phase and link, read back as one line per entry, and the saved form is migrated from the single-entry shape the previous version wrote. Proven in game with two crafters in reach of one requester: the torch entry is served by the crafter at one position and the stick entry by the crafter at another, each reading its own crafted count, while the same world with only the torch entry leaves the stick crafter at zero. One correction from the artefact: the brief said to stock the stick crafter with planks, which is a tag and not an item at this version, so the container silently took nothing and the machine could not step; the leg now names oak planks and asserts the stock before the filters run.
+"""
+
+[[versions]]
+version = "0.2.4"
+published = "2026-11-23"
+game = "26.3"
+file = "stepcrafter.hmod"
+sha256 = "675a229bb84827f55df67283c3b0080f1c489c0144a0b9e30966d8ad5a33e33e"
+changelog = """This version closes a silent-loss path in the step rather than a single case. The machine's room model counted a slot holding a named stack of the result as room for a plain one, so a step could be taken and counted while the result could not actually merge, and the items simply vanished. A slot now knows whether it accepts a plain insert, and that flag is derived from the same predicate the insert itself uses, so the model and the merge cannot disagree. Beyond that, applying a craft is a dry run committed only if every insert went in whole: the ingredients, the result and each remainder are simulated through the real merge rule on a copy, and nothing is consumed unless all of it fits. Proven in game on both sides of one inventory: a machine holding a named torch stack refuses the step, reports a full network and leaves all seventeen hundred and twenty-four items in place, while the same machine with a plain stack of the same count crafts four and consumes exactly what it should. A manual step's refusal is now recorded in the same phase field a tick-driven attempt uses, so the readout says where the last step left the machine instead of always reading idle.
+"""

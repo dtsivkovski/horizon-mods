@@ -17,7 +17,7 @@ A port of [Baubley Heart Canisters](https://github.com/Traverse-Joe/Baubley-Hear
 - **Soul canisters count.** `getHeartCount` sums every stored canister, including the soul slot, so soul contributes 2 health each.
 - The amulet, the belt and the soul-heart variants beyond the canister are later slices.
 
-MIT: the original copyright and licence travel inside the bundle, not only in the source repository. Pinned to Horizon 1d63e0a and horizon-mixins 5a64af93.
+MIT: the original copyright and licence travel inside the bundle, not only in the source repository. Pinned to Horizon 0b14f8a and horizon-mixins e59da90.
 """
 authors = ["Traverse-Joe", "AdLf0208"]
 owners = ["AdLf0208"]
@@ -29,9 +29,33 @@ categories = ["utility"]
 tags = ["port", "horizon"]
 
 [[versions]]
+version = "0.2.3"
+published = "2026-11-22"
+game = "26.3"
+file = "bhc.hmod"
+sha256 = "2788a8aed2b919abbbdd33278ed31e4629f40f83265af6376ab60457fa2ff3ae"
+changelog = """Slice 4, the melted-heart chain: the items and recipes that turn a dropped heart into a permanent one, which is the mod's actual reward loop. Everything is vanilla data — four plain items, smelting and shaped and shapeless recipes, one tag — so no Rust rule changed and the smelting is served by the engine's own lookup. Verified in game from both sides rather than one: a heart enters the furnace and the read a little later still shows one in and none out, then the pair flips to none in and one out, with the same shape at each of the four cooking times, plus a stick in a lit furnace as the control that must produce nothing. The table legs use a different colour in the recipe's centre, which is what proves the hearts tag rather than one specific heart, and the six tier conversions run both ways with two negatives that consume their grid and yield nothing. Two of our brief's numbers were wrong and the artefact corrected them: the cooking times are a hundred through four hundred ticks rather than a single figure, and there are six conversions rather than three, so carrying three would have invented a one-way chain. One engine fact is recorded with it: the older object-shaped ingredients are dropped silently by the loader, so every carried recipe uses the plain string form."""
+
+[[versions]]
+version = "0.2.2"
+published = "2026-11-21"
+game = "26.3"
+file = "bhc.hmod"
+sha256 = "dc2e679ffa5ce5474caf14a9087806c46599859662dc5fcee4469f86462bf5ad"
+changelog = """The loot hook now reads the mob_drops gamerule itself, so a kill with the rule off adds no heart, and no rule refuses empty loot tables again."""
+
+[[versions]]
+version = "0.2.1"
+published = "2026-11-20"
+game = "26.3"
+file = "bhc.hmod"
+sha256 = "3668bc07a06008cb75401ccf05920e958983edeef098051b67022ce890fda406"
+changelog = """Slice 2 in game: the mob-drop miniature hearts now have a launcher leg — ten heart items giveable, the zombie dropping 2, the cow none and the warden 2/2/2/0, the canister recipe crafted with its ingredients consumed (and an undeclared pattern, plus a heart with no carried recipe, crafting nothing), and the canister's health table. Defect fixed: the loot_drops guard skipped every call with an empty table, which the engine documents as the case where the block or mob has none."""
+
+[[versions]]
 version = "0.2.0"
 published = "2026-11-10"
 game = "26.3"
 file = "bhc.hmod"
 sha256 = "b33bd4b13114f268c580a7c270627dbdcb516721d990cc071e2505e8ad6d5fb1"
-changelog = "First release"
+changelog = """First release"""

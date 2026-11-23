@@ -1,0 +1,14 @@
+# Owners whose native-mod updates may merge without a reviewer: GitHub's numeric user id, one a line, and after `#`
+# the login and why. Only main's copy counts (scripts/owner_update.py); the update must still be the opener's own
+# entry (owner_ids), and its whole package must pass tools/native-subset while NATIVE_AUTO_MERGE is `on`.
+#
+# Seeded 2026-11-21 from main's history: openers with five or more native-mod pull requests that a reviewer merged
+# (opened by the account itself, its id in the entry's owner_ids at the merge, merged by someone else). Remove a
+# line to stop it; revoked.toml and owner-transfers.txt stop one mod.
+107615167 # AdLf0208: 137 reviewed native-mod merges
+38075742 # lavoide: 27
+354832816 # voltzz900: 7
+86315101 # selfmonoraque5: 7
+209812745 # Sparticle62ops: 6
+332662152 # tariksabanuz: 6
+203141410 # umbx-dot: 5

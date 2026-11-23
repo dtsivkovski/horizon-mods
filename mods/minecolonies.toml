@@ -31,9 +31,33 @@ categories = ["utility"]
 tags = ["port", "horizon"]
 
 [[versions]]
+version = "0.2.7"
+published = "2026-11-22"
+game = "26.3"
+file = "minecolonies.hmod"
+sha256 = "63825cc5327a584ca837f0f2d0ee428cfc737d11122a993645a2e869aea0ac92"
+changelog = """Slice 5, the food request: a citizen spends one point of saturation per work tick, stops working when it reaches zero, and the colony records a request for bread that one loaf from the chest settles. This is the request system's second family, and it uses the same machinery the tool request built: one saved field on the roster row, one request kind, one more branch of the delivery queue. Proven in game on the same tree: saturation falls from forty-six to forty-one over two hundred ticks while the tree still stands, then reaches zero and the citizen is hungry with one request naming the bread, and once the loaf leaves the chest the citizen reads fed, the request clears and the tree falls. The asset half is measured rather than asserted: a new provenance tool hashes every one of the jar's twenty-two thousand seven hundred and forty-seven files and every one of the port's twenty-five asset files, and reports zero matches, so the licence's no-copying requirement is checked by the same command every slice."""
+
+[[versions]]
+version = "0.2.6"
+published = "2026-11-22"
+game = "26.3"
+file = "minecolonies.hmod"
+sha256 = "bc41900e63fe6e766a6c188a065c865cc8dd49deda8b68ca7e0dcc9dd0f947b6"
+changelog = """Slice 4, the tool request: a worker needs its tool, the tool comes from the colony, and when it is missing the colony records a request and the worker does not work. A farmer needs its scythe, a lumberjack an iron axe, a miner an iron pickaxe; one matching item in the colony's chest is taken on the tick and put in the citizen's one held hand, and the request settles. This gives the carried scythe its first behaviour. Proven in game for all three jobs with their unarmed counterfactuals in the same run: a request line names the citizen and the item, the unarmed farmer leaves its crop ripe, the request clears when the scythe arrives and reads none, and the hand survives a relaunch; the lumberjack's tree stays whole for two hundred ticks until the axe is taken and then falls to four logs in the chest; the miner's column stays whole until the pickaxe arrives and then becomes an eight-deep shaft with eight cobblestone. Two defects were found and fixed: the saved-record decoder had stopped reading the logged and dug counters, so a colony's totals silently reset to zero on reload, and the harness planted a tree without asserting its soil so a lost command left a tree standing on air."""
+
+[[versions]]
+version = "0.2.5"
+published = "2026-11-21"
+game = "26.3"
+file = "minecolonies.hmod"
+sha256 = "9fbb989826e8b472ef026467286fc2af9b84b5b7134424a40e8235ba5043a635"
+changelog = """Slice 3, the two job buildings: a lumberjack's hut and a mine, so the two jobs added last time now have the building their own rule expects, and a citizen cannot be assigned a job whose building is missing. One marker type names the building, which is what lets one query answer for every job instead of special-casing the farmer. Proven in game with the refusal as the boundary: assigning a lumberjack with no hut is refused with a message naming the block and the colony, the same citizen then leaves a whole four-log tree standing over two hundred ticks, and with the hut placed the same tree falls to four logs in the chest with a sapling left on the stump; job info reads the hut present, and after the hut is broken in survival with an iron axe, which is needed because a creative break drops nothing, the drop is the hut itself and job info reads missing. The mine works the same way for the miner, whose shaft is one by one and eight deep with the bedrock untouched. Both recipes craft with their ingredients consumed and a wrong grid crafts nothing. The licence half is measured rather than asserted: all twenty-five asset files were hashed against all twenty-two thousand seven hundred and forty-seven entries in the jar, and none matched, with the generator re-rendering every one byte-identically."""
+
+[[versions]]
 version = "0.2.1"
 published = "2026-11-10"
 game = "26.3"
 file = "minecolonies.hmod"
 sha256 = "5c46f90c4e84c347eae117136235f97bb8c16febe1afd4d7d5a7a898f0d66186"
-changelog = "First release"
+changelog = """First release"""

@@ -36,3 +36,11 @@ game = "26.3"
 file = "industrialforegoing.hmod"
 sha256 = "c10182f32584e6522b274855f6c8331793421237112d87acf804a4fb17752ed7"
 changelog = "First release"
+
+[[versions]]
+version = "0.2.5"
+published = "2026-11-21"
+game = "26.3"
+file = "industrialforegoing.hmod"
+sha256 = "0876ea235c4fd196113992cd743c116d513add5e408e723dc2ec7bf34c7b2bad"
+changelog = """Slice 5, the dissolution chamber: the machine that gives the mod's whole item set a source, including the three higher machine frames and all sixteen lenses that until now could only be given as items. It has its own recipe type read as data, eleven slots, two fluid tanks and its own timing, and the fluids it needs are declared and written the way a mod fluid has to be at this pin, then proved through the declared capability rather than by reading the block entity. Proven in game end to end: twenty-three recipes load and the readout says so; two thousand millibuckets of latex enter the tank and answer through the capability; a white lens takes exactly a hundred ticks, spends exactly a hundred times ninety FE and two hundred and fifty millibuckets, and produces one lens from five consumed inputs; an empty tank leaves the recipe unstarted with its energy untouched, and filling it starts the run; a hopper empties the output into a barrel; the simple frame's three hundred ticks spend ninety FE a tick; and the advanced frame is made from the plastics tag, a crafted diamond gear and the simple frame, which is exactly the chain an add-on was waiting on. Two harness facts cost runs and are recorded: a container command writes the window's copy and never reaches a machine's server slots, and the End's mobs will kill the player mid-scenario unless difficulty is peaceful."""

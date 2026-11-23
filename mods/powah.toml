@@ -34,9 +34,84 @@ categories = ["technology", "game-mechanics"]
 tags = ["port", "machines", "energy", "power"]
 
 [[versions]]
+version = "0.2.13"
+published = "2026-11-23"
+game = "26.3"
+file = "powah.hmod"
+sha256 = "70f218d63974277c44b1d98fe6fd2a90b3fb131e45ecc212972ff532e3d9cf04"
+changelog = """This version gives every machine that has one a redstone mode: ignore the signal, which is the default, or run only while powered, or run only while unpowered. The reference's set is exactly those three and it is followed machine by machine rather than applied wholesale — eleven machines honour it and each gates the same thing the reference gates, so a cable refuses an insertion while a discharger's own item drain stops but its side extraction keeps running. The mode is saved where the reference saves it and not where it does not, so a broken machine's item carries its buffer and never its mode. Proven in game on all three modes and both polarities: a shut gate charges nothing over twenty ticks, the same rig charges again once the block is removed, ignoring the signal charges while the block is still there, and the powered and unpowered cases each behave as their own rule says. Five runs each caught a real defect, and they are recorded rather than smoothed over: a command word that was accepted but sent differently, a clamp that ran before the test item arrived, a foreign block answering a mode it has no field for, a shared channel that made a starter cell look wrong, and a pickup platform that had gone missing."""
+
+[[versions]]
+version = "0.2.12"
+published = "2026-11-23"
+game = "26.3"
+file = "powah.hmod"
+sha256 = "8b264c5d2e9a3da6073c9dc17229cd474d625ed63aabb56d6900922df5be951a"
+changelog = """This version adds the player transmitter and the binding card, so a machine can charge a player's inventory rather than a block beside it. The card is bound by using it, and the transmitter reads the name back and charges the bound player's items through their own energy handler at the tier's rate. Proven in game on the numbers: a card used from the hand binds to the operator and the transmitter names them; ten thousand in the buffer goes onto a cell item in that player's inventory and the transmitter reads exactly zero; a hundred thousand spends exactly five hundred a tick measured on the game clock, with the item gaining whole steps that add up against the same window; a blank card charges nothing and spends nothing; the nitro tier clamps two billion and names a million a tick. The slice also fixes a defect that predates it: a cable network rotated its starting port, so two storages on one cable ping-ponged the same charge and never equalized, which had also been making an older test pass or fail on which parity the harness happened to read."""
+
+[[versions]]
+version = "0.2.11"
+published = "2026-11-23"
+game = "26.3"
+file = "powah.hmod"
+sha256 = "49ba3462341a8460bd020a5e5816113a974be3fee78555d226eab4923b71612f"
+changelog = """This version adds the ender cell and the ender gate in all seven tiers, which are not storage blocks at all: the energy lives in a world-level store keyed by owner and channel, so every block on one channel is the same battery and a fill into one is a fill into all. That is why a broken cell carries nothing on its item and a relaunch loses nothing, which is the opposite of every storage block this port has built so far and is the reason the leg checks it by moving one cell to another channel and reading its peer unchanged. Proven in game on the numbers: two cells on one channel both read a hundred thousand and name their own tier's transfer, the moved cell reads zero on its new channel while its peer stays exactly where it was and finds the energy again when moved back, an extender gives the channel its own capacity, and a gate feeds only the face it faces at the cable's rate while the hopper behind it stays empty. One arithmetic error of my own was caught by the red: an expectation of four million and one against a value of four thousand and one, and the expectation was corrected rather than the code.
+"""
+
+[[versions]]
+version = "0.2.10"
+published = "2026-11-23"
+game = "26.3"
+file = "powah.hmod"
+sha256 = "13f0e7be10390536b39ae315d81878f257e5a5921f2cf7c071b45c60d6cfc9b4"
+changelog = """Slice 10, the solar panel ladder: seven tiers of panel that generate only when they can see the sky, in a dimension that has sky light, and in daylight — three conditions, each read from the game rather than assumed. The proof is built from differentials rather than a single positive: the panel gains one hundred and twenty energy over six ticks measured against its own clock, exactly twenty thousand from twenty of room and never above it, and holds five thousand unchanged for sixty ticks both under a stone and at midnight, which separates the sky from the day. Its buffer extracts through the bottom face only, so the cell underneath reads fourteen hundred and twenty while the cell beside it reads zero and the panel's own buffer stays empty. The nitro tier clamps two billion to forty million and names its two rates. Two defects the legs found are fixed: the shared push read its buffer through a face the panel does not extract on, so it pushed nothing downward, and my own craft-check data put panes in every tier's top row, which the table correctly refused. Every one of the seven drops itself and the pane and its recipes craft.
+"""
+
+[[versions]]
+version = "0.2.9"
+published = "2026-11-23"
+game = "26.3"
+file = "powah.hmod"
+sha256 = "387259ea8a3b6ce0975279cd4f4d67620d8c2fc11d1c634a76cc8113e32045f3"
+changelog = """Slice 9, the energy hopper in all seven tiers: a block with a keep-reserve and no slots of its own, which takes the container on the face it faces and charges the items inside it from its own buffer. The rule that makes it interesting is that the buffer and the per-item charge rate are different numbers, and the game leg proves the rate against the game's own tick counter rather than a sleep: seven ticks take three thousand five hundred from a starter hopper, which is five hundred a tick, and an item in a chest reaches exactly the amount the arithmetic predicts. Four counterfactuals sit in the same run: a hopper facing away leaves its container alone, an item with no energy buffer takes nothing at all, a machine with no mob or no fuel equivalent is irrelevant here because the hopper's own barrel reads zero and then five thousand, and a placed-back hopper keeps its stored charge. The seven tiers are carried with their own capacities and rates, and the tags accept the real blocks while refusing a position where nothing is.
+"""
+
+[[versions]]
+version = "0.2.8"
+published = "2026-11-22"
+game = "26.3"
+file = "powah.hmod"
+sha256 = "d152d396ff809f291b8bee6043f78ac1f1a23771a1b44dcfb6fb00c6f3b43950"
+changelog = """Slice 8, the energy discharger at all seven tiers: the mirror of the charge slot, a storage block that pulls energy out of the items in its seven slots through the item energy capability's extract side, which nothing had driven until now. Our brief had its capacity wrong and the artefact corrected it: a discharger uses the cell's numbers rather than the rod's, so the starter tier holds a million and transfers a thousand a side, and the measured line reads five thousand in the buffer with the item at zero. Proven in game against the block's own tick clock rather than a sleep: seven ticks moved seven thousand into the buffer with the item losing the same, the room arm stopped at a full buffer with four thousand nine hundred and eighty left on the item, a stone in the slot moved nothing, and the nitro tier reads two billion at two million a tick. A charged cell sitting beside one keeps its fifty thousand because the buffer is extract only, and all seven tiers drop themselves. The item draining goes through the item's own capability in a transaction at the end of the level tick, so a failed extract cannot lose or duplicate a charge."""
+
+[[versions]]
+version = "0.2.7"
+published = "2026-11-22"
+game = "26.3"
+file = "powah.hmod"
+sha256 = "8cf04f34e5135e4e07a66a516c42da11c2841e82f82458d63b3ae29a480269d3"
+changelog = """Slice 7, item energy: a machine broken in survival now carries its buffer on its own item and gives it back when placed, and a machine with a charge slot moves energy into the items you put there. Our brief named a symbol that does not exist at this pin and a capacitor that is not chargeable; the artefact corrected both, and the mechanism is the item energy capability, with the machine block items themselves being what charge. Proven in game with the numbers the differential needs: a furnator broken at five thousand places back at five thousand, a doctored item naming two billion clamps to the tier, a plain item places empty, and a cell carries its four thousand. The charge rate is measured against the game's own clock rather than a sleep: six ticks moved four hundred and eighty FE at eighty a tick with the machine losing exactly what the item gained, then the balance arm left the machine at zero with forty on the item, and the room arm stopped at a full item with nine hundred and twenty left over. Two defects in the reference are recorded rather than copied: it keeps an item's charge in one field while the placement reads a different one, so a machine charged in a slot used to give the placed machine nothing, and it believes a saved payload as written and per stack, which is how a two billion FE item was accepted."""
+
+[[versions]]
+version = "0.2.6"
+published = "2026-11-21"
+game = "26.3"
+file = "powah.hmod"
+sha256 = "3ab1b5b46df0285f14f5d8fd47367e1cd053cbf96e671bfe8e3bb2eca30ed358"
+changelog = """Slice 6, the two ladders completed: six more furnator tiers and six more cable tiers, so the furnator now runs from eighty FE a tick to forty thousand and the cable from two thousand to a million. Proven by reading every one of the fourteen numbers in game rather than by trusting the table: each furnator clamps at its own buffer under a request for far more than it can hold, each cable names its own rate in its readout, and the difference is observable through the blocks they feed, where a cell behind a starter cable takes five hundred a tick and the same cell behind a basic one takes a thousand. The nitro furnator is the one worth quoting, because its buffer was given exactly room for one coal so the read can be checked against the fuel rather than the machine: carbon reads eight thousand, not forty-seven thousand nine hundred and eighty. All eighteen new recipes craft with their exact outputs and ingredients consumed, and all twelve new blocks drop themselves. A selftest that demands the old rate fails, and the whole scenario on a game without the package fails at the first placement. Reactors stay recorded as blocked, because their fuel has no source in this pack at all."""
+
+[[versions]]
+version = "0.2.2"
+published = "2026-11-20"
+game = "26.3"
+file = "powah.hmod"
+sha256 = "9b600446d7457809af1583b3f478881de5b066add4035c0d18ba14ae414bcdf3"
+changelog = """Slice 2: the dielectric and capacitor family — six items and eight recipes — so the three carried machine recipes finally craft. The leg drives a real crafting table through all eleven: paste, rods, casing, both capacitors, the furnator, the energy cell and the cables, asserting each result's id and count and that every ingredient is consumed (the lava bucket leaving its bucket), with an off-pattern grid leaving the result empty."""
+
+[[versions]]
 version = "0.2.1"
 published = "2026-11-09"
 game = "26.3"
 file = "powah.hmod"
 sha256 = "698b63fb7880f84729dda23d0c9a14ccca091ebd595b97a7c56b977efc981670"
-changelog = "First release: slice 1 of the port, with the full licence and corresponding source in the port repository"
+changelog = """First release: slice 1 of the port, with the full licence and corresponding source in the port repository"""

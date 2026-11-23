@@ -30,9 +30,33 @@ categories = ["technology"]
 tags = ["port"]
 
 [[versions]]
+version = "0.1.4"
+published = "2026-11-23"
+game = "26.3"
+file = "refinedtypes.hmod"
+sha256 = "1c2b80ea37a1e52b7681f34e6dc5e180b738e66ef42e077d4cc867f52bd189df"
+changelog = """This version gives the network energizer the menu and the gauge the jar actually has, and the brief was wrong about which block had one: the only menu in the reference belongs to the energizer, so a storage-block menu would have been invented content. Getting the screen to draw took a measurement rather than a reading — opening the menu from the mod's own click gives a menu whose data slots sync but whose screen never appears, because the client builds a mod screen only when the block's own template class opens a menu. So the block is templated on a class that does, chosen for having no state properties of its own so the block's state stays the reference's alone. The gauge carries a number that does not fit a data slot, so it is split into four sixteen-bit limbs, exact for any value, and the leg reads them back as the stored and capacity figures it also prints. One defect in the reference is fixed rather than copied: the energizer reports its capacity as its stored amount, so its bar is always full; this port passes the network's real capacity and the gauge moves, which the leg measures as pixels against the trough."""
+
+[[versions]]
+version = "0.1.3"
+published = "2026-11-22"
+game = "26.3"
+file = "refinedtypes.hmod"
+sha256 = "9432dc8761476a9e266877631a02e3a55e94215259aad104ca7ddaaa4a7bd678"
+changelog = """Slice 3, the amount on the block's own item: a storage block broken in survival now drops an item carrying its stored energy, and placing that item restores it, clamped to the tier. The payload is built fresh rather than copied from the snapshot, which is what keeps container contents from being carried twice, and the restore is a placement hook because the engine's own path only merges a payload for a vanilla block entity type. Proven in game with the whole round trip and its two counterfactuals: five thousand deposited, broken with a pickaxe into one item whose components name the node and the amount, placed back reading five thousand of two hundred and fifty-six thousand, while a freshly given block reads zero, so the carried amount cannot be the default; a doctored payload naming nearly a billion clamps to the capacity. The 107 carried recipes still craft. Several harness facts are recorded with it, each of which cost a run: the build writes its artifact under the target directory and the port-root copy is the deliverable, a creative placement keeps the stack so the hand must be cleared before a doctored give, a bare-hand break outlasts the default command timeout, and endermen will kill a survival leg unless it runs under resistance."""
+
+[[versions]]
+version = "0.1.2"
+published = "2026-11-21"
+game = "26.3"
+file = "refinedtypes.hmod"
+sha256 = "5360468e99254658545ba986e0ec12fde04b4ab738a997121d66d5726cfbca34"
+changelog = """Slice 2, the recipe family: 107 of the jar's 109 recipes carried and converted to the 26.3 dialect — 27 blocks, 27 shaped disks, 27 shapeless housing-based disks and 26 parts — now that the parent mod ships the machine casing, the processors, the storage housing, the 1k part and the common tags they need. The two left out are left out with their reason printed rather than faked: the network energizer needs a parent block this campaign has not ported, and the 64b source storage part needs a namespace that is not in the registry. Proven in game: every one of the 107 crafts with its declared output and count and consumes its ingredients, and 107 deliberate wrong-ingredient controls leave the result empty, so the recipe list is not passing on a loose match. The jar's own 109 files were in the 1.21.1 object form the 26.3 loader rejects, which is what made them dead data in the first place."""
+
+[[versions]]
 version = "0.1.1"
 published = "2026-11-18"
 game = "26.3"
 file = "refinedtypes.hmod"
 sha256 = "9dcbbd3af28e7578e383858352d6f3ce3b8762470132857bd95cf2b15b264606"
-changelog = "First publication in the SDK format."
+changelog = """First publication in the SDK format."""

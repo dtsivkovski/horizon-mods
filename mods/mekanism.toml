@@ -30,9 +30,109 @@ categories = ["technology"]
 tags = ["port", "machines", "energy", "ore-processing"]
 
 [[versions]]
+version = "0.2.13"
+published = "2026-11-23"
+game = "26.3"
+file = "mekanism.hmod"
+sha256 = "4b5163cd96a7dcc53602f4de1ead2240e99534cd8fa182b37dd10317e2b77382"
+changelog = """This version completes the four metals: each gets a storage block, a nugget and the four recipes that connect them to its ingot, so nine ingots make a block and a block gives nine back, and an ingot makes nine nuggets. The shapes are the jar's own and they are not symmetric in the way the obvious version would be: the block is a ring of eight tag members around one of the metal, which looks redundant until you notice it lets the recipe accept any ingot the tag names, and there is no nugget-from-block recipe at all because the jar has none — so none is carried. Proven in game: all sixteen recipes craft with their grids emptied and their ingredients consumed, eight ingots and a dirt in the centre make nothing, all nineteen blocks place and read back and drop themselves, and no ingredient fails to resolve, which is the check that the tag-keyed cells actually read their tags. One thing deliberately not carried is the tool-tier tag: this build implements no tool tiers, so shipping it would be data claiming a behaviour the port does not have."""
+
+[[versions]]
+version = "0.2.12"
+published = "2026-11-23"
+game = "26.3"
+file = "mekanism.hmod"
+sha256 = "0b20e8dbdfd9f5c82bd721305b8b883664b12a35864c1fbcc5588d7d18bfdb71"
+changelog = """This version pays a debt rather than adding a family: the smelting table has been carried since the first slice and never exercised, and it now runs all hundred and sixty-three rows in game, with the four new ingot-to-dust crushing rows beside it, a hundred and fifty-six in all. The sweep is batched so a hundred and sixty-three operations take nine waits rather than a hundred and sixty-three, and a failure names the row's index and its input rather than only the count, because a count tells you that something broke and not what. Proven in game on both sides: three representative rows each spend exactly one operation's energy and empty their input, while a dirt in the same smelter holds its twenty thousand and produces nothing. The negative run flips the coal-ore row's output assertion, so the sweep can fail. One leg died inside another port's phase under contention and passed on re-run with no panic in its log, which is recorded rather than retried quietly."""
+
+[[versions]]
+version = "0.2.11"
+published = "2026-11-23"
+game = "26.3"
+file = "mekanism.hmod"
+sha256 = "e487f3aebb981725c422219904b3c89a0f4c845944efe437327a5e801c623f66"
+changelog = """This version completes the ore chain for four metals, which is mostly data and one sweep the campaign owed: it registers clumps, dirty dusts, dusts and ingots, grows the crushing table to a hundred and fifty-two rows and the enriching table to a hundred and thirty-six, and adds the port's first enriching sweep, so a hundred and thirty-two rows that had never been exercised in game now run. Proven in game along the whole path rather than at one step: a clump crushes to its dirty dust, that dirty dust enriches to its dust for exactly half of a twenty-thousand buffer, and that dust smelts to an ingot, with a dirt control that stays dirt and makes nothing. The sweeps print their own totals, which is what catches a table that quietly lost a row. Sixteen items and twelve rows is not much, but the sweep is: it converts a hundred and thirty-two unexercised rows into ones that fail loudly if they break.
+"""
+
+[[versions]]
+version = "0.2.10"
+published = "2026-11-23"
+game = "26.3"
+file = "mekanism.hmod"
+sha256 = "216345bbec2e6136e03284bf2f9927ba8506c57f6269ee1f488626603533368b"
+changelog = """This version carries the step from crystal to shard for all seven crystals, so the gas machine now runs seventy-nine rows instead of seventy-two and no crystal the crystallizer makes is left without its next form. The numbers are proved per operation rather than per outcome: one crystal and one unit a tick of hydrogen chloride spend exactly eighty thousand energy over two hundred ticks and leave the output slot holding one shard with the neighbour tank four units lighter, and the sweep runs all seventy-nine rows. One correction: the brief expected a buffer reading zero after an operation charged with a full tank, but one operation costs eighty thousand of a hundred and sixty thousand buffer, so the leg asserts the eighty thousand — which pins the operation's cost rather than a tank running dry. The optional dirty dust and dust items were refused with the reason measured: they would need clumps and ingots this package does not carry, and an enriching sweep the port does not have, so eight items would have been dead data at both ends.
+"""
+
+[[versions]]
+version = "0.2.9"
+published = "2026-11-23"
+game = "26.3"
+file = "mekanism.hmod"
+sha256 = "3f72a2acaeed253f580e975d3fb6a7cc376bca57732c535b6e5e470e1b08a025"
+changelog = """This version registers the four crystals the crystallizer could not make, so every slurry the washer can produce now has its own crystal. The washer and crystallizer already shipped; what was missing was the data, and the proof is the sweep rather than one machine: seven rows crystallize, two operations each, with the tank emptied and the buffer spent, and the game reads one of them end to end — one thousand clean lead in the neighbour tank, two iron crystals out, six hundred left. The table is regenerated from the jar rather than hand-written, and three recipes are still skipped because their outputs are not registered. One claim in the brief did not survive the artefact and is recorded as not ported rather than implied: the next step, crystals into shards, needs four shard items this port does not carry, so the chain closes at the crystal and the shard remains a named gap.
+"""
+
+[[versions]]
+version = "0.2.8"
+published = "2026-11-23"
+game = "26.3"
+file = "mekanism.hmod"
+sha256 = "ff719b859f3cc0ca810a86b4d01fa60f23cc00c66a9d37a0eeec24da3ade8945"
+changelog = """Slice 9, the chemical crystallizer: the machine that turns a clean slurry back into an item, and so the customer the washer was built for. The brief's arithmetic did not survive the jar: four hundred energy a tick, two hundred ticks and a one hundred sixty thousand buffer means one charge buys exactly two operations, not five, so the game leg proves the brief's claims with the reference's numbers — one charge gives two crystals, a second and a third charge carry it to five, eighty thousand alone gives one, and a dirty slurry gives nothing while spending nothing. One defect was found only in game: the machine ran once and then stalled, because the check for which slurry a slot wants treated a slot holding one material's crystal as a refusal for every other material, so a slot of iron crystal hid the iron slurry. The rule moved into the pure core where a test pins it, and four further operations in the same run are the proof. A harness collision is also recorded and fixed rather than re-run until it vanished: a hopper placed on a coordinate the persistence phase reads was overwriting that phase's machine.
+"""
+
+[[versions]]
+version = "0.2.7"
+published = "2026-11-22"
+game = "26.3"
+file = "mekanism.hmod"
+sha256 = "38a7bca520354e06932a914fbcd70adb0f2c2f12624b74598a855bcc4a7458a4"
+changelog = """Slice 8, the chemical washer: the port's first fluid machine, where a dirty slurry and five millibuckets of water become a clean one. The question the brief asked is answered before the build and it is the opposite of the chemical one: the pin's fluid capability is a shared resource type, so unlike a mod's own chemical it crosses packages and a real tank answers through the declared handler — inserted ten thousand, saved, and read back attributed to the game rather than to the mod. The numbers are the jar's own, re-read for this machine rather than carried from its siblings: two hundred FE a tick, eighty thousand of buffer, two hundred ticks, ten thousand of each tank, and the water and slurry spent at the finish rather than per tick, which a mid-operation read confirms by still holding all thousand. Proven in game with one operation charged exactly and the rest of the brief's figures kept: the buffer empties, the output holds one clean iron, the water tank sits at nine thousand nine hundred and ninety-five, the machine's input is empty, and the neighbour tank falls by the unit it is about to spend. All seven washing rows sweep, and the fluid and chemical worlds are kept apart both ways: water is unknown to the chemical handler and there is no fluid handler where the chemical one lives."""
+
+[[versions]]
+version = "0.2.6"
+published = "2026-11-22"
+game = "26.3"
+file = "mekanism.hmod"
+sha256 = "6633dde7616f86fb8d8a6baad3cbaa1f842d977ae500a207000345a8a8b60e67"
+changelog = """Slice 7, the basic factory family: five machines that run the same recipe three times side by side, one input and output pair per process, sharing a buffer and, for the two gas machines, one tank. Every number was re-read for this family rather than carried from its single-machine sibling, including the buffer formula that multiplies by the process count, which gives thirty thousand for the three-item factories, a hundred and twenty thousand for purification and two hundred and forty thousand for injection, and a gas tank of two hundred and ten per process. Proven in game: three iron ore in three processes make nine clumps and empty both the buffer and three ticks of gas per process, while one ore in one process makes three; forty thousand FE charges exactly two hundred ticks without finishing an operation, which is the shared buffer being paid per working process; and the item factories take three ore to three ingots with the buffer emptied. A real defect surfaced that the unit tests had not caught: the factory drew its neighbour's gas while unpowered, so the gas ask now counts only the processes the tick can pay for and is pinned by two tests."""
+
+[[versions]]
+version = "0.2.5"
+published = "2026-11-21"
+game = "26.3"
+file = "mekanism.hmod"
+sha256 = "ac8289c802ffdba25a1b3f7a96fea5c0904b8c7a65d20ca49417dea6f9363828"
+changelog = """Slice 6, the purification chamber: the middle of the ore chain, where a raw ore and oxygen become three clumps. It is the same machine shape as the injection chamber but its numbers are its own, read rather than carried over: two hundred FE a tick rather than four hundred, eighty thousand of buffer, and a whole operation is forty thousand. Proven in game with three counterfactuals in one run: four thousand oxygen in a tank turns one iron ore into three clumps for exactly forty thousand FE and leaves the tank at three thousand eight hundred, which is the per-tick draw times two hundred; with no tank beside it the chamber sits full and the ore untouched; with a hydrogen chloride tank, which is the injection chamber's gas, nothing moves and the tank is untouched. The chain is proved end to end as the data declares it rather than as our brief guessed: the clump crushes to a dirty dust and the dirty dust enriches to a dust in the enrichment chamber, while this chamber given a dirty dust sits at eighty thousand FE with an untouched input, which is the counterfactual that proves the two machines are not interchangeable. Fifteen purification rows ran, and the crusher and injecting sweeps still pass at a hundred and forty-eight and seventy-two."""
+
+[[versions]]
+version = "0.2.4"
+published = "2026-11-21"
+game = "26.3"
+file = "mekanism.hmod"
+sha256 = "dc37efbcea33fc5e7c0feb26fa2a126f947b107aa566dd90dc9cd91df49dac6c"
+changelog = """Slice 5, the chemical injection chamber: the consumer half of the capability slice 4 published, so a machine now pulls gas out of a neighbour's tank through the key on its tick and turns ore into shards with it. Two numbers were read from the artefact rather than assumed: the raw iron row wants hydrogen chloride and not hydrogen, which makes hydrogen a useful wrong-gas control, and this machine costs four hundred FE a tick rather than the fifty of its siblings, so an operation is eighty thousand, and the cell draws one tick's gas two hundred times, so a whole operation empties two hundred times the per-tick amount. Proven in game with three counterfactuals in the same run: a tank of four thousand hydrogen chloride turns three raw iron into eight shards and ends at three thousand eight hundred, which is exactly two hundred times the row's per-tick; with no tank beside it the chamber sits at zero progress with its energy untouched; a tank of oxygen behaves the same; and a hydrogen tank is left alone. All seventy-two carried rows ran, and each drew exactly its own per-tick amount from the tank, which is the assertion that would fail if the pull were inert. The limit found in slice 4 holds and is recorded rather than worked around: the provider and the consumer here are the same crate's tank and chemical type, which is why this draw resolves."""
+
+[[versions]]
+version = "0.2.3"
+published = "2026-11-21"
+game = "26.3"
+file = "mekanism.hmod"
+sha256 = "5e304608de3b1094a2b9ce62b5fe9245299cc0587e4bacc44201b303cf8fd989"
+changelog = """Slice 4, the chemical capability: one resource, one published capability key, one block entity holding a tank and one item that carries a chemical. A basic chemical tank holds sixty-four thousand units and names them in its own saved data, and a gauge dropper takes two hundred and fifty units a call into its component, so a chemical can now be moved between a machine and a hand the same way items and energy are. Proven in game in five parts: the capability is published by name and lists Mekanism's thirty-two chemicals with hydrogen among them; an insert of four thousand units lands in the tank and reads back from the block data as the id and the number exactly; a partial drain takes two hundred and fifty of a thousand asked, leaving three thousand seven hundred and fifty in the tank and putting exactly two hundred and fifty on the item; an unknown chemical is refused by name and moves nothing; and the counterfactual against a block entity that answers items and energy but not this key finds no handler and no saved chemical. This is the surface two stopped add-ons were waiting for: the article of Mekanism's identity that this port had none of, noted in its own manifest as a gap for four slices."""
+
+[[versions]]
+version = "0.2.2"
+published = "2026-11-21"
+game = "26.3"
+file = "mekanism.hmod"
+sha256 = "d52219f7f369bded568a031d8a8e31d8e0a8a2cb8b0fc19bafe43112187d38f6"
+changelog = """Slice 3, the Crusher — the ore-processing machine that needs no new capability: 50 FE/t, a 20,000 FE buffer and 200 ticks (10,000 FE) per operation, from the jar's own config, carrying 145 of its 313 crushing rows (the rest need dusts this port does not register, and each skipped row is printed by the generator). Two defects found while carrying it, both fixed. First: every shaped recipe in 0.2.x used the 1.21.1 `{"item": …}` ingredient form, which 26.3 rejects — all four existing recipes and the new one could not craft at all; they now use bare item ids and are proven in game. Second: the local `Stack` and `Recipe` types shadowed SDK names, so the `uses` table claimed SDK types the port never used and `fits` against a different build failed; renamed `ItemAmount` and `MachineRecipe`, and the table is now true. Proven in game: cobblestone becomes gravel with the buffer at 0 after exactly one 10,000 FE operation, all 145 rows crush in a sweep, an uncharged crusher does nothing, and dirt with no recipe burns nothing."""
+
+[[versions]]
 version = "0.2.1"
 published = "2026-11-09"
 game = "26.3"
 file = "mekanism.hmod"
 sha256 = "2cf935e4b568d876535fafec9f0eb7c7aaf8c851ff30f424e1931b993ec76c5a"
-changelog = "First release"
+changelog = """First release"""

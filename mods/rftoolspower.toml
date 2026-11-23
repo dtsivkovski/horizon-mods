@@ -1,0 +1,84 @@
+id = "rftoolspower"
+kind = "native-mod"
+name = "rftoolspower"
+summary = "A Horizon port of rftoolspower."
+description = """
+A port of [rftoolspower](https://github.com/McJtyMods/RFToolsPower) by McJtyMods. The generator and monitor recipes use RFTools Base ingredients, provided by `rftoolsbase` 0.2.2 on the matching SDK.
+
+The first port of RFTools Power, and it opens with the coal generator: a machine whose whole loop closes inside one block — fuel in, burn, FE out, and a `lit` state that mirrors the burn. Upstream's numbers, not invented ones: 60 FE a tick, 600 ticks for a coal and 5,400 for a coal block, a 500,000 FE buffer, one insert-only slot. Proven in game across thirteen phases: a fresh generator reads 0 of 500,000 and unlit; one coal puts 780 FE in the buffer at 587 of 600 burn and empties the player's hand; the energy gain equals exactly sixty times the burn delta over fifty-three ticks; the store freezes when the burn ends; stone is refused and charcoal burns for its own 600; a hopper feeds the slot with no click at all; the full store survives a save and relaunch; and a generator broken in survival drops an item carrying its 3,000 FE, which restores on placing while a doctored 999,999 is clamped to the 500,000 ceiling. Two deviations are recorded rather than hidden: there is no GUI, so a right click fuels the machine, and the lit state is the same cube because the parent's glow overlay cannot run at this pin. The powercell family is recorded as blocked on the smart wrench, which the parent port does not carry.
+"""
+authors = ["AdLf0208"]
+owners = ["AdLf0208"]
+owner_ids = [107615167]
+license = "MIT"
+source = "https://github.com/AdLf0208/rftoolspower"
+icon = "icons/rftoolspower.png"
+categories = ["utility"]
+tags = ["port", "horizon"]
+
+[[versions]]
+version = "0.1.7"
+published = "2026-11-23"
+game = "26.3"
+file = "rftoolspower.hmod"
+sha256 = "15cc6d27279638fb67003d7a9492eb8dd21f87b1273025a433c4712121212bbd"
+changelog = """This version adds the blazing agitator, the machine that makes a rod better by standing it beside other rods. The reference's arithmetic is unusual and it is followed exactly: each rod's quality factor comes from its own quality and duration, each neighbour contributes the difference between its factor and its own, the sum is floored at one and divided by four, and that figure then drives time down and quality and duration up, so a full box beats a lone rod and the middle of a row beats its ends. Proven in game on the arithmetic rather than on a trend: the store falls exactly ten a tick over forty-seven ticks, the combined change across the whole box matches the machine's own readout to six decimal places, a lone rod rises at its own much smaller rate, a neighbour feeding it gains and loses exactly in step, outputs move in order, locks hold, a plain blaze rod converts, and an agitated rod leaves in a hopper. One defect only the game could show is fixed: a number stored as a double was read as a float, so a rod whose time read five hundredths came back as four and a half quintillion ticks. Two corrections from the artefact are recorded: a lone rod's factor is not one but a fifth, and the infuser's counter period is eleven ticks rather than ten."""
+
+[[versions]]
+version = "0.1.6"
+published = "2026-11-23"
+game = "26.3"
+file = "rftoolspower.hmod"
+sha256 = "7fe0e23708d8473564c53494f983c01bb9373fafdb8d551f7b8db5df0ae59a7c"
+changelog = """This version carries the blazing generator and the blazing rod, whose whole mechanic is a number in the rod's own item data: a rod starts at six units of energy a tick, climbs toward sixty over more than five hundred ticks, and decays once it leaves the slot. The ramp is proved by its own fold rather than by a rate: six point nine becomes seventeen point two over thirty-one ticks and the closed form predicts it to five decimal places. At sixty the generator makes exactly sixty a tick, a rod inserted into a full buffer takes it to exactly a million and is still burning, a hundred thousand is handed to a receiver in the same tick with nothing kept back, and a rod plus a generator both survive a relaunch. The component is a real registered type read from the delivered stack, not a lore string, and the in-game check reads it back with the generator consuming the same value. Two brief assertions were wrong and the artefact won: the four-hundred-tick rod never reaches its ceiling, and the block's click is owned by the global hook rather than the part, measured twice against two different templates.
+"""
+
+[[versions]]
+version = "0.1.5"
+published = "2026-11-23"
+game = "26.3"
+file = "rftoolspower.hmod"
+sha256 = "26485b9a8e5277bc248ad4a476e17b98cdcd3a1632e4718bb44d0b8909b614d6"
+changelog = """Slice 6, the power level display: a block that writes a redstone strength onto the face it displays on, in ten steps from empty to full. The brief's arithmetic was wrong and the artefact won: the reference multiplies by ten and divides, so a generator at half of its capacity reads five, not four, and the game leg pins five while the counterfactual keeps a deliberate four so the assertion can fail. Proven in game on all three readings plus a differential: empty reads zero, half reads five with a wire on the display face and nothing on the wrong face, and full reads nine because ten clamps. The block also answers a query at a position where there is no display, and its recipe refuses to craft with a wrong ingredient. The reference has the same face bug this family's other machine had — it answers redstone on one side and notifies another — so the port answers and notifies on the face it shows on.
+"""
+
+[[versions]]
+version = "0.1.4"
+published = "2026-11-23"
+game = "26.3"
+file = "rftoolspower.hmod"
+sha256 = "e1c6015697ba7825e07e6b58f0ca25daa89c7617c6880a90af4fec6968b1c9b2"
+changelog = """Slice 4, the ender monitor: the block that watches a pearl's journey and answers a redstone signal for exactly one tick, in one of three modes — the pearl lost, fired, or arrived. Proving a one-tick pulse needs a sample rather than a look, so the game leg samples sixteen consecutive server ticks around the landing and records the string, where the arrived monitor lights in exactly one of them and the same shot with the mode set to lost lights in none while still paying its energy; that pairing is the differential that makes the first claim mean something. Three further cases come with it: two notices inside one tick produce one pulse, a mis-facing monitor stays dark, and a survival break drops an item carrying the mode, which reads back after being placed again. One defect in the reference is fixed rather than copied: the generator answers its redstone through one face and notifies its display through another, so a lamp beside the monitor would never light; this port answers and notifies on the face it displays on.
+"""
+
+[[versions]]
+version = "0.1.3"
+published = "2026-11-22"
+game = "26.3"
+file = "rftoolspower.hmod"
+sha256 = "ab452bd8913d68820359293365a983d30d8c47bfa729bb2053c1039276c45af0"
+changelog = """Slice 4, the endergenic generator and the pearl injector: the mod's signature mechanic, where a pearl is fired at a generator and pays according to how far the generator has charged. Every figure is read from the reference's own configuration rather than guessed: the charging window is modes one through fifteen with everything else idle, the payment per mode runs from two hundred FE to twenty-five thousand six hundred with the mod's factor already applied, the flight time is a third of the distance plus one tick capped at four, and the loss chance is five in a thousand. Proven in game with parsed replies: a fired pearl arrives and pays exactly two hundred while the store moves by the gained minus the spent, the same shot against an idle destination drops the pearl and pays nothing with the reason named, and with no injector the charge runs and decays without earning anything. A hundred thousand FE next to the receiver hands over ninety-eight thousand and keeps two thousand as the reserve. A broken generator carries its three thousand and restores it, the monitor facing it reads the store, and the store, the arrival and the link all survive a relaunch."""
+
+[[versions]]
+version = "0.1.2"
+published = "2026-11-22"
+game = "26.3"
+file = "rftoolspower.hmod"
+sha256 = "989543d73da03afec9117d28ef3c4bf9175d55c03e2e5ce387461815622f6ebb"
+changelog = """Slice 3, the powercell: the mod's core storage, a block that holds five hundred thousand FE and shares it with its neighbours as one network. Its side faces default to none, so a fresh cell takes nothing until a face is set to input, which is upstream's own behaviour and the reason this family was blocked without the wrench: the stand-in is a command that sets one face at a time. Two numbers in our brief did not survive the jar and both made the port more faithful. A lone tier-one cell accepts two hundred and fifty FE a tick, not two thousand, because the reference caps what it receives by its own per-tick figure; the leg asserts the cell's gain and the generator's matching loss. And a tier-two cell beside a tier-one one does share the network, because membership is adjacency and the reference recurses without a tier test; the differential is a tier-two cell one block further away reading its own empty store. Proven in game across the sequence that matters: a fresh cell refuses a hundred thousand FE over forty ticks, one face set to input takes exactly two hundred and fifty a tick for thirty-eight ticks with the generator losing the same, and an output face likewise. Two defects only the game found are recorded: a pure item needs its own item declaration or a give refuses it while the recipe still crafts, and setting the same block again keeps its block entity data, which made one phase vacuous until it was cleared."""
+
+[[versions]]
+version = "0.1.1"
+published = "2026-11-21"
+game = "26.3"
+file = "rftoolspower.hmod"
+sha256 = "6df52b7421749bc7fea622dd3359e84ce3ff847ea2454d2ce9ef3ef79c2d15f5"
+changelog = """Slice 2, the power monitor: a block that reads the machine behind it every twenty ticks and shows how full it is, as a level state and as redstone, so a generator's charge is finally visible from outside. The ratio is the reference's own, one plus five steps of charge, and the bands are settable the way its GUI would set them. Proven in game across three readings and two controls: a generator at half its buffer reads level three, an empty one reads level one, and plain stone reads level zero because it is not an energy block; a band of forty to sixty lights the lamp at fifty percent and a band of ninety to a hundred puts it out; and the generator's own push, which this slice also adds, empties a hundred thousand FE into an adjacent receiver in two-thousand-FE steps while the monitor facing that receiver reads full. One limit is stated rather than papered over: a monitor has no buffer of its own in the reference, so the push is proven against a receiver that exists only in the test harness, and the delivered package invents no buffer to make the assertion easier."""
+
+[[versions]]
+version = "0.1.0"
+published = "2026-11-21"
+game = "26.3"
+file = "rftoolspower.hmod"
+sha256 = "33a0c6c0961bf39a86d1ef9ac613dd8a16050b4fd5ca18f4e7588f09450ecf99"
+changelog = """The first port of RFTools Power, and it opens with the coal generator: a machine whose whole loop closes inside one block — fuel in, burn, FE out, and a `lit` state that mirrors the burn. Upstream's numbers, not invented ones: 60 FE a tick, 600 ticks for a coal and 5,400 for a coal block, a 500,000 FE buffer, one insert-only slot. Proven in game across thirteen phases: a fresh generator reads 0 of 500,000 and unlit; one coal puts 780 FE in the buffer at 587 of 600 burn and empties the player's hand; the energy gain equals exactly sixty times the burn delta over fifty-three ticks; the store freezes when the burn ends; stone is refused and charcoal burns for its own 600; a hopper feeds the slot with no click at all; the full store survives a save and relaunch; and a generator broken in survival drops an item carrying its 3,000 FE, which restores on placing while a doctored 999,999 is clamped to the 500,000 ceiling. Two deviations are recorded rather than hidden: there is no GUI, so a right click fuels the machine, and the lit state is the same cube because the parent's glow overlay cannot run at this pin. The powercell family is recorded as blocked on the smart wrench, which the parent port does not carry."""

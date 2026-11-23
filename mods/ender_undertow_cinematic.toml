@@ -1,0 +1,23 @@
+id = "ender_undertow_cinematic"
+kind = "native-mod"
+name = "Ender Undertow Cinematic"
+summary = "Feel an underground Enderman lift you, turn you toward its scream and leave you blinking in another cave."
+description = "In multiplayer, install the native cinematic mod on the host and on each client that wants the cinematic. The host identifies the Enderman carrying the player so the client can follow it during the grab. Install the Ender Undertow beta data pack in the world, then opt in with `/trigger eu.scene set 1`. Add Ender Undertow Resources for voices and wardrobe, and Ender Undertow Focus for blur and warble. This native beta targets Horizon 26.3 Nightly 2026-11-20.\n\n**Installing Ender Undertow on Horizon 26.3**\n\n- [Ender Undertow](https://playhorizon.dev/mods/ender_undertow) — World data pack for the mining and teleport encounter. It works on its own.\n- **Cinematic** (this listing) — Native mod for the camera turn, lowered hands and color fade. Install on the host and each participating client, then opt in with `/trigger eu.scene set 1`.\n- [Resources](https://playhorizon.dev/mods/ender_undertow_resources) — Client resource pack for the Gentleman’s voice and wardrobe and the lingering portal sound. Enable it in Resource Packs.\n- [Focus](https://playhorizon.dev/mods/ender_undertow_focus) — Optional client shader for blur and warble during the cinematic. Select it in Shader Packs.\n\n[Download all four in one ZIP and see installation instructions](https://michado.dk/projects/ender-undertow/#install)."
+authors = ["Fnux8890"]
+owners = ["Fnux8890"]
+owner_ids = [21344589]
+license = "MIT"
+icon = "icons/ender_undertow_cinematic.png"
+categories = ["game-mechanics"]
+tags = ["enderman", "mining", "survival", "teleportation"]
+key = "RWTXlLLUSOJS7XRVRqmgOEH3c0rwDY/1CqXd64/Debkiy6bJOe0mzt4K"
+source = "https://github.com/Fnux8890/ender-undertow/tree/2c5491918c87dcce0e9e8ae3527d238beb14da5f"
+
+[[versions]]
+version = "0.1.0-beta.2"
+published = "2026-11-21"
+game = "26.3"
+file = "ender_undertow_cinematic.hmod"
+sha256 = "482d2af5617ff24b19b7a0ee541ff17d0810c88d420e44e4b3390b31b8850fc6"
+changelog = "Cinematic beta with the full MIT notice in this standalone download."
+signature = "untrusted comment: signature from minisign secret key\nRUTXlLLUSOJS7Y0wGbyOIWYiIjCCoDN1oDKV6PZ4PFzbcb/vyUei1EpGatCyRhc3vyNkLIWQCQ0hl/uZNNQlm4xVJNVFKbYknQ8=\ntrusted comment: timestamp:1795292611\tfile:ender_undertow_cinematic.hmod\thashed\nqZlGCxYogoqwbzef9YZ9FGrAinqRmvBTDfhx729PgHBgtIkwB6ryvalJ81o3FOH1+FDncz1gx0VO4//9SpHPCA==\n"

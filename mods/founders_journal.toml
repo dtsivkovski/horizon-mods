@@ -1,0 +1,30 @@
+id = "founders_journal"
+kind = "datapack"
+name = "Chapterloom: Founders"
+summary = "Optional settlement quests for Horizon 26.3. Recipes stay available unless a modpack author adds a quest requirement."
+description = """
+You can play Founders at your own pace. The chapter leaves your crafting recipes available even if you skip every quest.
+
+Start a settlement and follow its progress from a crafting table to tools, a hearth and fields. Obtain a crafting table to complete Set Up Camp and earn 10 XP.
+
+This download installs the Founders chapter data in your world. For the book and its Claim reward button, build the [matching Chapterloom runtime](https://github.com/Fnux8890/chapterloom/tree/v1.1.2-beta.1#build-the-beta-runtime). Press L to open it. Single-player works offline after setup. Multiplayer uses the same patched build on the host and clients.
+
+Modpack authors can choose which recipes require a completed quest. The second screenshot shows the Expert example, where completing Set Up Camp unlocks the blast furnace. Players can claim their reward later. [See the crafting rule and how to add it to a modpack](https://github.com/Fnux8890/chapterloom/blob/v1.1.2-beta.1/docs/quest-gated-crafting.md).
+"""
+authors = ["Fnux8890"]
+owners = ["Fnux8890"]
+owner_ids = [21344589]
+license = "MIT"
+source = "https://github.com/Fnux8890/chapterloom/tree/v1.1.2-beta.1"
+icon = "icons/founders_journal.png"
+categories = ["game-mechanics", "utility"]
+tags = ["quests", "progression", "settlement", "journal"]
+screenshots = ["screenshots/founders_journal/journal.png", "screenshots/founders_journal/expert-crafting.png"]
+
+[[versions]]
+version = "1.1.2-beta.1"
+published = "2026-11-20"
+game = "26.3"
+file = "founders_journal-1.1.2-beta.1.zip"
+sha256 = "e869b78fc0bfd0dec0b17bad5c228b9034a48c19b0abf15de68b2580702205b5"
+changelog = "First public beta of the Founders settlement chapter."

@@ -6,7 +6,9 @@ description = """
 A shader pack for Horizon (shader API 0.2) that turns the sky into a galaxy and brings weather, light and water to life.
 
 **Sky**
-- Night: a painted galaxy with glowing nebulae, a blue gas giant with four turning moons, twinkling stars, rare shooting stars, now and then a comet that stays for several nights, and an aurora in cold biomes.
+- Night: a painted galaxy with glowing nebulae, a blue gas giant with four turning moons, twinkling stars, rare shooting stars and an aurora in cold biomes.
+- The moon: a round, cratered moon with dark seas and real phases (full, half, crescent, new) instead of Minecraft's square one, with a soft terminator and earthshine.
+- Now and then a great comet that stays for several nights: a bright head in a green coma, a broad curved dust tail with striations and a faint blue ion tail.
 - Day: a deep blue scattered-light sky with volumetric clouds. Some days are clear, some overcast; clouds cast shadows and let sun shafts through their gaps.
 - After rain: rainbows (sometimes a double one), fog bows on damp mornings, rare solar and lunar eclipses with a corona.
 
@@ -34,6 +36,16 @@ icon = "icons/galaxy_sky.png"
 categories = ["fantasy", "atmosphere", "high"]
 tags = ["galaxy", "sky", "clouds", "planets", "stars", "water", "rain", "weather", "nether", "end"]
 screenshots = ["screenshots/galaxy_sky/1.jpg", "screenshots/galaxy_sky/2.jpg", "screenshots/galaxy_sky/3.jpg", "screenshots/galaxy_sky/4.jpg", "screenshots/galaxy_sky/5.jpg", "screenshots/galaxy_sky/6.jpg"]
+
+[[versions]]
+version = "1.1.0"
+published = "2026-11-22"
+game = "26.3"
+file = "galaxy_sky-1.1.0.hshader"
+sha256 = "2ef6c01f0bc508aba4aec90b81b43efe25c94451ed644dbb18407ac9dc97f084"
+changelog = """
+- A round, cratered moon with real phases instead of Minecraft's square moon, with a soft terminator and earthshine.
+- A fuller comet: a broad, curved dust tail with striations, a green coma and a faint blue ion tail."""
 
 [[versions]]
 version = "1.0.0"

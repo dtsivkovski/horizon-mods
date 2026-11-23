@@ -1,0 +1,31 @@
+id = "skinsrestorer"
+kind = "native-mod"
+name = "SkinsRestorer"
+summary = "Players change their skin on a Horizon server; the signed textures property is replaced before login."
+description = """
+SkinsRestorer lets players on a Horizon server change their skin. A stored skin replaces the player's signed `textures` property at login, before the server sends the profile, so the player's own client and everyone in the player list see it.
+
+- `/skin set <name>` resolves a Minecraft account through the game's own profile resolver and stores its signed skin.
+- `/skin clear` restores the player's own skin; `/skin update` refreshes the stored name; `/skin` shows what is stored.
+- Operators can set or clear another player's skin.
+
+The lookup runs in the background on the server tick, so the server never waits on Mojang. Skins are stored in `config/skinsrestorer/skins.json`.
+
+This is a server-side native mod for the Horizon mod API. It is made for Nightly `8f83e5c` (2026-11-21), the first signed build with the `player_login_profile` hook and the `profiles` service from horizon-rust/horizon#18587. It is based on SkinsRestorer and licensed under GPL-3.0.
+"""
+authors = ["cakePhone"]
+owners = ["cakePhone"]
+owner_ids = [82392894]
+license = "GPL-3.0-only"
+source = "https://github.com/cakePhone/SkinsRestorerHorizon"
+icon = "icons/skinsrestorer.png"
+categories = ["utility", "social"]
+tags = ["skin", "skins", "cosmetic", "appearance", "profile", "textures"]
+
+[[versions]]
+version = "1.0.1"
+published = "2026-11-21"
+game = "26.3"
+file = "skinsrestorer-1.0.1.hmod"
+sha256 = "88b5e18161d9b98a1c31be8f3425624c16e612dd31aa22ba3dfc7f1d9b7946cc"
+changelog = "Built against Nightly 8f83e5c, the first signed SDK with the player_login_profile hook and the profiles service. Adds the cross-build uses table generated from that build's surface. Same /skin commands and login-time skin replacement."

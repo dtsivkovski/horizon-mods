@@ -49,3 +49,11 @@ game = "26.3"
 file = "vivid_horizon_raytracing-0.9.0.hshader"
 sha256 = "112f9feb66d41930d5eae4917726060fcd1e48161427631f37f1403f13f83071"
 changelog = "First beta release."
+
+[[versions]]
+version = "0.9.1"
+published = "2026-11-21"
+game = "26.3"
+file = "vivid_horizon_raytracing-0.9.1.hshader"
+sha256 = "18df11a11e8d7856358657f9ba772a64d9716322ae19ebc1c6c66ebde5a6fad1"
+changelog = "Fixes streaked, stretched bands when the resolution scale is below 100 percent. Water keeps its waves, sky and sun mirror and depth when ray tracing is off (a GPU without ray queries, or a game not restarted after picking the pack)."

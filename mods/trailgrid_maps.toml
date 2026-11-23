@@ -1,0 +1,85 @@
+id = "trailgrid_maps"
+kind = "native-mod"
+name = "Kadir's Map"
+summary = "Explore with a configurable minimap, a persistent world map, waypoint groups, and entity radar."
+description = """
+Explore with a minimap and a world map that remembers visited terrain. Find waypoints by name, organize them into groups, and jump to their map locations from the waypoint list.
+
+- **M** opens the world map, **N** opens the waypoint list, **K** adds a waypoint, and **Y** opens minimap settings. The waypoint panel opens from the bottom-right corner of the world map.
+- Filter waypoints by dimension, share waypoint links, and enable automatic death waypoints. Import tools read supported map, settings, and waypoint formats from existing Xaero data.
+- On servers, the map can select a different terrain cache and waypoint list when the server reports a distinct world. Choose or bind a map manually in **M → Server worlds**.
+- Right-click the world map to build it from the generated chunks of a local save or a copy of a server save. Mob icons use textured 3D models.
+- In 0.1.11, **F2** edits the selected waypoint and **/mapdeaths** shows recent death waypoints.
+- English is the default. The interface also follows supported game languages.
+- Requires Minecraft Java Edition 26.3 and the matching Horizon Nightly. Use 0.1.17 for the November 22 build `f1bb66f`, 0.1.13 for the November 22 build `2b77287`, 0.1.10 for November 21 (`8f83e5c`) or 0.1.0 for November 20 (`0a875da`).
+
+Based on [Minimap, Worldmap and waypoints reworked](https://github.com/Gurov08ruS/Minimap-Worldmap-and-waypoints-reworked) by daniliammo and Gurov08ruS.
+"""
+authors = ["Kadir (maintainer)", "daniliammo (upstream)", "Gurov08ruS (upstream)"]
+owners = ["groznen95"]
+owner_ids = [273570573]
+source = "https://github.com/groznen95/trailgrid"
+license = "GPL-3.0-only"
+icon = "icons/trailgrid_maps.png"
+screenshots = [
+  "screenshots/trailgrid_maps/settings.png",
+  "screenshots/trailgrid_maps/waypoints.png",
+]
+categories = ["utility", "adventure"]
+tags = ["map", "minimap", "navigation", "waypoints"]
+
+[[versions]]
+version = "0.1.17"
+published = "2026-11-23"
+game = "26.3"
+file = "trailgrid_maps-0.1.17.hmod"
+sha256 = "53ac3e7f20d9475c4544eee1e127e2f2d7b120e56312841c3ddf505409295e96"
+changelog = "The surface world map tilts in place past 4× zoom. Right-drag to rotate or change pitch, and use the mountain button to return to the overhead view. Adds higher-detail terrain at close zoom and refreshes Horizon SMP claims on server confirmation. Keeps existing caches and waypoints. Requires Horizon Nightly 2026-11-22 (f1bb66f)."
+
+[[versions]]
+version = "0.1.13"
+published = "2026-11-22"
+game = "26.3"
+file = "trailgrid_maps-0.1.13.hmod"
+sha256 = "c53d3832280c135ac5aa23a2e826efc3ca81bf135da8d47e1e19b8f6babb856c"
+changelog = "Search every settings tab with Ctrl+F or Command+F. At larger GUI scales, use Share to copy, paste, or open a waypoint link in chat. Keeps your existing map cache and waypoints. Requires Horizon Nightly 2026-11-22 (2b77287)."
+
+[[versions]]
+version = "0.1.11"
+published = "2026-11-22"
+game = "26.3"
+file = "trailgrid_maps-0.1.11.hmod"
+sha256 = "b4af157c2f34f1bfd8afee8ef719af0a9acfb7bdd9c2db757dd11b3dd0c15945"
+changelog = "Builds on Horizon Nightly 2026-11-22 (2b77287). Adapts saved map terrain to the new far-terrain API, adds F2 waypoint editing and improved text controls, and moves local death history to /mapdeaths."
+
+[[versions]]
+version = "0.1.10"
+published = "2026-11-22"
+game = "26.3"
+file = "trailgrid_maps-0.1.10.hmod"
+sha256 = "b3017a7d4ca8e3cbaf9e10b1541537c41bfbbf1d33cde1d034d4346a98de9d3b"
+changelog = "Redesigned map tools, waypoint list and settings. Adds textured 3D radar icons, building maps from world saves, and configurable PNG exports. Keeps existing waypoint and cache data. Pinned to Horizon Nightly 2026-11-21 (8f83e5c)."
+
+[[versions]]
+version = "0.1.7"
+published = "2026-11-22"
+game = "26.3"
+file = "trailgrid_maps-0.1.7.hmod"
+sha256 = "34ed16393e629c26efad8dd008e201012e42854584fee6633c50189262fa159c"
+changelog = "Automatically switches maps for distinct server world identities and keeps previous map caches and waypoints. Adds the Server worlds menu, map-integrated death waypoints, and the Kadir's Map name and icon. Pinned to Horizon Nightly 2026-11-21 (8f83e5c) and Horizon Mixins e59da90."
+
+[[versions]]
+version = "0.1.1"
+published = "2026-11-21"
+game = "26.3"
+file = "trailgrid_maps-0.1.1.hmod"
+sha256 = "7739fb61259e1bb8717c60e33e2d6233ca7549e0522b1e130781cd87791bb670"
+changelog = "Builds against Horizon Nightly 2026-11-21 (8f83e5c) and uses the trail display name in the installed mod. Keeps the same map, waypoint and settings data directory."
+
+[[versions]]
+version = "0.1.0"
+published = "2026-11-21"
+game = "26.3"
+file = "trailgrid_maps-0.1.0.hmod"
+sha256 = "0ec0f3cc57e1d1565e76b67ba787a7b5fc45827a2cf728676c17b175b71b8b93"
+changelog = "First release with English-first presentation, an original icon, in-game map settings, and a searchable waypoint list."

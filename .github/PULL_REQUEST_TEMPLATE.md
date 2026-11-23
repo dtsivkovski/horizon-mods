@@ -13,3 +13,6 @@
 
 The `stage` check puts each linked file in the `staging` release as `<sha256>.<extension>` and re-runs the check. A file
 linked anywhere else: ask a reviewer to stage it.
+
+Reviewers follow [REVIEWING.md](https://github.com/horizon-rust/horizon-mods/blob/main/REVIEWING.md): bugs don't hold
+a listing, and small problems in the submission are fixed for you.

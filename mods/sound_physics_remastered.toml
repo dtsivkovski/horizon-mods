@@ -1,0 +1,35 @@
+id = "sound_physics_remastered"
+kind = "native-mod"
+name = "sound_physics_remastered"
+summary = "A Horizon port of Sound Physics Remastered."
+description = """Behavioral port of [Sound Physics Remastered](https://github.com/henkelmax/Sound-Physics-Remastered) (GPL-3.0-only) for the Horizon client. Port repo: `Sparticle62ops/horizon-sound-physics-remastered`; master copy in `horizon-modport/ports/sound-physics-remastered`.
+
+## Status
+- [x] Slice 1: the pure sound physics. Per-block sound materials (absorption + reflectivity from the block's sound type), direct-path occlusion raymarching (half-block sampling, one hit per voxel), distance falloff, and raytraced reverb estimation (deterministic LCG rays, bounce budget, mean-free-path decay). 10/10 tests.
+- [ ] Slice 2: client glue, feeding the physics from Horizon's world snapshot and applying the computed occlusion/reverb to sound playback.
+
+## Degradations
+- Client-side world access for the raymarcher rides world snapshots (horizon-rust/horizon #10152, open).
+- SPR hooks Minecraft's client sound engine to resample each played sound's volume/reverb per position; Horizon's native mod API has no sound playback hook yet. The client glue (slice 2) waits on that surface; filed: horizon-rust/horizon #10444 (sound playback hook).
+- Nothing calls the physics yet, so players see no effect; slice 2 lands with the sound playback hook.
+
+Package rebuilt on the current SDK (Horizon f00125f61f794aaa3d4e950d301f353b35b6ee3d, mixins e59da9094f0c2fdda6c627fe9eff22dec6a906f0) with a real `mod_api` entry in `lib.rs`; the package source and the repo match.
+
+Licence: GPL-3.0-only, carrying upstream's license and credit. Source: https://github.com/Sparticle62ops/horizon-sound-physics-remastered
+"""
+authors = ["henkelmax", "sparticle"]
+owners = ["Sparticle62ops"]
+owner_ids = [209812745]
+license = "GPL-3.0-only"
+source = "https://github.com/Sparticle62ops/horizon-sound-physics-remastered"
+icon = "icons/sound_physics_remastered.png"
+categories = ["utility"]
+tags = ["port", "horizon"]
+
+[[versions]]
+version = "1.0.0"
+published = "2026-11-19"
+game = "26.3"
+file = "sound_physics_remastered-1.0.0.hmod"
+sha256 = "577931a8c4f80c046137921c7137b209bb9f684b61f3bcdcfd9738d8ab40246b"
+changelog = "Rebuilt on Horizon f00125f / mixins e59da90 (api 0.2): real mod_api entry, crate:: imports resolved, GPL-3.0-only correction."

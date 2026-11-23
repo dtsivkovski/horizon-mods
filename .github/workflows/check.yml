@@ -56,14 +56,22 @@ jobs:
         env:
           LOGIN: ${{ github.event.pull_request.user.login }}
           BODY: ${{ github.event.pull_request.body }}
-          BOT: ${{ vars.REGISTRY_BOT || 'horizon-mods-bot' }}
+          # Unset or empty: no author is the bot, and no marker is trusted.
+          BOT: ${{ vars.REGISTRY_BOT }}
         run: |
           # The submission form opens pull requests as the bot and names the
-          # GitHub account that signed in to it.
+          # GitHub account that signed in to it. REGISTRY_BOT lists the bot's
+          # logins, space-separated (several while the form switches from one to
+          # another), each exactly as GitHub shows it: an App's with its `[bot]`,
+          # since the same name without it is an ordinary account anyone may hold.
           author="$LOGIN"
-          if [ "$LOGIN" = "$BOT" ] || [ "$LOGIN" = "${BOT}[bot]" ]; then
-            author="$(printf '%s' "$BODY" | sed -n 's/.*<!-- submitted-by: \([A-Za-z0-9-]*\) -->.*/\1/p' | head -1)"
-          fi
+          read -ra bots <<< "$BOT"
+          for bot in "${bots[@]}"; do
+            if [ "$LOGIN" = "$bot" ]; then
+              author="$(printf '%s' "$BODY" | sed -n 's/.*<!-- submitted-by: \([A-Za-z0-9-]*\) -->.*/\1/p' | head -1)"
+              break
+            fi
+          done
           echo "login=${author:-$LOGIN}" >> "$GITHUB_OUTPUT"
       - name: What it changes
         env:

@@ -1,0 +1,14 @@
+[package]
+name = "native-subset"
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.88"
+publish = false
+description = "Decides whether a native-mod owner update stays inside the subset that merges without a reviewer"
+
+[dependencies]
+proc-macro2 = { version = "1", default-features = false, features = ["span-locations"] }
+sha2 = "0.11.1"
+syn = { version = "2", default-features = false, features = ["full", "visit", "parsing", "printing", "clone-impls"] }
+toml = "1.2.2"
+zip = { version = "9", default-features = false, features = ["deflate"] }

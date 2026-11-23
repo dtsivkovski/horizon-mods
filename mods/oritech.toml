@@ -17,7 +17,7 @@ A port of [Oritech](https://github.com/Rearth/Oritech) by Rearth for Horizon —
 - The buffer's key is the API's int `energy` rather than upstream's long `oritech.machine_energy`; every value here fits and the buffer is a real block energy capability other mods can use.
 - **The rest of Oritech:** the other generators, the accelerator ring, the reactor, the GeckoLib deep-tier models, the machines beyond these two, the ore/ingot sets and the rest of the crafting chain.
 
-The original copyright and licence notices travel inside the distributed archive (`mixins/oritech/LICENSE` and `NOTICE.md`) and are also in this repository. CC0-1.0. Pinned to Horizon 1d63e0a and horizon-mixins 5a64af93.
+Oritech 0.2.13 includes the upstream CC0-1.0 licence in `LICENSE` and credits in `LICENSE-NOTICE.md`. The [release receipt](https://github.com/AdLf0208/oritech/blob/1a230cb0f29429e1ba8d97a931b51820ed6d05f9/RECEIPT.md) records the exact build pins.
 """
 authors = ["Me! - Rearth", "AdLf0208"]
 owners = ["AdLf0208"]
@@ -29,9 +29,45 @@ categories = ["utility"]
 tags = ["port", "horizon"]
 
 [[versions]]
+version = "0.2.13"
+published = "2026-11-23"
+game = "26.3"
+file = "oritech.hmod"
+sha256 = "ffd3ee465c7af7b3665c82dccd3354aa05abc13f227a9e12c8ba0204cd6fc367"
+changelog = """This version answers a review, and the honest answer is that the delivered version already validated its output before consuming anything — so the work was to make the wrong order inexpressible rather than to fix a bug. The whole decision now lives in one pure rule that answers either a work item or nothing, and the tick only applies what it returns, so a path that takes the input and the fluid before learning the output cannot fit no longer exists. Proven in game on the review's own case and its twin: a full output slot leaves the input, the buffer and the progress untouched for an item recipe, and a full output tank does the same for a fluid recipe, while the same machines with room finish for their exact costs and let the fluid fall by exactly the recipe's amount. The counterfactual removes the fit check and watches exactly those two tests fail. A harness command had to be added, because a machine's output slot has no player route at all — the right click fills inputs and the container reader cannot see a mod block entity."""
+
+[[versions]]
+version = "0.2.12"
+published = "2026-11-23"
+game = "26.3"
+file = "oritech.hmod"
+sha256 = "f2da80ce2a2e7487c473c7c561cd47aa2900d383c00b1bfe3059695585d1ec81"
+changelog = """Slice 10, the foundry: a two-input alloying machine, and the slice where the gates went green while the package could not open a world. The first build carried an alloy recipe under the mod's own type without registering the type or its serializer, so the game crashed at load while the static check, both compatibility runs, one hundred and thirty-seven unit tests and the content carry all passed. The fix registers the pair, and a test now walks every carried recipe type and greps the registration site for the matching pair, watched failing with the registration removed. The measurement that chose this family is also worth stating: all twenty-two refinery recipes were read and none of them resolves, because every one needs a fluid tag no mod here declares and the pin has no fluid-tag query, so the refinery is recorded as blocked and the foundry taken instead. Five of its thirty recipes are carried, each fed to the machine in game with its own numbers: steel in twenty-six ticks for three thousand three hundred and twenty-eight energy, and three more at eighty ticks for ten thousand two hundred and forty, with a wrong pair producing nothing and spending nothing, and the ingredient order shown not to matter.
+"""
+
+[[versions]]
+version = "0.2.10"
+published = "2026-11-22"
+game = "26.3"
+file = "oritech.hmod"
+sha256 = "8c39bc526b3dbb0457d4c4f3ea71126214c3267acc51e2f328990a82b107bb6e"
+changelog = """Slice 8, the assembler: a machine with four input slots and a three-core multiblock requirement, where a craft costs exactly its recipe's time multiplied by the machine's own rate. Proven in game with the arithmetic rather than the outcome alone: with no core the full grid at twelve hundred and eighty FE shows no recipe and makes nothing, three core placements form it, twelve hundred and eighty FE advances exactly ten of forty-eight ticks, and priming the remaining four thousand eight hundred and sixty-four yields two motors with the buffer at zero and every input slot empty. A second craft primed with more than it needs spends exactly its cost and returns the excess; one coil short gives no progress, no recipe and no energy spent, which is the differential that separates a correct recipe match from a lenient one; and a slot holding two steel pays one and keeps one, which separates one item per ingredient from a whole stack. Five of the jar's recipes are carried and fifty-two are refused with a reason each: thirteen need a plastic plate from an oil chain this port has not built, twenty-nine are compatibility files for a mod the pack does not ship alongside, seven name a result family that is not carried, two need a bio fuel tag and one a leather tag. The brief's list of which recipes resolve was wrong in both directions, and the sweep of all fifty-seven files is what replaced it.
+"""
+
+[[versions]]
+version = "0.2.2"
+published = "2026-11-21"
+game = "26.3"
+file = "oritech.hmod"
+sha256 = "9af384e8e4aca3fd7ca956187791ebd9c85341ab258a3d845a52dad2b037eefc"
+changelog = """Slice 2, the powered furnace multiblock and the seven machine cores. It is the system rather than one machine: the core block, the assembled gate, the core lookup and "a broken core disassembles" are what the foundry, refinery, atomic forge and reactor reuse, and it closes slice 1's gameplay hole — a generator can now drive a machine that turns ore into ingots. From the jar's numbers: 10,000 FE capacity, 256 insert, 32 FE/tick, a 0.5 speed multiplier so a 200-tick recipe finishes in 100, the core at (0,1,0), seven cores with quality equal to tier, an unassembled machine inert, and a broken core freezing progress rather than losing it. The seven carried pulverizer recipes were dead data — they used the 1.21.1 `{"item": …}` form 26.3 rejects — and are rewritten to bare ids by the carry script. Proven in game: no core and ore with 5,000 FE smelts nothing; a core placed by right click assembles at quality 2; 320 FE finishes exactly 10 ticks and an iron ore yields one ingot for exactly 3,200 FE; a core broken mid-smelt freezes progress at 31 with the buffer unspent and a core 4 re-assembles to finish; all seven cores place and read back while machine_core_8 is refused; and all seven pulverizer recipes craft with their inputs consumed.
+"""
+
+[[versions]]
 version = "0.2.1"
 published = "2026-11-10"
 game = "26.3"
 file = "oritech.hmod"
 sha256 = "de762c4efd93b034561223d5ddb18b9c8fa44765ccb332069fe7fa12b5fc6d73"
-changelog = "First release"
+changelog = """First release
+"""

@@ -47,6 +47,14 @@ tags = ["bee", "moonskull"]
 screenshots = ["screenshots/abelha_skull/1.png"]
 
 [[versions]]
+version = "1.0.0-fix"
+published = "2026-11-22"
+game = "26.3"
+file = "abelha_skull-1.0.0-fix.zip"
+sha256 = "eac1312f9a61a91a1d2b9e490793f88877dcede2aa89f444ddc1628ee97bdb77"
+changelog = "fixes the bed and humble painting texture for 26.3"
+
+[[versions]]
 version = "1.0.0"
 published = "2026-11-09"
 game = "26.3"

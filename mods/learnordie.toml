@@ -1,0 +1,53 @@
+id = "learnordie"
+kind = "native-mod"
+name = "Learn or Die (Horizon port)"
+summary = "Learn German as you play: a teacher narrates what you do and quizzes you on it, with rewards and penalties."
+description = """Learn or Die, ported to Horizon: a German teacher narrates what you do and quizzes you on it.
+
+## What it does
+
+- The teacher says out loud, in German, what you do: mining, building, picking up and dropping items, moving, fighting, eating, the weather and more. The sentence shows on screen with a translation, and his portrait talks along.
+- Questions come up as you play: pick the German for the word or sentence shown, or for the phrase you hear, with keys 1 to 4 or the mouse, or type it. The game pauses in single player while a question is open.
+- Right answers bring buffs or friendly mobs. Wrong ones bring debuffs, five monsters, lost hearts or death, as you choose, and always death in a Hardcore world. After several wrong answers in a row the angry teacher drops your inventory.
+- Every 20 minutes of play an exam asks up to 20 phrases you have met and shows your score.
+- The dictionary lists the phrases you know, word by word, with grammar notes and other forms, and plays them normal or slow. Item tooltips show the German noun, and "what is this" names the block or mob you look at.
+- Your answers are saved per world. A phrase you know is not asked or said again in that world.
+
+Riding and fishing are said, and rewards and penalties given, in single player and for the host of a LAN world. A short guide opens in your first world. Not ported yet: voice answers, and the HUD's score counter, learned-phrase banner and jingle.
+
+## Install
+
+The port reads the German pack, the voices and the portrait from the official Learn or Die German 0.6.2 jar for Minecraft 26.3, `learn-or-die-german-0.6.2+mc26.3.jar`, from the [official release](https://github.com/Larenlearn/learn-or-die/releases/tag/v0.6.2). It contains none of them itself.
+
+1. Install the mod. It is a native mod, so the launcher compiles it for your instance first.
+2. Start the instance. Without the jar, the launcher stops and names the path it expects. Copy the unmodified jar to that path, then start again.
+
+## Keys
+
+N turns the teacher on or off, M mutes the voice, K switches between normal and slow speech, I opens the settings, J the dictionary, U the guide, and V says what you are looking at. 1 to 4 answer a question and Enter checks a typed answer. All but 1 to 4, Enter and Esc can be changed in Controls, Key Binds.
+
+## Settings
+
+Press I in a world: question type and frequency, penalties and rewards, the angry teacher, the exam, speech speed and volume, tooltips, and which actions the teacher talks about. They are saved to `config/learnordie.json` in the instance folder, with the original's setting names and defaults.
+
+## Credits and support
+
+Learn or Die is made by Laren. Website: [learnordie.me](https://learnordie.me). Official mod: [github.com/Larenlearn/learn-or-die](https://github.com/Larenlearn/learn-or-die). This port is made with Laren's [permission](https://github.com/Larenlearn/learn-or-die/issues/17), and like the original it is All Rights Reserved.
+
+For problems with the port, open an issue in [its repository](https://github.com/y0sif/learn-or-die-horizon/issues). For everything else, see the official mod."""
+authors = ["Laren (original Learn or Die)", "y0sif (Horizon port)"]
+owners = ["y0sif"]
+owner_ids = [61329766]
+license = "LicenseRef-All-Rights-Reserved"
+source = "https://github.com/y0sif/learn-or-die-horizon"
+icon = "icons/learnordie.png"
+categories = ["game-mechanics", "utility"]
+tags = ["german", "language-learning", "education", "quiz", "narrator", "port"]
+
+[[versions]]
+version = "0.1.0"
+published = "2026-11-22"
+game = "26.3"
+file = "learnordie.hmod"
+sha256 = "60a35d0c4882847a706927c0c692a07dcc0d5afcafb47da0e26f7eab7b20c2a3"
+changelog = "First release: the teacher's narration, quizzes, rewards and penalties, the angry teacher, exams, the dictionary, tooltips, naming what you look at, the guide and the settings screen, with the German pack. Built for Horizon 8f83e5c (nightly 2026-11-21)."

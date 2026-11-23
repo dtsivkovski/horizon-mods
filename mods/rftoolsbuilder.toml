@@ -49,3 +49,11 @@ game = "26.3"
 file = "rftoolsbuilder.hmod"
 sha256 = "da48b02d137e8d6cbf8df87536feb417ed7e4b02761f84b9e620cef314d627a6"
 changelog = "First publication in the SDK format."
+
+[[versions]]
+version = "0.2.2"
+published = "2026-11-21"
+game = "26.3"
+file = "rftoolsbuilder.hmod"
+sha256 = "f09026b0f9f9cc91a2204f9231b07a595e62cda9f18e80ab46601ad049c5e872"
+changelog = """Slice 2, the two carried recipes, which were dead data: the builder and its shape card both used the 1.21.1 `{"item": …}` / `{"tag": …}` ingredient form, which 26.3 rejects at load, so the game logged `invalid ingredient` for every key and the grid sat full with an empty result — the mod could not be crafted at all. Both files now use bare item ids and `#tag` strings, with patterns, results and ids untouched, and the port gains a data guard that fails on the old shape. Proven in game: the shape card and the builder both craft with their ingredients consumed and the grid emptied, two wrong-ingredient controls return nothing, the game log has no `invalid ingredient` line, and a broken builder drops itself once."""

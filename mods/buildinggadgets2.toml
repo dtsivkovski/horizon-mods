@@ -3,22 +3,23 @@ kind = "native-mod"
 name = "buildinggadgets2"
 summary = "A Horizon port of buildinggadgets2."
 description = """
-A port of [Building Gadgets 2](https://github.com/Direwolf20-MC/BuildingGadgets2) (MIT, by Direwolf20 and the Building Gadgets contributors) for Horizon. This first slice is the **building gadget** and its horizontal-row mode.
+**The build and area modes are held in this version, on purpose.** Horizon's API at the pinned build has no placement call that takes an actor **and** lets a protection mod cancel an individual position: `player_place_block` documents that no survival, obstruction, build-permission or spawn-protection check runs, and the call that does run them (`player_perform_action`) only works for a fake player, which a mod cannot create. Rather than write through protection, a click now plans the cells, reports how many would be allowed and how many were placed, and spends nothing. Selection, all eight mode plans, ranges, the wheel and the world-border rule all work; the hold lifts when the pin gains a cancellable placement call.
+
+A port of [Building Gadgets 2](https://github.com/Direwolf20-MC/BuildingGadgets2) (MIT, by Direwolf20 and the Building Gadgets contributors) for Horizon. This port includes the **building gadget** and its eight planning modes.
 
 **Implemented so far**
 
-- `buildinggadgets2:gadget_building` (stack size 1) right-clicked on a block. **Sneak + right click** selects the clicked block's state (upstream's `onShiftAction`); air, unbreakable blocks and non-source fluids are refused. **Plain right click** builds the selected block's **horizontal row**: `side = face.axis == Y ? player facing : -face`, cells `clicked + side*i` for `i in 0..range`, skipping cells that are not replaceable, outside the build height, or where the state cannot survive.
-- Each placed cell consumes one item of the block's kind; creative pays nothing. A gadget with no selection, no items or no room places nothing and says why.
+- Sneak-right-click a block to select its state. The gadget rejects air, unbreakable blocks, non-source fluids and blocks covered by the deny tag. A normal right-click plans the selected mode and reports its eligible cells.
+- On a dedicated server, the gadget reads only the `spawn-protection` setting from the server’s `server.properties` to calculate the eligible count.
 - The selection/range state is stored **as an item component** (`buildinggadgets2:gadget_state`), so it travels with the gadget and survives a relog, and the mouse wheel changes the range through the `mouse_scrolling` client hook (`scroll.rs`).
-- `/buildinggadgets2` readout commands for the harness, with the carried model, texture, language and recipe inside the one `.hnmod`.
+- `/buildinggadgets2` readout commands for the harness, with the carried model, texture, language and recipe inside the one `.hmod`.
 
 **Not yet ported**
 
-- Mode fixed to `horizontal_row`. Upstream's default is `build_to_me`; the other modes (vertical wall and column, surface, horizontal wall, stairs, grid, build-to-me) and mode switching are deferred — the mode wheel is client-only.
 - The selection stores the raw state id, so transient properties (age, lit, waterlogged, open, …) are not cleaned the way upstream's `cleanBlockState` does.
 - The undo stack, the anchor, the paste/rotate gadget, the cut/paste gadget, the destruction gadget, the exchange gadget and their screens are later slices.
 
-MIT; the original copyright and permission notices travel inside the archive at `mixins/buildinggadgets2/LICENSE`.
+MIT; the original copyright and permission notices travel inside the archive at `LICENSE` and `LICENSE-NOTICE.md`.
 """
 authors = ["Direwolf20-MC", "AdLf0208"]
 owners = ["AdLf0208"]
@@ -30,9 +31,27 @@ categories = ["utility"]
 tags = ["port", "horizon"]
 
 [[versions]]
+version = "0.2.5"
+published = "2026-11-23"
+game = "26.3"
+file = "buildinggadgets2.hmod"
+sha256 = "9d19a3410c5dea90b062fb5818fea876710085ef412f9a23de151658c9bbfcf7"
+changelog = """This version consults the deny tag the reference ships, so a block the mod says must not be built is refused when it is selected and when it is a destination. The tag is carried byte for byte as the jar ships it: four blocks and three tags that resolve to forty-five in this build. The interesting part is that with the shipped tag the destination rule is invisible, because every one of those forty-five is already non-replaceable here, so a count built on the tag alone could not fail. The leg therefore extends the tag in a test world with a block that is replaceable and shows the count fall from eight to six, and it records the deviation plainly: the reference reads the tag at the selection only, and applying it to destinations is the exchange gadget's rule borrowed into this path. Selection is proved separately, with a block that only the tag can refuse. The build modes stay held and the preview stays blocked, neither re-attempted."""
+
+[[versions]]
+version = "0.2.4"
+published = "2026-11-23"
+game = "26.3"
+file = "buildinggadgets2.hmod"
+sha256 = "927409d7750cc246e1e98630b6355bc9e90ba6c7cdf17c80f9e87bb05066f14a"
+changelog = """This version answers a review with a behaviour reduction, deliberately and with the evidence for it. The gadget's area modes wrote blocks through a raw path, so a protection mod could not cancel a single placement, and the only calls this pin offers that take an actor either bypass protection by their own contract or require a fake player a mod cannot create. So the modes are held rather than written: a click plans the cells, reports how many would be allowed and how many were placed, spends nothing, and says which symbol is missing. Selection, all eight mode plans, ranges and the wheel keep working, and the hold lifts with one constant when the pin gains a cancellable placement call. The second review item is fixed and measured: the upper world-border bound is now exclusive, which the game proves by counting nineteen allowed cells when the clicked column lies exactly on the bound and twenty-four when it is one cell inside. The old assertion that encoded the defect was corrected with it, and the pre-fix mode logs are retired so no stale pass claims a build that no longer happens.
+"""
+
+[[versions]]
 version = "0.2.2"
 published = "2026-11-10"
 game = "26.3"
 file = "buildinggadgets2.hmod"
 sha256 = "de10c06860205d2d70c7bd93e5901aa1809a298043721be181d2d9079282b3cb"
-changelog = "First release"
+changelog = """First release
+"""

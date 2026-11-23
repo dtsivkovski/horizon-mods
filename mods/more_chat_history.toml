@@ -1,0 +1,51 @@
+id = "more_chat_history"
+kind = "native-mod"
+name = "Chat Memory and History"
+summary = "Raises the chat history to 16384 messages, keeps it between sessions and keeps 1000 saved commands."
+description = """
+Keeps up to 16384 chat messages instead of vanilla's 100, so you can scroll back through a long session.
+
+- Chat messages, wrapped lines and the up-arrow history of sent messages all keep 16384 entries.
+- The chat is saved to `chat_history.log` in the game folder and shown again next session, under a grey divider. Only the text is kept, not colours or click events.
+- `chat_memory.properties` (written on first run): `save_history=false` turns the saved history off, `max_file_mib` caps the log. The log holds everything the chat shows, private messages included.
+- The saved command history (`command_history.txt`) keeps 1000 commands instead of 50.
+- Nothing else about the chat changes: scrolling, search and resizing work as before.
+
+Made for Horizon from the idea of [More Chat History](https://modrinth.com/mod/morechathistory) by JackFredMods (CC0-1.0)
+and the session history of [Chat Patches](https://modrinth.com/mod/chatpatches) (LGPL-3.0). None of their code is used.
+This is a native mod: mixins replace the chat's trimming functions with copies that use the new limit.
+
+Pinned to Nightly 2026-11-20 (`0a875da`). Needs launcher 0.2.89 or later. The icon is Ionicons' `chatbubbles-outline` (MIT).
+"""
+authors = ["ZiQu-dev"]
+owners = ["ZiQu-dev"]
+owner_ids = [75249449]
+license = "MIT"
+source = "https://github.com/ZiQu-dev/horizon-more-chat-history"
+icon = "icons/more_chat_history.png"
+categories = ["utility"]
+tags = ["chat", "history", "quality-of-life"]
+
+[[versions]]
+version = "0.1.0"
+published = "2026-11-19"
+game = "26.3"
+file = "more_chat_history-0.1.0.hmod"
+sha256 = "6016c99d846c2852d19bb3cd4be75e4d168bbf556907bd4c20f2c1ac158237b5"
+changelog = "First version. Pinned to Nightly 2026-11-20 (0a875da); needs a launcher with horizon-rust/horizon#18789."
+
+[[versions]]
+version = "0.3.0"
+published = "2026-11-22"
+game = "26.3"
+file = "more_chat_history-0.3.0.hmod"
+sha256 = "4d60de76faf6bdf3df45c3fc791a3991ea77702857b3015fc2007e141533410c"
+changelog = "chat_memory.properties: save_history=false turns the saved history off, max_file_mib caps chat_history.log (default 4, only its tail is read, cut while a session runs). Pinned to Nightly 2026-11-20 (0a875da); needs launcher 0.2.89 or later."
+
+[[versions]]
+version = "0.2.2"
+published = "2026-11-22"
+game = "26.3"
+file = "more_chat_history-0.2.2.hmod"
+sha256 = "5b713906b306210a93862941e984d292af0b173621b60120bea3a6a1db8474ee"
+changelog = "Keeps the chat between sessions in chat_history.log, shown under a divider; keeps 1000 saved commands instead of 50. Renamed to Chat Memory and History (same id). Pinned to Nightly 2026-11-20 (0a875da); needs launcher 0.2.89 or later."

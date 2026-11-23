@@ -1,0 +1,29 @@
+id = "industrialization_overdrive"
+kind = "native-mod"
+name = "industrialization_overdrive"
+summary = "A Horizon port of industrialization_overdrive."
+description = """
+Requires [Modern Industrialization](https://github.com/AdLf0208/modern_industrialization) 0.2.3 or later: the pyrolyse oven's multiblock is built from that mod's casings, coils and hatches, and the package declares it as a required dependency, so the game refuses this mod by name when the parent is absent.
+
+A port of [industrialization_overdrive](https://github.com/WhitePhant0m/Industrialization-Overdrive).
+
+The first port of Industrialization Overdrive, and it opens with the machine the mod is named around: the pyrolyse oven, a thirty-three member multiblock of seventeen bronze plated bricks and sixteen coil blocks with item, fluid and energy hatches, which turns four logs into five charcoal and proxies the parent's own coke recipes. The parent surface it binds to went from nothing to complete across three slices of its own: the shell blocks, the hatches, the energy aggregation and a coke recipe kind another package can read, which is why this slice needed no hard-coded recipe table. Proven in game with the numbers that matter: the shell forms with three hatches and nothing missing, four logs and exactly twelve thousand eight hundred FE through the hatches make five charcoal with the controller and hatch both emptied, and twelve thousand seven hundred and eighty makes nothing and stalls at nine hundred and ninety-eight of a thousand, so the energy is coming from the hatch rather than from nowhere. Breaking one coil freezes the run and a brick where the coil belongs stays unformed, and restoring it finishes. A second coil tier reads its own batch size and multiplier and pays its own coke run. The creosote by-product, the oven's own craft recipe and the other four families are recorded with their exact missing symbols rather than approximated.
+"""
+authors = ["WhitePhant0m", "AdLf0208"]
+owners = ["AdLf0208"]
+owner_ids = [107615167]
+license = "MIT"
+source = "https://github.com/AdLf0208/industrialization_overdrive"
+icon = "icons/industrialization_overdrive.png"
+categories = ["utility"]
+tags = ["port", "horizon"]
+
+[[versions]]
+version = "0.1.2"
+published = "2026-11-23"
+game = "26.3"
+file = "industrialization_overdrive.hmod"
+sha256 = "111f3e09e39a4e11be65fdf8467d8bcc925b6e71f80918b8863cb89fd0fbe383"
+changelog = """
+This version answers a review with three fixes, and the first one is the interesting kind: the hatch moved items by the registered stack limit rather than the stack's own, and it ignored whether either write succeeded. Now a read that fails is never taken for an empty slot, the limit comes from the stack's own component when it has one, and a move only counts when both writes report a change, so a refused write rolls the whole tick back instead of leaving one side changed. Proven in game both ways: twelve of a sixteen-limited stack beside eight of the same moves exactly four and keeps four, and a state the boundary refuses consumes nothing on either side. The second fix validates the whole craft result before anything is spent, including a recipe with two distinct results, which this oven's shipped data never produces but a data pack can declare over either the machine's own type or the proxied one, so the guard is proved against an installed pack rather than against a hypothetical. The third removes the inventory diagnostic outright rather than gating it, because operator commands cannot be shown to refuse in this harness, and the vanilla data command prints the same items with their components.
+"""

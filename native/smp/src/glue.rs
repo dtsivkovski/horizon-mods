@@ -77,7 +77,7 @@ pub struct WebPush {
 impl Default for WebPush {
     fn default() -> Self {
         Self {
-            url: "https://kira-production-500e.up.railway.app/smp/ingest".into(),
+            url: "https://mcp.playhorizon.dev/smp/ingest".into(),
             token: String::new(),
         }
     }

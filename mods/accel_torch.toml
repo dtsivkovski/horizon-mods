@@ -1,0 +1,66 @@
+id = "accel_torch"
+kind = "native-mod"
+name = "加速火把 (Accel Torch)"
+summary = "仿 Torcherino 的三档加速火把：右键调范围与速度（100%~640000%），三档各有独立外观与粒子。Right-click to set reach and speed (100%~640000%): three tiers, each with its own look and particles."
+description = """A toolkit of three accelerating torches for Horizon, inspired by [Torcherino](https://modrinth.com/mod/torcherino). Written in Rust as a native mod: original code and textures, no assets or code taken from the original.
+
+## The three tiers
+
+| Tier | Block | Speed steps | Reach per axis | Largest area |
+| --- | --- | --- | --- | --- |
+| Accel Torch | `accel_torch:accel_torch` | 100% / 200% / 300% / 400% | 1 or 3 | 7x7x7 |
+| Advanced Accel Torch | `accel_torch:advanced_accel_torch` | 4000% / 8000% / 12000% / 16000% | 1 to 9 | 19x19x19 |
+| Super Accel Torch | `accel_torch:super_accel_torch` | 160000% / 320000% / 480000% / 640000% | 1 to 27 | 55x55x55 |
+
+A reach of 1 covers 3x3x3 with the torch in the middle, 3 covers 7x7x7, and the super torch's 27 covers 55x55x55.
+
+A percentage is how many extra random ticks each block in the area gets per tick: 100% means one extra `randomTick` per block per tick (vanilla's own chance is 3/4096, so about 1365 times faster), 40000% means 400 extra calls.
+
+## Using it
+
+- Right-click a torch to open its panel: the reach on X, Y and Z (odd numbers, + and - step by 2), speed, and the on/off switch. Every click saves at once.
+- The panel takes the plain right click, so `sneak + right-click` is what places a block against a torch, the same way a crafting table works.
+- New torches start switched off, at the smallest speed step and a reach of 1 on each axis (3x3x3).
+- Two items, the Accel Clock and Super Accel Clock, and five recipes; see the gallery.
+- Each tier has its own texture and its own spark particles; particles only show while the torch is on.
+
+## How it works
+
+- The torch is a block entity. While on, each tick it calls `LevelRef::block_random_tick` for blocks in its box, the same random tick a chunk gets, so crops, saplings, grass spread, ice and lava behave exactly as they would with a much higher random tick rate.
+- One random-tick budget is shared by every torch on the server: at most 3000 calls and 3 ms of work per tick, reset each server tick and enforced across all torches, so stacking them cannot drag the server below 20 TPS. Measured: 5 maxed 27x27x27 super torches still take 5.01-5.04 s per 100 ticks (20 TPS). That budget is split equally between every torch that ticked in the previous tick, so the first torch in the server's tick order cannot starve the others; a torch whose share is smaller than its area keeps its own cursor and carries on from the cell its last pass stopped at, so the whole area is still covered over a few ticks.
+- Settings live in the block entity's data (`active`, `speed`, `sx`, `sy`, `sz`), sync to clients through the update tag, and are re-read from the server when the panel opens, so a torch replaced with `/setblock` never shows stale values.
+- A change packet is only accepted from a player in the torch's level and within 6 blocks of it; anything else is ignored (with a chat note) rather than failing the payload, which would disconnect the sender.
+
+## Requirements and limits
+
+- Horizon 26.3, API 0.2, side both; native mod, so it compiles on first launch (a few seconds).
+- Built and tested against Horizon build `0a875da` / mixins `e59da90`.
+- Native code runs with your permissions; the source is in the linked repository, and this page's file is the exact source.
+
+## Credits
+
+Inspired by [Torcherino](https://modrinth.com/mod/torcherino) by lukegrahamlandry and [Torcherino (Unofficial)](https://www.mcmod.cn/class/11277.html) by skniro; no code, textures or data from either project is included. Textures and code by Wen."""
+authors = ["Wen"]
+owners = ["wen2863"]
+owner_ids = [159218016]
+license = "MIT"
+source = "https://github.com/wen2863/accel-torch"
+icon = "icons/accel_torch.png"
+categories = ["utility", "game-mechanics"]
+tags = ["tick", "acceleration", "utility", "torcherino", "rust"]
+
+[[versions]]
+version = "0.2.1"
+published = "2026-11-23"
+game = "26.3"
+file = "accel_torch.hmod"
+sha256 = "56f3b157bb8e1c550752e8317eb3d694c060bca8bb507c5c01744f75c1ce6da9"
+changelog = "包内元数据改成中英双语（名称与描述），代码与资源不变。The package manifest now names the mod and describes it in English as well as Chinese; src and assets are byte-for-byte 0.2.0."
+
+[[versions]]
+version = "0.2.0"
+published = "2026-11-22"
+game = "26.3"
+file = "accel_torch.hmod"
+sha256 = "82689a183471487f5fc8a1962f68a084f2d3d3ca58f77db3e540dd59b47729d0"
+changelog = "代码整合，行为不变：897 行的单文件拆成 tier / settings / screen / torch / budget / spark / util 七个模块加 lib.rs，范围、速度档、面板和共享预算都与 0.1.5 一致，方便以后并入别的模组。实测面板写入 {sx:3, sy:3, sz:1, speed:200, active:1b}；reach 内的树苗约 60 tick 长成，把范围外的树苗放进 reach 后同样长成；最宽档 27（55x55x55）+ 640000% 连续两次 100 tick 都是 5.00 秒（20 TPS）。注册表条目只保留本版本。"

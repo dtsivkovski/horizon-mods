@@ -3,6 +3,8 @@ kind = "native-mod"
 name = "DimStorage"
 summary = "Frequency-linked dimensional chests: a 54-slot inventory shared across dimensions, ported."
 description = """
+Two dimensional blocks in this version: a chest whose 54 slots live in a remote inventory keyed by its frequency, and a tank that holds 16,000 mB of one fluid per frequency, shares that store across every tank on the same frequency, fills and drains by bucket, and keeps its contents across a relaunch. Both persist and both are read back through the game's own capability, not a private field.
+
 A port of [DimStorage](https://github.com/Edivad99/DimStorage) by Edivad99 for
 Horizon. This is the first slice, not a full replacement.
 
@@ -16,7 +18,9 @@ Implemented so far
 
 Not yet ported
 
-- the dimensional tank (fluid store and capability) and the dimensional tablet (remote access, autocollect);
+- the dimensional tablet (remote access and autocollect), the frequency/owner/lock screens and the tank's
+  comparator — the tank itself ships here and is fully readable and writable through the game's own
+  capability;
 - the owner/lock/frequency GUI and the item `dimstorage:frequency` component, so a broken chest re-places on the default channel;
 - the custom chest renderer, lid animation and rotation display;
 - auto-eject, upgrades and size tiers, and the config file;
@@ -37,9 +41,27 @@ categories = ["storage", "technology"]
 tags = ["port", "storage", "ender-chest", "dimensional"]
 
 [[versions]]
+version = "0.2.5"
+published = "2026-11-23"
+game = "26.3"
+file = "dimstorage.hmod"
+sha256 = "74a967bc259bf53c4478a15a235534ee7af1e27f9c785a4e1065ed5a107af77f"
+changelog = """This version closes the last way the tank could lose a bucket. At the world's channel limit a new frequency was reported as having room, so the bucket handler accepted the transfer, the store refused to admit the channel, and the tank was then overwritten with the store's empty balance. Now a channel the store cannot admit reports no room at all, a refused write keeps the tank's own fluid and is never reported as committed, and the player is told why — which needed a third fix found in game, because a command's own answer is dropped during a block click, so the refusal had been silent. Proven on a world grown to exactly its limit: the bucket is untouched, the tank still reads its old contents, the neighbouring channel still holds what it held, and the new frequency never appears in the store, while the same click on a known channel lands as usual."""
+
+[[versions]]
+version = "0.2.4"
+published = "2026-11-23"
+game = "26.3"
+file = "dimstorage.hmod"
+sha256 = "02cc3b1c937686ba6a4e8f1929ca470f6d91fe5cecdc597fbd20c58a5b6333ed"
+changelog = """This version answers a review of the dimensional tank, and the review found a real hazard in a shared fluid store. A bucket transfer now commits to the channel before it reports success, so a sibling tank reading in the same tick sees the change, and removing a tank before its next tick cannot lose a finished transfer. A channel that has been drained stays drained: the world remembers which channels it knows, so a stale tank left behind cannot re-seed one after a restart, which the game leg proves by removing a sibling with ticks frozen, relaunching, and reading the same amount. A fill that cannot fit is refused whole, before anything lands, rather than accepted and then clamped away by the next sync. One limit is stated rather than papered over: a foreign capability write through a pipe arrives inside the game's own transaction, which cannot roll back a store outside it, so it is staged in the tank's own saved compound and committed at the next tick, break or reload. The four regression cases the review named were written first and each failed against the previous model for the reason the review gave.
+"""
+
+[[versions]]
 version = "0.2.1"
 published = "2026-11-10"
 game = "26.3"
 file = "dimstorage.hmod"
 sha256 = "18641dc422a34eadab58d4f049e23f6642a7307bb4513f450765e0a84d4884d6"
-changelog = "First release: slice 1 of the port, with the full licence and corresponding source in the port repository"
+changelog = """First release: slice 1 of the port, with the full licence and corresponding source in the port repository
+"""
